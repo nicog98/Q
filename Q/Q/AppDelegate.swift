@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             $0.server = "http://q-server-nicolaig.herokuapp.com/parse"
         }
         Parse.initialize(with: configuration)
-        testServer()
+        //testServer()
         return true
     }
 
