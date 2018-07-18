@@ -1,0 +1,7 @@
+Login Page: Creating user account, storing info in server
+
+Queue: Playing songs, uploading Spotify library, Soundcloud library, Youtube videos
+	Networking: adding to queue through network/server
+
+Persistance: Account info
+	Past Qs, with songs user was a part of and info for each song

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F68F4FF20F57DF300928008 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F68F4FE20F57DF300928008 /* AppDelegate.swift */; };
-		3F68F50120F57DF300928008 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F68F50020F57DF300928008 /* ViewController.swift */; };
+		3F68F50120F57DF300928008 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F68F50020F57DF300928008 /* LoginViewController.swift */; };
 		3F68F50420F57DF300928008 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F68F50220F57DF300928008 /* Main.storyboard */; };
 		3F68F50620F57DF500928008 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F68F50520F57DF500928008 /* Assets.xcassets */; };
 		3F68F50920F57DF500928008 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F68F50720F57DF500928008 /* LaunchScreen.storyboard */; };
@@ -25,6 +25,7 @@
 		3F7A824220FCDC0200965FB6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7A824120FCDC0200965FB6 /* SystemConfiguration.framework */; };
 		3F7A824420FCDC1100965FB6 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7A824320FCDC1100965FB6 /* libsqlite3.tbd */; };
 		3F7A824620FCDC1B00965FB6 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7A824520FCDC1B00965FB6 /* libz.tbd */; };
+		3FDDF12F20FF11360054F6F7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDDF12E20FF11360054F6F7 /* SignUpViewController.swift */; };
 		DFDC78E72B4F60E49B07FABB /* Pods_Q.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CE5A4A6B46119F265CC2D43 /* Pods_Q.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,7 +34,7 @@
 		3A28B5CF87879FE503B5C05C /* Pods-Q.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Q.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Q/Pods-Q.debug.xcconfig"; sourceTree = "<group>"; };
 		3F68F4FB20F57DF300928008 /* Q.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Q.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F68F4FE20F57DF300928008 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3F68F50020F57DF300928008 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3F68F50020F57DF300928008 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3F68F50320F57DF300928008 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3F68F50520F57DF500928008 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F68F50820F57DF500928008 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +52,7 @@
 		3F7A824120FCDC0200965FB6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3F7A824320FCDC1100965FB6 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		3F7A824520FCDC1B00965FB6 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		3FDDF12E20FF11360054F6F7 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		E5F7B451E4EAE4467D08D123 /* Pods-Q.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Q.release.xcconfig"; path = "Pods/Target Support Files/Pods-Q/Pods-Q.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,7 +112,8 @@
 			isa = PBXGroup;
 			children = (
 				3F68F4FE20F57DF300928008 /* AppDelegate.swift */,
-				3F68F50020F57DF300928008 /* ViewController.swift */,
+				3F68F50020F57DF300928008 /* LoginViewController.swift */,
+				3FDDF12E20FF11360054F6F7 /* SignUpViewController.swift */,
 				3F68F50220F57DF300928008 /* Main.storyboard */,
 				3F68F50520F57DF500928008 /* Assets.xcassets */,
 				3F68F50720F57DF500928008 /* LaunchScreen.storyboard */,
@@ -254,7 +257,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F68F50120F57DF300928008 /* ViewController.swift in Sources */,
+				3FDDF12F20FF11360054F6F7 /* SignUpViewController.swift in Sources */,
+				3F68F50120F57DF300928008 /* LoginViewController.swift in Sources */,
 				3F68F4FF20F57DF300928008 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
