@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,7 +15,7 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="Q" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w4q-Py-uiv">
@@ -61,9 +61,6 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="userNameFieldEdited:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="bk8-2S-jUb"/>
-                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ohK-jM-ogg">
                                 <rect key="frame" x="139" y="452" width="97" height="30"/>
@@ -71,9 +68,6 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="passwordFieldEdited:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="MGA-tf-eBI"/>
-                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hHl-DT-E9I">
                                 <rect key="frame" x="128" y="592" width="120" height="55"/>
@@ -123,18 +117,65 @@
                         <outlet property="UsernameLabel" destination="W34-W8-N8u" id="eXe-d4-lEk"/>
                         <outlet property="UsernameTextField" destination="n5I-vt-2xJ" id="wq0-Qf-hjo"/>
                         <segue destination="Owm-dl-VPX" kind="show" identifier="ShowSignUpPage" id="4lu-gM-oJO"/>
+                        <segue destination="U3u-GT-R4Q" kind="showDetail" identifier="ShowQUserViewFromSignIn" id="ajL-mg-aew"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="140" y="133.5832083958021"/>
         </scene>
+        <!--User View Controller-->
+        <scene sceneID="IkL-cj-md1">
+            <objects>
+                <viewController id="U3u-GT-R4Q" customClass="QUserViewController" customModule="Q" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2ED-Tm-oYz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ye-eI-yLj">
+                                <rect key="frame" x="117" y="100" width="140" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="editProfilePicutre:" destination="U3u-GT-R4Q" eventType="touchUpInside" id="aDl-gS-34f"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Picture-Frame-128" translatesAutoresizingMaskIntoConstraints="NO" id="uF4-JM-KBg" userLabel="Profile Picture Image View">
+                                <rect key="frame" x="117" y="100" width="140" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l8r-WH-JjH">
+                                <rect key="frame" x="140" y="248" width="95.333333333333343" height="22.333333333333314"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="USERNAME">
+                                        <attributes>
+                                            <font key="NSFont" size="17" name="Futura-Medium"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="R0X-zT-fod"/>
+                    </view>
+                    <connections>
+                        <outlet property="EditButton" destination="2ye-eI-yLj" id="a48-TL-jpf"/>
+                        <outlet property="ProfilePictureImageView" destination="uF4-JM-KBg" id="m5V-8m-vNI"/>
+                        <outlet property="UsernameLabel" destination="l8r-WH-JjH" id="CV4-Y6-ref"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6bL-Wa-16p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1192.8" y="132.26600985221674"/>
+        </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="1gI-zy-FZQ">
             <objects>
                 <viewController id="Owm-dl-VPX" customClass="SignUpViewController" customModule="Q" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OHN-kr-93G">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u50-9g-ddz">
@@ -199,9 +240,6 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="userNameFieldEdited:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="CEI-Yi-8bN"/>
-                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Pm-W3-zao">
                                 <rect key="frame" x="137" y="490" width="100" height="30"/>
@@ -210,8 +248,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
-                                    <action selector="passwordTwoEdited:" destination="Owm-dl-VPX" eventType="editingDidEnd" id="kVj-JZ-NLf"/>
-                                    <action selector="userNameFieldEdited:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="TtG-EW-7ci"/>
+                                    <action selector="passwordTwoEdited:" destination="Owm-dl-VPX" eventType="editingDidEnd" id="ZDq-0F-C4z"/>
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X1Z-H7-vIn">
@@ -233,10 +270,26 @@
                                     <action selector="SignUp:" destination="Owm-dl-VPX" eventType="touchUpInside" id="wtZ-Nh-DZa"/>
                                 </connections>
                             </button>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mE1-DO-fDb">
+                                <rect key="frame" x="1" y="44" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem id="Qdr-fz-FYb">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" image="back-icon-1x" landscapeImage="back-icon-1x" largeContentSizeImage="back-icon-2x" id="G7Q-3F-Zcu">
+                                            <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <connections>
+                                                <action selector="back:" destination="Owm-dl-VPX" id="5Mf-wp-LyA"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="PGa-hK-cNx"/>
                     </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="PasswordField1" destination="kg7-2X-pFT" id="8mw-aY-iEV"/>
                         <outlet property="PasswordField2" destination="7Pm-W3-zao" id="6OE-Yw-WQ5"/>
@@ -246,6 +299,7 @@
                         <outlet property="SignUpButton" destination="X1Z-H7-vIn" id="ZSS-zk-6IN"/>
                         <outlet property="UsernameField" destination="3em-Cj-NLd" id="ubz-7G-SgH"/>
                         <outlet property="UsernameLabel" destination="a1t-fo-ODg" id="I2t-Hp-YVF"/>
+                        <segue destination="U3u-GT-R4Q" kind="showDetail" identifier="ShowQUserViewFromSignUp" id="RgM-8G-m0r"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="roh-gS-irh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -253,4 +307,12 @@
             <point key="canvasLocation" x="140" y="942.27886056971522"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Picture-Frame-128" width="128" height="128"/>
+        <image name="back-icon-1x" width="50" height="50"/>
+        <image name="back-icon-2x" width="50" height="50"/>
+    </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="RgM-8G-m0r"/>
+    </inferredMetricsTieBreakers>
 </document>

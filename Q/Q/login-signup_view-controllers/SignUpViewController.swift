@@ -9,6 +9,10 @@
 import UIKit
 import Parse
 
+protocol SignUpViewControllerDelegate {
+    func setUser(user: PFUser)
+}
+
 class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var QLabel: UILabel!
@@ -37,6 +41,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    var delegate: SignUpViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,9 +94,16 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             } else {
                 // Hooray! Let them use the app now.
                 print("SUCCESSFULLY SIGNED UP \(user.username!) FOR Q")
+                self.delegate?.setUser(user: user)
+                self.performSegue(withIdentifier: "ShowQUserViewFromSignUp", sender: sender)
             }
         }
     }
+    
+    @IBAction func back(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     
 
     /*
