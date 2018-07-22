@@ -132,31 +132,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aBI-eo-ahd">
-                                <rect key="frame" x="0.0" y="391" width="375" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="zgj-hZ-jeo"/>
-                                </constraints>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ye-eI-yLj">
+                                <rect key="frame" x="117" y="100" width="140" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="editProfilePicutre:" destination="U3u-GT-R4Q" eventType="touchUpInside" id="aDl-gS-34f"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Picture-Frame-128" translatesAutoresizingMaskIntoConstraints="NO" id="uF4-JM-KBg" userLabel="Profile Picture Image View">
+                                <rect key="frame" x="117" y="100" width="140" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l8r-WH-JjH">
+                                <rect key="frame" x="140" y="248" width="95.333333333333343" height="22.333333333333314"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="USERNAME">
+                                        <attributes>
+                                            <font key="NSFont" size="17" name="Futura-Medium"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="R0X-zT-fod" firstAttribute="trailing" secondItem="aBI-eo-ahd" secondAttribute="trailing" id="CjF-Ui-m0U"/>
-                            <constraint firstItem="aBI-eo-ahd" firstAttribute="leading" secondItem="R0X-zT-fod" secondAttribute="leading" id="wyZ-iF-kcM"/>
-                            <constraint firstItem="aBI-eo-ahd" firstAttribute="centerY" secondItem="2ED-Tm-oYz" secondAttribute="centerY" id="zvK-zP-c7G"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="R0X-zT-fod"/>
                     </view>
                     <connections>
-                        <outlet property="UsernameField" destination="aBI-eo-ahd" id="MA1-tr-U1c"/>
+                        <outlet property="EditButton" destination="2ye-eI-yLj" id="a48-TL-jpf"/>
+                        <outlet property="ProfilePictureImageView" destination="uF4-JM-KBg" id="m5V-8m-vNI"/>
+                        <outlet property="UsernameLabel" destination="l8r-WH-JjH" id="CV4-Y6-ref"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6bL-Wa-16p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1194" y="133"/>
+            <point key="canvasLocation" x="1192.8" y="132.26600985221674"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="1gI-zy-FZQ">
@@ -296,6 +308,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Picture-Frame-128" width="128" height="128"/>
         <image name="back-icon-1x" width="50" height="50"/>
         <image name="back-icon-2x" width="50" height="50"/>
     </resources>

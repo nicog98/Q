@@ -9,10 +9,6 @@
 import UIKit
 import Parse
 
-protocol LoginViewControllerDelegate {
-    func setUser(user: PFUser)
-}
-
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var QLabel: UILabel!
@@ -30,8 +26,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private var passwordEdited: Bool = false
     
     public var user: PFUser?
-    
-    public var delegate: LoginViewControllerDelegate?
     
     @IBAction func signIn(_ sender: UIButton) {
         PFUser.logInWithUsername(inBackground: UsernameTextField.text!, password: PasswordTextField.text!) { (user: PFUser?, error: Error?) in

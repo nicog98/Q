@@ -9,22 +9,63 @@
 import UIKit
 import Parse
 
-class QUserViewController: UIViewController, SignUpViewControllerDelegate, LoginViewControllerDelegate {
+class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    var user: QUser?
-    
-    func setUser(user: PFUser) {
-        self.user = QUser(user: user)
-        UsernameField.text = self.user?.username
+    @IBOutlet weak var ProfilePictureImageView: UIImageView! {
+        didSet {
+            ProfilePictureImageView.layer.cornerRadius = ProfilePictureImageView.frame.height/2
+            ProfilePictureImageView.clipsToBounds = true
+        }
     }
     
-    @IBOutlet weak var UsernameField: UITextField!
+    @IBOutlet weak var EditButton: UIButton!
+    
+    var imagePicker = UIImagePickerController()
+    
+    @IBAction func editProfilePicutre(_ sender: UIButton) {
+        // open photos
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            if let mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary) {
+                imagePicker.mediaTypes = mediaTypes
+                self.present(imagePicker, animated: true)
+            }
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let chosenImageURL = info[UIImagePickerControllerImageURL] as? URL {
+            do {
+                let imageData = try Data(contentsOf: chosenImageURL)
+                self.user?.profilePictureData = imageData
+                self.ProfilePictureImageView.image = UIImage(data: imageData)
+                dismiss(animated: true) {
+                    // save photo to cloud
+                    self.user?.saveUserInfo()
+                }
+            } catch {
+                print("Unable to load image.")
+            }
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBOutlet weak var UsernameLabel: UILabel!
+    
+    var user: QUser?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.UsernameField.text = self.user?.username
-        // UsernameField.text = self.user?.username
-        // Do any additional setup after loading the view.
+        
+        self.UsernameLabel.text = self.user?.username!
+        if let profilePictureData = self.user?.profilePictureData {
+            self.ProfilePictureImageView.image = UIImage(data: profilePictureData)
+        }
+        
+        // set up delegates
+        imagePicker.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
