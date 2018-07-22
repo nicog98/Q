@@ -9,6 +9,10 @@
 import UIKit
 import Parse
 
+protocol LoginViewControllerDelegate {
+    func setUser(user: PFUser)
+}
+
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var QLabel: UILabel!
@@ -25,19 +29,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     private var passwordEdited: Bool = false
     
-    @IBAction func userNameFieldEdited(_ sender: UITextField) {
-        usernameEdited = true
-        if (passwordEdited) {
-            // login
-        }
-    }
+    public var user: PFUser?
     
-    @IBAction func passwordFieldEdited(_ sender: UITextField) {
-        passwordEdited = true
-        if (usernameEdited) {
-            // login
-        }
-    }
+    public var delegate: LoginViewControllerDelegate?
     
     @IBAction func signIn(_ sender: UIButton) {
         PFUser.logInWithUsername(inBackground: UsernameTextField.text!, password: PasswordTextField.text!) { (user: PFUser?, error: Error?) in
@@ -46,6 +40,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 print(errorString)
             } else {
                 print("SUCCESSFULLY LOGGED IN \(user!.username!)")
+                self.user = user
+                self.performSegue(withIdentifier: "ShowQUserViewFromSignIn", sender: sender)
             }
         }
     }
@@ -92,6 +88,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "ShowQUserViewFromSignIn") {
+            if let qUser = segue.destination as? QUserViewController {
+                qUser.user = QUser(user: self.user!)
+            }
+        }
+    }
 
 }
 

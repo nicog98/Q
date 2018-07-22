@@ -25,6 +25,8 @@
 		3F7A824220FCDC0200965FB6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7A824120FCDC0200965FB6 /* SystemConfiguration.framework */; };
 		3F7A824420FCDC1100965FB6 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7A824320FCDC1100965FB6 /* libsqlite3.tbd */; };
 		3F7A824620FCDC1B00965FB6 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7A824520FCDC1B00965FB6 /* libz.tbd */; };
+		3FAEA7022104E76E0069B8BF /* QUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEA7012104E76E0069B8BF /* QUserViewController.swift */; };
+		3FAEA7072104F1770069B8BF /* QUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEA7062104F1770069B8BF /* QUser.swift */; };
 		3FDDF12F20FF11360054F6F7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDDF12E20FF11360054F6F7 /* SignUpViewController.swift */; };
 		DFDC78E72B4F60E49B07FABB /* Pods_Q.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CE5A4A6B46119F265CC2D43 /* Pods_Q.framework */; };
 /* End PBXBuildFile section */
@@ -52,6 +54,8 @@
 		3F7A824120FCDC0200965FB6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3F7A824320FCDC1100965FB6 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		3F7A824520FCDC1B00965FB6 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		3FAEA7012104E76E0069B8BF /* QUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QUserViewController.swift; sourceTree = "<group>"; };
+		3FAEA7062104F1770069B8BF /* QUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QUser.swift; sourceTree = "<group>"; };
 		3FDDF12E20FF11360054F6F7 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		E5F7B451E4EAE4467D08D123 /* Pods-Q.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Q.release.xcconfig"; path = "Pods/Target Support Files/Pods-Q/Pods-Q.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,13 +115,11 @@
 		3F68F4FD20F57DF300928008 /* Q */ = {
 			isa = PBXGroup;
 			children = (
-				3F68F4FE20F57DF300928008 /* AppDelegate.swift */,
-				3F68F50020F57DF300928008 /* LoginViewController.swift */,
-				3FDDF12E20FF11360054F6F7 /* SignUpViewController.swift */,
+				3FAEA7002104E6550069B8BF /* supporting-files */,
+				3FAEA6FF2104E5A40069B8BF /* login-signup_view-controllers */,
 				3F68F50220F57DF300928008 /* Main.storyboard */,
-				3F68F50520F57DF500928008 /* Assets.xcassets */,
-				3F68F50720F57DF500928008 /* LaunchScreen.storyboard */,
 				3F68F50A20F57DF500928008 /* Info.plist */,
+				3FAEA7052104F1500069B8BF /* QUser */,
 			);
 			path = Q;
 			sourceTree = "<group>";
@@ -141,6 +143,34 @@
 				2CE5A4A6B46119F265CC2D43 /* Pods_Q.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3FAEA6FF2104E5A40069B8BF /* login-signup_view-controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3F68F50020F57DF300928008 /* LoginViewController.swift */,
+				3FDDF12E20FF11360054F6F7 /* SignUpViewController.swift */,
+			);
+			path = "login-signup_view-controllers";
+			sourceTree = "<group>";
+		};
+		3FAEA7002104E6550069B8BF /* supporting-files */ = {
+			isa = PBXGroup;
+			children = (
+				3F68F4FE20F57DF300928008 /* AppDelegate.swift */,
+				3F68F50520F57DF500928008 /* Assets.xcassets */,
+				3F68F50720F57DF500928008 /* LaunchScreen.storyboard */,
+			);
+			path = "supporting-files";
+			sourceTree = "<group>";
+		};
+		3FAEA7052104F1500069B8BF /* QUser */ = {
+			isa = PBXGroup;
+			children = (
+				3FAEA7012104E76E0069B8BF /* QUserViewController.swift */,
+				3FAEA7062104F1770069B8BF /* QUser.swift */,
+			);
+			path = QUser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +287,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FAEA7022104E76E0069B8BF /* QUserViewController.swift in Sources */,
 				3FDDF12F20FF11360054F6F7 /* SignUpViewController.swift in Sources */,
 				3F68F50120F57DF300928008 /* LoginViewController.swift in Sources */,
+				3FAEA7072104F1770069B8BF /* QUser.swift in Sources */,
 				3F68F4FF20F57DF300928008 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
