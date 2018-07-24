@@ -17,6 +17,12 @@ class QUser {
     
     var user: PFUser?
     
+    public var qScore: Int? {
+        didSet {
+            user?["qScore"] = qScore
+        }
+    }
+    
     var profilePictureData: Data? {
         didSet {
             let profilePicture = PFFile(name: "profile-picture.png", data: profilePictureData!)
@@ -41,6 +47,7 @@ class QUser {
     init(user: PFUser) {
         self.user = user
         self.username = user["username"] as? String
+        self.qScore = user["qScore"] as? Int
         if let profilePicture = user["profilePicture"] as? PFFile {
             do {
                 self.profilePictureData = try profilePicture.getData()
