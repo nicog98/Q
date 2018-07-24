@@ -21,6 +21,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var PasswordTextField: UITextField!
     
+    @IBOutlet weak var SignInActivityIndicator: UIActivityIndicatorView! {
+        didSet {
+            self.SignInActivityIndicator.isHidden = true
+        }
+    }
+    
     private var usernameEdited: Bool = false
     
     private var passwordEdited: Bool = false
@@ -28,6 +34,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     public var user: PFUser?
     
     @IBAction func signIn(_ sender: UIButton) {
+        self.SignInActivityIndicator.isHidden = false
+        self.SignInActivityIndicator.startAnimating()
         PFUser.logInWithUsername(inBackground: UsernameTextField.text!, password: PasswordTextField.text!) { (user: PFUser?, error: Error?) in
             if let error = error {
                 let errorString = error.localizedDescription
@@ -35,6 +43,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             } else {
                 print("SUCCESSFULLY LOGGED IN \(user!.username!)")
                 self.user = user
+                self.SignInActivityIndicator.stopAnimating()
+                self.SignInActivityIndicator.isHidden = true
                 self.performSegue(withIdentifier: "ShowQUserViewFromSignIn", sender: sender)
             }
         }
