@@ -205,7 +205,7 @@
                         <outlet property="EditButton" destination="2ye-eI-yLj" id="a48-TL-jpf"/>
                         <outlet property="ProfilePictureImageView" destination="uF4-JM-KBg" id="m5V-8m-vNI"/>
                         <outlet property="UsernameLabel" destination="l8r-WH-JjH" id="CV4-Y6-ref"/>
-                        <segue destination="lUE-8R-rf6" kind="showDetail" id="jQP-JE-MMt"/>
+                        <segue destination="lUE-8R-rf6" kind="show" id="jQP-JE-MMt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6bL-Wa-16p" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -215,17 +215,17 @@
         <!--View Controller-->
         <scene sceneID="Kz8-W2-LS8">
             <objects>
-                <viewController id="lUE-8R-rf6" sceneMemberID="viewController">
+                <viewController id="lUE-8R-rf6" customClass="QViewController" customModule="Q" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Lh1-qc-3yk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ji2-Tj-S6C">
-                                <rect key="frame" x="0.0" y="44" width="375" height="280"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="luvisrage" translatesAutoresizingMaskIntoConstraints="NO" id="ji2-Tj-S6C">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="324"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fhB-1b-Ip4">
-                                <rect key="frame" x="0.0" y="375" width="375" height="63"/>
+                                <rect key="frame" x="0.0" y="361" width="375" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText">
                                     <fragment content="BARONS AFTER PARTY">
@@ -241,16 +241,50 @@
                                 <rect key="frame" x="123" y="225" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="play-button"/>
+                                <connections>
+                                    <action selector="play:" destination="lUE-8R-rf6" eventType="touchUpInside" id="ivz-sR-4iV"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yJ8-4R-S0P">
-                                <rect key="frame" x="294" y="44" width="65" height="65"/>
+                                <rect key="frame" x="309" y="44" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="add"/>
+                                <connections>
+                                    <action selector="addSong:" destination="lUE-8R-rf6" eventType="touchUpInside" id="R6z-AH-4oz"/>
+                                </connections>
                             </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6Gm-VH-yMa">
+                                <rect key="frame" x="0.0" y="432" width="375" height="380"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fSM-Iy-fbm">
+                                    <size key="itemSize" width="375" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="wPB-Lj-MBb">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="fMM-d4-HFH"/>
                     </view>
+                    <connections>
+                        <outlet property="AddButton" destination="yJ8-4R-S0P" id="JOC-Ga-M2z"/>
+                        <outlet property="ArtworkImageView" destination="ji2-Tj-S6C" id="lhv-sI-Q8n"/>
+                        <outlet property="PlayButton" destination="zWb-nl-5xX" id="d5w-iJ-PBL"/>
+                        <outlet property="QCollectionView" destination="6Gm-VH-yMa" id="m1q-7J-vXz"/>
+                        <outlet property="QTitleLabel" destination="fhB-1b-Ip4" id="4sn-r4-ZiW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qKf-NG-PCl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -398,6 +432,7 @@
         <image name="add" width="128" height="128"/>
         <image name="back-icon-1x" width="50" height="50"/>
         <image name="back-icon-2x" width="50" height="50"/>
+        <image name="luvisrage" width="300" height="300"/>
         <image name="play-button" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
