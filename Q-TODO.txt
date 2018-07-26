@@ -9,6 +9,7 @@ Persistence:
 
 UI
 	Editing profile picture, resizing/scaling
+	Current QView slides up from bottom (small border showing at bottom of app if currentQ exists (similar to Apple Music))
 
 Sign In
 	Skip signing in if user is already signed in on the app (only need to sign in once, info is stored locally
