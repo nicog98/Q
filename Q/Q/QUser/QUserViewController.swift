@@ -54,6 +54,8 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     @IBOutlet weak var UsernameLabel: UILabel!
     
+    @IBOutlet weak var startQButton: UIButton!
+    
     var user: QUser?
 
     override func viewDidLoad() {
@@ -73,15 +75,21 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
         // Dispose of any resources that can be recreated.
     }
     
+    
+    @IBAction func startQ(_ sender: Any) {
+        performSegue(withIdentifier: "ShowQ", sender: sender)
+    }
+    
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "ShowQ", let qView = segue.destination as? QViewController {
+            // initialize Q view controller
+        }
     }
-    */
 
 }
