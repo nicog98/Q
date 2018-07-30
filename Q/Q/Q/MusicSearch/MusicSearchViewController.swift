@@ -38,6 +38,22 @@ class MusicSearchViewController: UIViewController, UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // query music search with given keywords
+        let keyword = searchBar.text
+        let query = URL(string: "https://api.music.apple.com/v1/catalog/us/search/hints?term=\(keyword!)&limit=10&types=artists,albums")
+        let session = URLSession.shared
+        
+        if let url = query {
+            let request = URLRequest(url: url)
+            let task = session.dataTask(with: request) { (data, response, error) in
+                if let data = data, error == nil {
+                    print(response)
+                    print(data)
+                } else {
+                    print(error)
+                }
+            }
+            task.resume()
+        }
     }
     
     /*

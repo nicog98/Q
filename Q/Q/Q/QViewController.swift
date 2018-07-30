@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 import StoreKit
 import MediaPlayer
 
@@ -65,6 +66,22 @@ class QViewController: UIViewController {
     
     // Request permission for Apple Music library
     var appleMusicAuthorized: Bool = false
+    var mediaLibraryAuthorized: Bool = false
+    
+    func mediaLibraryRequestPermission() {
+        MPMediaLibrary.requestAuthorization { (status:MPMediaLibraryAuthorizationStatus) in
+            switch status {
+            case .authorized:
+                self.mediaLibraryAuthorized = true
+            case .denied:
+                self.mediaLibraryAuthorized = false
+            case .notDetermined:
+                self.mediaLibraryAuthorized = false
+            case .restricted:
+                self.mediaLibraryAuthorized = false
+            }
+        }
+    }
     
     func appleMusicRequestPermission() {
         SKCloudServiceController.requestAuthorization { (status:SKCloudServiceAuthorizationStatus) in
@@ -72,7 +89,7 @@ class QViewController: UIViewController {
             case .authorized:
                 self.appleMusicAuthorized = true
                 self.fetchStoreId()
-                self.getUserToken()
+                self.fetchDeveloperToken()
             case .denied:
                 self.appleMusicAuthorized = false
             case .restricted:
@@ -94,6 +111,8 @@ class QViewController: UIViewController {
     // Fetch user's storefront ID
     
     var storeFrontId: String?
+    var developerToken: String?
+    var userToken: String?
 
     func fetchStoreId() {
         let serviceController = SKCloudServiceController()
@@ -105,17 +124,39 @@ class QViewController: UIViewController {
             }
         }
     }
-    private let developerToken = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlVZVVk0SEs2TlMifQ.eyJpc3MiOiJGS0JKTDM3SFBRIiwiaWF0IjoxNTMyNjY0NDQ3LCJleHAiOjE1MzI3MDc2NDd9.E8DSXmLmmkL9bl3EFcjweetKe4y7sR12nCVV5F8pmggXW4ZmexPzUv-6qvh4IxaGX7yElL6vp8QPXlVSg62_WA"
-    var userToken: String?
     
-    func getUserToken() {
-        let serviceController = SKCloudServiceController()
-        serviceController.requestUserToken(forDeveloperToken: self.developerToken) { (userToken: String?, error: Error?) in
-            if error == nil, let token = userToken {
-                self.userToken = token
-            } else if error != nil {
-                print(error!.localizedDescription)
+    func fetchDeveloperToken() {
+        let query = PFQuery(className: "DeveloperToken")
+        query.whereKeyExists("developerToken")
+        query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) in
+            if error == nil {
+                if let objects = objects {
+                    let tokenObject = objects[0]
+                    if let token = tokenObject["developerToken"] as? String {
+                        self.developerToken = token
+                        self.fetchUserToken()
+                    }
+                }
+            } else {
+                print(error?.localizedDescription)
             }
+        }
+    }
+    
+    func fetchUserToken() {
+        let serviceController = SKCloudServiceController()
+        serviceController.requestUserToken(forDeveloperToken: self.developerToken!) { (userToken: String?, error: Error?) in
+            guard error == nil else {
+                print(error!)
+                return
+            }
+            
+            guard let userToken = userToken else {
+                print("UNEXPECTED VALUE FOR USER TOKEN")
+                return
+            }
+            
+            self.userToken = userToken
         }
     }
     
