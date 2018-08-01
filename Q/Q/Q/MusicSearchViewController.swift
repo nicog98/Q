@@ -14,20 +14,15 @@ class MusicSearchViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var resultsCollectionView: UICollectionView!
     
-    var appleMusicAuthorized: Bool = false
-    var appleMusicDeveloperToken: String?
-    var appleMusicUserToken: String?
-    var appleMusicStoreFrontId: String?
-    // var spotifyAuthorized: Bool = false
-    // var soundCloudAuthorized: Bool = false
+    var appleMusicController: AppleMusicController!
+    var appleMusicAuthorizationController: AppleMusicAuthorizationController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        print("DEVELOPER TOKEN: \(self.appleMusicDeveloperToken)")
-        print("USER TOKEN: \(self.appleMusicUserToken)")
-        print("STORE FRONT ID: \(self.appleMusicStoreFrontId)")
         // Do any additional setup after loading the view.
+        print("DEVELOPER TOKEN: \(self.appleMusicController.fetchDeveloperToken()!)")
+        print("USER TOKEN: \(self.appleMusicAuthorizationController.userToken)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,18 +37,7 @@ class MusicSearchViewController: UIViewController, UISearchBarDelegate {
         let query = URL(string: "https://api.music.apple.com/v1/catalog/us/search/hints?term=\(keyword!)&limit=10&types=artists,albums")
         let session = URLSession.shared
         
-        if let url = query {
-            let request = URLRequest(url: url)
-            let task = session.dataTask(with: request) { (data, response, error) in
-                if let data = data, error == nil {
-                    print(response)
-                    print(data)
-                } else {
-                    print(error)
-                }
-            }
-            task.resume()
-        }
+        // query Apple Music API
     }
     
     /*
