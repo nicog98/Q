@@ -32,6 +32,12 @@
 		3FAEA70B210568B60069B8BF /* Q.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEA70A210568B60069B8BF /* Q.swift */; };
 		3FAEA70D210568C80069B8BF /* QViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEA70C210568C80069B8BF /* QViewController.swift */; };
 		3FDDF12F20FF11360054F6F7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDDF12E20FF11360054F6F7 /* SignUpViewController.swift */; };
+		3FE5D35E2111257700CABC65 /* AppleMusicAuthorizationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE5D35D2111257700CABC65 /* AppleMusicAuthorizationController.swift */; };
+		3FE5D36121112EAF00CABC65 /* AppleMusicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE5D36021112EAF00CABC65 /* AppleMusicController.swift */; };
+		3FE5D365211158FE00CABC65 /* JSONKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE5D364211158FE00CABC65 /* JSONKeys.swift */; };
+		3FE5D3672111592700CABC65 /* Artwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE5D3662111592700CABC65 /* Artwork.swift */; };
+		3FE5D3692111593A00CABC65 /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE5D3682111593A00CABC65 /* MediaItem.swift */; };
+		3FE5D36B2111595000CABC65 /* SerializationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE5D36A2111595000CABC65 /* SerializationError.swift */; };
 		DFDC78E72B4F60E49B07FABB /* Pods_Q.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CE5A4A6B46119F265CC2D43 /* Pods_Q.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +71,12 @@
 		3FAEA70A210568B60069B8BF /* Q.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Q.swift; sourceTree = "<group>"; };
 		3FAEA70C210568C80069B8BF /* QViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QViewController.swift; sourceTree = "<group>"; };
 		3FDDF12E20FF11360054F6F7 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		3FE5D35D2111257700CABC65 /* AppleMusicAuthorizationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicAuthorizationController.swift; sourceTree = "<group>"; };
+		3FE5D36021112EAF00CABC65 /* AppleMusicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicController.swift; sourceTree = "<group>"; };
+		3FE5D364211158FE00CABC65 /* JSONKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONKeys.swift; sourceTree = "<group>"; };
+		3FE5D3662111592700CABC65 /* Artwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artwork.swift; sourceTree = "<group>"; };
+		3FE5D3682111593A00CABC65 /* MediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
+		3FE5D36A2111595000CABC65 /* SerializationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerializationError.swift; sourceTree = "<group>"; };
 		E5F7B451E4EAE4467D08D123 /* Pods-Q.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Q.release.xcconfig"; path = "Pods/Target Support Files/Pods-Q/Pods-Q.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,15 +112,6 @@
 				E5F7B451E4EAE4467D08D123 /* Pods-Q.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		3F630990210ADA760055DD5E /* MusicSearch */ = {
-			isa = PBXGroup;
-			children = (
-				3F630991210ADA940055DD5E /* MusicSearchViewController.swift */,
-				3F1EACDF210FD18000C5ADFE /* AppleMusicSearchGenerator.swift */,
-			);
-			path = MusicSearch;
 			sourceTree = "<group>";
 		};
 		3F68F4F220F57DF300928008 = {
@@ -194,11 +197,42 @@
 		3FAEA7092105689A0069B8BF /* Q */ = {
 			isa = PBXGroup;
 			children = (
-				3F630990210ADA760055DD5E /* MusicSearch */,
+				3F630991210ADA940055DD5E /* MusicSearchViewController.swift */,
 				3FAEA70A210568B60069B8BF /* Q.swift */,
 				3FAEA70C210568C80069B8BF /* QViewController.swift */,
+				3FE5D35F21112E0400CABC65 /* AppleMusic */,
 			);
 			path = Q;
+			sourceTree = "<group>";
+		};
+		3FE5D35F21112E0400CABC65 /* AppleMusic */ = {
+			isa = PBXGroup;
+			children = (
+				3FE5D362211158A800CABC65 /* Model */,
+				3FE5D363211158D200CABC65 /* Utility */,
+				3FE5D36021112EAF00CABC65 /* AppleMusicController.swift */,
+				3FE5D35D2111257700CABC65 /* AppleMusicAuthorizationController.swift */,
+			);
+			path = AppleMusic;
+			sourceTree = "<group>";
+		};
+		3FE5D362211158A800CABC65 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3FE5D3662111592700CABC65 /* Artwork.swift */,
+				3FE5D3682111593A00CABC65 /* MediaItem.swift */,
+				3FE5D36A2111595000CABC65 /* SerializationError.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3FE5D363211158D200CABC65 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				3F1EACDF210FD18000C5ADFE /* AppleMusicSearchGenerator.swift */,
+				3FE5D364211158FE00CABC65 /* JSONKeys.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -320,14 +354,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FE5D36B2111595000CABC65 /* SerializationError.swift in Sources */,
 				3F630992210ADA940055DD5E /* MusicSearchViewController.swift in Sources */,
 				3FAEA7022104E76E0069B8BF /* QUserViewController.swift in Sources */,
 				3FDDF12F20FF11360054F6F7 /* SignUpViewController.swift in Sources */,
 				3FAEA70D210568C80069B8BF /* QViewController.swift in Sources */,
+				3FE5D35E2111257700CABC65 /* AppleMusicAuthorizationController.swift in Sources */,
 				3F68F50120F57DF300928008 /* LoginViewController.swift in Sources */,
 				3FAEA70B210568B60069B8BF /* Q.swift in Sources */,
+				3FE5D3692111593A00CABC65 /* MediaItem.swift in Sources */,
+				3FE5D3672111592700CABC65 /* Artwork.swift in Sources */,
+				3FE5D365211158FE00CABC65 /* JSONKeys.swift in Sources */,
 				3FAEA7072104F1770069B8BF /* QUser.swift in Sources */,
 				3F1EACE0210FD18000C5ADFE /* AppleMusicSearchGenerator.swift in Sources */,
+				3FE5D36121112EAF00CABC65 /* AppleMusicController.swift in Sources */,
 				3F68F4FF20F57DF300928008 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

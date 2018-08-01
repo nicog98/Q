@@ -314,7 +314,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qKf-NG-PCl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2224.8000000000002" y="131.52709359605913"/>
+            <point key="canvasLocation" x="2226" y="133"/>
         </scene>
         <!--Music Search View Controller-->
         <scene sceneID="LUh-CZ-wyG">
