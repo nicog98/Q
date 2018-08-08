@@ -35,7 +35,9 @@ class QViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initializeMusicControllers()
+        self.appleMusicController = AppleMusicController()
+        self.appleMusicAuthorizationController = AppleMusicAuthorizationController(appleMusicController: self.appleMusicController)
+        //initializeMusicControllers()
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,27 +49,28 @@ class QViewController: UIViewController {
         performSegue(withIdentifier: "ShowMusicSearch", sender: sender)
     }
     
-    func initializeMusicControllers() {
-        let query = PFQuery(className: "DeveloperToken")
-        query.whereKeyExists("developerToken")
-        query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) in
-            guard error == nil else {
-                print(error!.localizedDescription)
-                return
-            }
-            
-            guard let objects = objects else {
-                print("Unexpected value when fetching developer token.")
-                return
-            }
-            
-            let tokenObject = objects[0]
-            if let developerToken = tokenObject["developerToken"] as? String {
-                self.appleMusicController = AppleMusicController(developerToken: developerToken)
-                self.appleMusicAuthorizationController = AppleMusicAuthorizationController(appleMusicController: self.appleMusicController)
-            }
-        }
-    }
+//    func initializeMusicControllers() {
+//        let query = PFQuery(className: "DeveloperToken")
+//        query.whereKeyExists("developerToken")
+//        query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) in
+//            guard error == nil else {
+//                print(error!.localizedDescription)
+//                return
+//            }
+//
+//            guard let objects = objects else {
+//                print("Unexpected value when fetching developer token.")
+//                return
+//            }
+//
+//            let tokenObject = objects[0]
+//            if let developerToken = tokenObject["developerToken"] as? String {
+//                //self.appleMusicController = AppleMusicController(developerToken: developerToken)
+//                self.appleMusicController = AppleMusicController()
+//                self.appleMusicAuthorizationController = AppleMusicAuthorizationController(appleMusicController: self.appleMusicController)
+//            }
+//        }
+//    }
     
     // MARK: - Navigation
 
@@ -76,7 +79,7 @@ class QViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "ShowMusicSearch" {
-            if let musicSearchViewController = segue.destination as? MusicSearchViewController {
+            if let musicSearchViewController = segue.destination as? MusicSearchTableViewController {
                 // passing appleMusic api to search
                 musicSearchViewController.appleMusicController = self.appleMusicController
                 musicSearchViewController.appleMusicAuthorizationController = self.appleMusicAuthorizationController
