@@ -72,12 +72,7 @@ class AppleMusicAuthorizationController {
             requestCloudServiceCapabilities()
             
             /// Retrieve the Music User Token for use in the application if it was stored from a previous run.
-            if let token = UserDefaults.standard.string(forKey: AppleMusicAuthorizationController.userTokenUserDefaultsKey) {
-                userToken = token
-            } else {
-                /// The token was not stored previously then request one.
-                requestUserToken()
-            }
+            requestUserToken()
         } else {
             requestCloudServiceAuthorization()
         }
