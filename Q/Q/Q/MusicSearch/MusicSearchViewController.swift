@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol MusicSearchTableViewControllerDelegate {
+    func didSelectSong(mediaItem: MediaItem)
+}
+
 class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate {
+    
+    var delegate: MusicSearchTableViewControllerDelegate?
     
     // Handle Apple Music API queries
     var appleMusicController = AppleMusicController()
@@ -60,20 +66,20 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
             searchController.searchBar.isUserInteractionEnabled = true
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    // Table View Delegate Methods
+    // MARK: Table View Delegate Methods
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.mediaItems.count != 0 ? mediaItems[section].count : 0
+        return self.mediaItems.count > section ? self.mediaItems[section].count : 0
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -114,16 +120,24 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
         return UITableViewCell()
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    var selectedIndexPath: IndexPath?
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.selectedIndexPath = indexPath
+        let selectedMediaItem = mediaItems[indexPath.section][indexPath.row]
+        if selectedMediaItem.type == .songs {
+            delegate?.didSelectSong(mediaItem: selectedMediaItem)
+        } else { // album
+            // segue to show songs in album
+        }
     }
-    */
-
+    
+    //    MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+    }
+    
 }
 
 extension MusicSearchTableViewController: UISearchResultsUpdating {
