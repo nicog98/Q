@@ -11,6 +11,11 @@ import Parse
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
+    // The 'UserDefaults' key for storing and retrieving user login information so user can be auto-logged in to their account
+    static let usernameUserDefaultsKey = "UsernameUserDefaultsKey"
+    
+    static let passwordUserDefaultsKey = "PasswordUserDefaultsKey"
+    
     @IBOutlet weak var QLabel: UILabel!
     
     @IBOutlet weak var UsernameLabel: UILabel!
@@ -33,10 +38,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     public var user: PFUser?
     
-    @IBAction func signIn(_ sender: UIButton) {
-        self.SignInActivityIndicator.isHidden = false
-        self.SignInActivityIndicator.startAnimating()
-        PFUser.logInWithUsername(inBackground: UsernameTextField.text!, password: PasswordTextField.text!) { (user: PFUser?, error: Error?) in
+    func loginUser(username: String, password: String, firstTime: Bool) {
+        PFUser.logInWithUsername(inBackground: username, password: password) { (user: PFUser?, error: Error?) in
             if let error = error {
                 let errorString = error.localizedDescription
                 print(errorString)
@@ -45,9 +48,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 self.user = user
                 self.SignInActivityIndicator.stopAnimating()
                 self.SignInActivityIndicator.isHidden = true
-                self.performSegue(withIdentifier: "ShowQUserViewFromSignIn", sender: sender)
+                
+                // store login information in user defaults
+                if firstTime {
+                    let userDefaults = UserDefaults.standard
+                    userDefaults.set(self.UsernameTextField.text, forKey: LoginViewController.usernameUserDefaultsKey)
+                    userDefaults.set(self.PasswordTextField.text, forKey: LoginViewController.passwordUserDefaultsKey)
+                }
+                
+                self.performSegue(withIdentifier: "ShowQUserViewFromSignIn", sender: nil)
             }
         }
+    }
+    
+    @IBAction func signIn(_ sender: UIButton) {
+        self.SignInActivityIndicator.isHidden = false
+        self.SignInActivityIndicator.startAnimating()
+        loginUser(username: self.UsernameTextField.text!, password: self.PasswordTextField.text!, firstTime: true)
     }
     
     @IBAction func signUp(_ sender: UIButton) {
@@ -64,6 +81,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         PasswordTextField.delegate = self
 
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // attempt to retrieve user login information if stored in user defaults
+        let userDefaults = UserDefaults.standard
+        if let username = userDefaults.string(forKey: LoginViewController.usernameUserDefaultsKey), let password = userDefaults.string(forKey: LoginViewController.passwordUserDefaultsKey) {
+            loginUser(username: username, password: password, firstTime: false)
+            
+        }
     }
     
     var screenMoved: Bool = false
