@@ -45,9 +45,6 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
         definesPresentationContext = true
         searchController.searchBar.delegate = self
         tableView.tableHeaderView = searchController.searchBar
-        
-        print("DEVELOPER TOKEN: \(self.appleMusicController.fetchDeveloperToken()!)")
-        print("USER TOKEN: \(self.appleMusicAuthorizationController.userToken)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -127,6 +124,10 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
         let selectedMediaItem = mediaItems[indexPath.section][indexPath.row]
         if selectedMediaItem.type == .songs {
             delegate?.didSelectSong(mediaItem: selectedMediaItem)
+            dismiss(animated: false)
+            dismiss(animated: true) {
+                self.selectedIndexPath = nil
+            }
         } else { // album
             // segue to show songs in album
         }
@@ -134,9 +135,9 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
     
     //    MARK: - Navigation
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//
+//    }
     
 }
 
