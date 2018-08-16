@@ -12,4 +12,24 @@ struct Q {
     
     var members: [QUser]
     
+    var queue: [MediaItem]
+    
+    init() {
+        self.queue = []
+        self.members = []
+    }
+    
+    init(musicQueue: [MediaItem]) {
+        self.queue = musicQueue
+        self.members = []
+    }
+    
+    mutating func addToQueue(song: MediaItem) {
+        queue.append(song)
+    }
+    
+    mutating func addMember(user: QUser) {
+        members.append(user)
+    }
+    
 }

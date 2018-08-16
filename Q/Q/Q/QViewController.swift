@@ -11,7 +11,7 @@ import Parse
 import StoreKit
 import MediaPlayer
 
-class QViewController: UIViewController {
+class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MusicSearchTableViewControllerDelegate {
     
     @IBOutlet weak var ArtworkImageView: UIImageView!
     
@@ -21,7 +21,7 @@ class QViewController: UIViewController {
     
     @IBOutlet weak var AddButton: UIButton!
     
-    @IBOutlet weak var QCollectionView: UICollectionView!
+    @IBOutlet weak var QueueTableView: UITableView!
     
     @IBAction func addSong(_ sender: UIButton) {
         performSegue(withIdentifier: "ShowMusicSearch", sender: sender)
@@ -33,11 +33,15 @@ class QViewController: UIViewController {
     var appleMusicController: AppleMusicController!
     var appleMusicAuthorizationController: AppleMusicAuthorizationController!
     
+    var musicQueue = Q()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.appleMusicController = AppleMusicController()
         self.appleMusicAuthorizationController = AppleMusicAuthorizationController(appleMusicController: self.appleMusicController)
-        //initializeMusicControllers()
+        
+        self.QueueTableView.delegate = self
+        self.QueueTableView.dataSource = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,28 +53,26 @@ class QViewController: UIViewController {
         performSegue(withIdentifier: "ShowMusicSearch", sender: sender)
     }
     
-//    func initializeMusicControllers() {
-//        let query = PFQuery(className: "DeveloperToken")
-//        query.whereKeyExists("developerToken")
-//        query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) in
-//            guard error == nil else {
-//                print(error!.localizedDescription)
-//                return
-//            }
-//
-//            guard let objects = objects else {
-//                print("Unexpected value when fetching developer token.")
-//                return
-//            }
-//
-//            let tokenObject = objects[0]
-//            if let developerToken = tokenObject["developerToken"] as? String {
-//                //self.appleMusicController = AppleMusicController(developerToken: developerToken)
-//                self.appleMusicController = AppleMusicController()
-//                self.appleMusicAuthorizationController = AppleMusicAuthorizationController(appleMusicController: self.appleMusicController)
-//            }
-//        }
-//    }
+    // MARK: MusicSearchViewController delegate methods
+    
+    func didSelectSong(mediaItem: MediaItem) {
+        musicQueue.addToQueue(song: mediaItem)
+        self.QueueTableView.reloadData()
+    }
+    
+    // MARK: UITableViewDelegate, UITableViewDataSource methods
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.musicQueue.queue.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let songCell = tableView.dequeueReusableCell(withIdentifier: "SongCell") as? QTableViewCell {
+            songCell.mediaItem = self.musicQueue.queue[indexPath.row]
+            return songCell
+        }
+        return UITableViewCell()
+    }
     
     // MARK: - Navigation
 
@@ -83,6 +85,7 @@ class QViewController: UIViewController {
                 // passing appleMusic api to search
                 musicSearchViewController.appleMusicController = self.appleMusicController
                 musicSearchViewController.appleMusicAuthorizationController = self.appleMusicAuthorizationController
+                musicSearchViewController.delegate = self
             }
         }
     }
