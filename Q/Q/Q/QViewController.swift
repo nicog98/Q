@@ -23,11 +23,16 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBOutlet weak var QueueTableView: UITableView!
     
+    let musicPlayer = MPMusicPlayerController.applicationQueuePlayer
+    
     @IBAction func addSong(_ sender: UIButton) {
         performSegue(withIdentifier: "ShowMusicSearch", sender: sender)
     }
     
     @IBAction func play(_ sender: UIButton) {
+        musicPlayer.setQueue(with: musicQueue.identifiers)
+        musicPlayer.prepareToPlay()
+        musicPlayer.play()
     }
     
     var appleMusicController: AppleMusicController!
@@ -42,6 +47,7 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         self.QueueTableView.delegate = self
         self.QueueTableView.dataSource = self
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -58,6 +64,8 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     func didSelectSong(mediaItem: MediaItem) {
         musicQueue.addToQueue(song: mediaItem)
         self.QueueTableView.reloadData()
+        let storeQueueDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: musicQueue.identifiers)
+        musicPlayer.append(storeQueueDescriptor)
     }
     
     // MARK: UITableViewDelegate, UITableViewDataSource methods
