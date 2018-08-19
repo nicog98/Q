@@ -12,20 +12,31 @@ struct Q {
     
     var members: [QUser]
     
-    var queue: [MediaItem]
+    var queue: [MediaItem] {
+        didSet {
+            for mediaItem in queue {
+                identifiers.append(mediaItem.identifier)
+            }
+        }
+    }
+    
+    var identifiers: [String]
     
     init() {
+        self.identifiers = []
         self.queue = []
         self.members = []
     }
     
     init(musicQueue: [MediaItem]) {
+        self.identifiers = []
         self.queue = musicQueue
         self.members = []
     }
     
     mutating func addToQueue(song: MediaItem) {
         queue.append(song)
+        identifiers.append(song.identifier)
     }
     
     mutating func addMember(user: QUser) {
