@@ -20,6 +20,15 @@ class AlbumTableViewCell: UITableViewCell {
         didSet {
             AlbumNameLabel.text = mediaItem?.name ?? ""
             ArtistLabel.text = mediaItem?.artistName ?? ""
+            DispatchQueue.main.async {
+                let artworkUrl = self.mediaItem?.artwork.imageURL(size: CGSize(width: (self.mediaItem?.artwork.width)!, height: (self.mediaItem?.artwork.height)!))
+                do {
+                    let data = try Data(contentsOf: artworkUrl!)
+                    self.AlbumArtworkImageView.image = UIImage(data: data)
+                } catch {
+                    print("ERROR FETCHING \(self.mediaItem!.name) ARTWORK")
+                }
+            }
         }
     }
     
