@@ -12,25 +12,13 @@ struct Q {
     
     var members: [QUser]
     
-    var queue: [MediaItem] {
-        didSet {
-            for mediaItem in queue {
-                identifiers.append(mediaItem.identifier)
-            }
-        }
-    }
+    var queue: [MediaItem]
     
     var identifiers: [String]
     
     init() {
         self.identifiers = []
         self.queue = []
-        self.members = []
-    }
-    
-    init(musicQueue: [MediaItem]) {
-        self.identifiers = []
-        self.queue = musicQueue
         self.members = []
     }
     

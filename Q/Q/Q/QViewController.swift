@@ -29,10 +29,13 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         performSegue(withIdentifier: "ShowMusicSearch", sender: sender)
     }
     
+    var isPlaying: Bool = false
+    
     @IBAction func play(_ sender: UIButton) {
         musicPlayer.setQueue(with: musicQueue.identifiers)
         musicPlayer.prepareToPlay()
         musicPlayer.play()
+        isPlaying = true
     }
     
     var appleMusicController: AppleMusicController!
@@ -47,7 +50,6 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         self.QueueTableView.delegate = self
         self.QueueTableView.dataSource = self
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,7 +66,7 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     func didSelectSong(mediaItem: MediaItem) {
         musicQueue.addToQueue(song: mediaItem)
         self.QueueTableView.reloadData()
-        let storeQueueDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: musicQueue.identifiers)
+        let storeQueueDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [mediaItem.identifier])
         musicPlayer.append(storeQueueDescriptor)
     }
     

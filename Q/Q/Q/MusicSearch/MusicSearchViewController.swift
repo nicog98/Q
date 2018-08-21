@@ -14,6 +14,9 @@ protocol MusicSearchTableViewControllerDelegate {
 
 class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate {
     
+    private static var songCellRowHeight: CGFloat = 70.0
+    private static var albumCellRowHeight: CGFloat = 81.0
+    
     var delegate: MusicSearchTableViewControllerDelegate?
     
     // Handle Apple Music API queries
@@ -90,27 +93,29 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 60
+            return MusicSearchTableViewController.songCellRowHeight
         } else {
-            return 120
+            return MusicSearchTableViewController.albumCellRowHeight
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 { // Song
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as? SongTableViewCell {
-                let mediaItem = mediaItems[indexPath.section][indexPath.row]
-                if mediaItem.type == .songs {
-                    cell.mediaItem = mediaItem
-                    return cell
+        if mediaItems.count > 0 {
+            if indexPath.section == 0 { // Song
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as? SongTableViewCell {
+                    let mediaItem = mediaItems[indexPath.section][indexPath.row]
+                    if mediaItem.type == .songs {
+                        cell.mediaItem = mediaItem
+                        return cell
+                    }
                 }
-            }
-        } else if indexPath.section == 1 { // Album
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumCell", for: indexPath) as? AlbumTableViewCell {
-                let mediaItem = mediaItems[indexPath.section][indexPath.row]
-                if mediaItem.type == .albums {
-                    cell.mediaItem = mediaItem
-                    return cell
+            } else if indexPath.section == 1 { // Album
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumCell", for: indexPath) as? AlbumTableViewCell {
+                    let mediaItem = mediaItems[indexPath.section][indexPath.row]
+                    if mediaItem.type == .albums {
+                        cell.mediaItem = mediaItem
+                        return cell
+                    }
                 }
             }
         }
