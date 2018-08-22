@@ -16,10 +16,13 @@ struct Q {
     
     var identifiers: [String]
     
+    var name: String
+    
     init() {
         self.identifiers = []
         self.queue = []
         self.members = []
+        self.name = ""
     }
     
     mutating func addToQueue(song: MediaItem) {
