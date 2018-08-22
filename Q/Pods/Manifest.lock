@@ -2,19 +2,25 @@ PODS:
   - Bolts/Tasks (1.9.0)
   - Parse (1.15.4):
     - Bolts/Tasks (~> 1.9)
+  - SDWebImage (4.2.3):
+    - SDWebImage/Core (= 4.2.3)
+  - SDWebImage/Core (4.2.3)
 
 DEPENDENCIES:
   - Parse
+  - SDWebImage (~> 4.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Bolts
     - Parse
+    - SDWebImage
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Parse: 1968c634e1c782fb31aad6872f6d32de911bb122
+  SDWebImage: 791bb72962b3492327ddcac4b1880bd1b5458431
 
-PODFILE CHECKSUM: 86d09e17415d9299e635dba0939d6123fbbccb3f
+PODFILE CHECKSUM: cba3db87489af5889424f991e8b45b21caf32652
 
 COCOAPODS: 1.5.3
