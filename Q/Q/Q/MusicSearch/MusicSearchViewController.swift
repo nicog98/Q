@@ -138,6 +138,13 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
         }
     }
     
+    // MARK: Search Bar Delegate Methods
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        dismiss(animated: false)
+        dismiss(animated: true)
+    }
+    
     //    MARK: - Navigation
     
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

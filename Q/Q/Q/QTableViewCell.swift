@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class QTableViewCell: UITableViewCell {
     
@@ -20,6 +21,10 @@ class QTableViewCell: UITableViewCell {
         didSet {
             self.SongLabel.text = mediaItem?.name
             self.ArtistLabel.text = mediaItem?.artistName
+            guard let artworkUrl = self.mediaItem?.artwork.imageURL(size: CGSize(width: (self.mediaItem?.artwork.width)!, height: (self.mediaItem?.artwork.height)!)) else {
+                return
+            }
+            AlbumArtworkImageView.sd_setImage(with: artworkUrl, placeholderImage: UIImage())
         }
     }
     

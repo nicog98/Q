@@ -10,6 +10,7 @@ import UIKit
 import Parse
 import StoreKit
 import MediaPlayer
+import SDWebImage
 
 class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MusicSearchTableViewControllerDelegate {
     
@@ -17,7 +18,11 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBOutlet weak var QTitleLabel: UILabel!
     
+    @IBOutlet weak var PreviousButton: UIButton!
+    
     @IBOutlet weak var PlayButton: UIButton!
+    
+    @IBOutlet weak var NextButton: UIButton!
     
     @IBOutlet weak var AddButton: UIButton!
     
@@ -29,14 +34,37 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         performSegue(withIdentifier: "ShowMusicSearch", sender: sender)
     }
     
-    var isPlaying: Bool = false
+    @IBAction func previousSong(_ sender: Any) {
+        musicPlayer.skipToPreviousItem()
+    }
     
     @IBAction func play(_ sender: UIButton) {
-        musicPlayer.setQueue(with: musicQueue.identifiers)
-        musicPlayer.prepareToPlay()
-        musicPlayer.play()
-        isPlaying = true
+        
+        if !musicPlayer.isPreparedToPlay {
+            musicPlayer.setQueue(with: musicQueue.identifiers)
+            musicPlayer.prepareToPlay()
+            musicPlayer.play()
+        } else {
+            switch musicPlayer.playbackState {
+            case .stopped:
+                musicPlayer.setQueue(with: musicQueue.identifiers)
+                musicPlayer.prepareToPlay()
+                musicPlayer.play()
+            case .paused:
+                musicPlayer.play()
+            case .playing:
+                musicPlayer.pause()
+            default:
+                return
+            }
+        }
+        
     }
+    
+    @IBAction func nextSong(_ sender: Any) {
+        musicPlayer.skipToNextItem()
+    }
+    
     
     var appleMusicController: AppleMusicController!
     var appleMusicAuthorizationController: AppleMusicAuthorizationController!
@@ -50,6 +78,25 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         self.QueueTableView.delegate = self
         self.QueueTableView.dataSource = self
+        
+        let notificationCenter = NotificationCenter.default
+        
+        notificationCenter.addObserver(self,
+                                       selector: #selector(nowPlayingItemDidChange),
+                                       name: .MPMusicPlayerControllerNowPlayingItemDidChange,
+                                       object: nil)
+        
+        notificationCenter.addObserver(self,
+                                       selector: #selector(playbackStateDidChange),
+                                       name: .MPMusicPlayerControllerPlaybackStateDidChange,
+                                       object: nil)
+        
+        notificationCenter.addObserver(self,
+                                       selector: #selector(volumeDidChange),
+                                       name: .MPMusicPlayerControllerVolumeDidChange,
+                                       object: nil)
+        
+        musicPlayer.beginGeneratingPlaybackNotifications()
     }
 
     override func didReceiveMemoryWarning() {
@@ -82,6 +129,35 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
             return songCell
         }
         return UITableViewCell()
+    }
+    
+    // MARK: Music Player Notification Handlers
+    
+    @objc func nowPlayingItemDidChange() {
+        let mediaItemIndex = musicPlayer.indexOfNowPlayingItem
+        let mediaItem = musicQueue.queue[mediaItemIndex]
+        let artworkUrl = mediaItem.artwork.imageURL(size: CGSize(width: mediaItem.artwork.width, height: mediaItem.artwork.height))
+        ArtworkImageView.sd_setImage(with: artworkUrl, placeholderImage: UIImage())
+    }
+    
+    @objc func playbackStateDidChange() {
+        switch musicPlayer.playbackState {
+        case .interrupted:
+            musicPlayer.pause()
+        case .paused:
+            PlayButton.setImage(#imageLiteral(resourceName: "play-button"), for: .normal)
+        case .playing:
+            PlayButton.setImage(#imageLiteral(resourceName: "pause-button"), for: .normal)
+        case .stopped:
+            musicPlayer.setQueue(with: musicQueue.identifiers)
+            PlayButton.setImage(#imageLiteral(resourceName: "play-button"), for: .normal)
+        default:
+            return
+        }
+    }
+    
+    @objc func volumeDidChange() {
+        
     }
     
     // MARK: - Navigation

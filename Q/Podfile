@@ -7,5 +7,6 @@ target 'Q' do
 
   # Pods for Q
   pod 'Parse'
+  pod 'SDWebImage', '~> 4.0'
 
 end
