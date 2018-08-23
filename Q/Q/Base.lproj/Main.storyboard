@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="U3u-GT-R4Q">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -245,7 +245,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="luvisrage" translatesAutoresizingMaskIntoConstraints="NO" id="ji2-Tj-S6C">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ji2-Tj-S6C">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="e42-ZO-bEa"/>
@@ -275,7 +275,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="80.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="luvisrage" translatesAutoresizingMaskIntoConstraints="NO" id="6bj-4F-bng">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6bj-4F-bng">
                                                     <rect key="frame" x="15" y="11" width="59" height="59"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="59" id="65f-TA-wbC"/>
@@ -467,7 +467,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="80.666666666666671"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="luvisrage" translatesAutoresizingMaskIntoConstraints="NO" id="bbc-YX-e6y">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bbc-YX-e6y">
                                             <rect key="frame" x="16" y="9" width="64" height="64"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -662,7 +662,6 @@
         <image name="back-icon" width="85" height="85"/>
         <image name="back-icon-1x" width="50" height="50"/>
         <image name="back-icon-2x" width="50" height="50"/>
-        <image name="luvisrage" width="300" height="300"/>
         <image name="next-icon" width="85" height="85"/>
         <image name="play-button" width="128" height="128"/>
         <image name="previous-icon" width="85" height="85"/>
