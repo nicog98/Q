@@ -12,7 +12,7 @@ protocol MusicSearchTableViewControllerDelegate {
     func didSelectSong(mediaItem: MediaItem)
 }
 
-class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate {
+class MusicSearchTableViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate {
     
     private static var songCellRowHeight: CGFloat = 70.0
     private static var albumCellRowHeight: CGFloat = 81.0
@@ -42,12 +42,20 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        // Set up search bar/view controller
+        searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
-        definesPresentationContext = true
+        searchController.definesPresentationContext = true
         searchController.searchBar.delegate = self
+        
         tableView.tableHeaderView = searchController.searchBar
+        
+        tableView.keyboardDismissMode = .onDrag // hide keyboard when user scrolls table view
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        searchController.isActive = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -145,11 +153,21 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
         dismiss(animated: true)
     }
     
+    // MARK: Search Controller Delegate Methods
+    
+    func presentSearchController(_ searchController: UISearchController) {
+        searchController.searchBar.becomeFirstResponder()
+    }
+    
     //    MARK: - Navigation
     
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 //
 //    }
+    
+    // MARK: Miscellaneous
+    
+    
     
 }
 

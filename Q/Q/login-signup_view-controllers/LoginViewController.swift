@@ -88,7 +88,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let userDefaults = UserDefaults.standard
         if let username = userDefaults.string(forKey: LoginViewController.usernameUserDefaultsKey), let password = userDefaults.string(forKey: LoginViewController.passwordUserDefaultsKey) {
             loginUser(username: username, password: password, firstTime: false)
-            
         }
     }
     
