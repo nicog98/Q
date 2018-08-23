@@ -71,6 +71,8 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     var musicQueue = Q()
     
+    // MARK: View Loading Functions
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.appleMusicController = AppleMusicController()
@@ -129,6 +131,23 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
             return songCell
         }
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Play queue from song selected at indexPath
+        // Set now playing item to correct song in queue
+        musicPlayer.perform(queueTransaction: { (queue: MPMusicPlayerControllerMutableQueue) in
+            self.musicPlayer.pause()
+        }) { (queue: MPMusicPlayerControllerQueue, error: Error?) in
+            guard error == nil else {
+                print("ERROR MUTATING QUEUE: \(error!)")
+                return
+            }
+            self.musicPlayer.nowPlayingItem = queue.items[indexPath.row]
+            self.musicPlayer.play()
+            self.QueueTableView.deselectRow(at: indexPath, animated: true   )
+        }
+        
     }
     
     // MARK: Music Player Notification Handlers
