@@ -8,6 +8,7 @@
 
 import Foundation
 import StoreKit
+import Parse
 
 class AppleMusicController {
     
@@ -29,13 +30,28 @@ class AppleMusicController {
         return URLSession(configuration: urlSessionConfiguration)
     }()
     
+    init() {
+        let _ = fetchDeveloperToken()
+    }
+    
     /// The storefront id that is used when making Apple Music API calls.
     var storefrontID: String?
     
+    var developerToken: String?
+    
     func fetchDeveloperToken() -> String? {
-        let developerAuthenticationToken = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlVZVVk0SEs2TlMifQ.eyJpc3MiOiJGS0JKTDM3SFBRIiwiaWF0IjoxNTMzMDg5NjQ0LCJleHAiOjE1NDg4NjEyNDR9.w7L-p--UrC98Odtnehjr1wxBeK5bKnBrVNv94C-aeLrVeC3wJT_AWrwWxV-fP97Dzs2_lIMX4nVmjbiSrI3wpQ"
-        
-        return developerAuthenticationToken
+        if developerToken == nil {
+            let query = PFQuery(className: "DeveloperToken")
+            
+            do {
+                let objects = try query.findObjects()
+                let developerTokenObject = objects[0]
+                self.developerToken = developerTokenObject["developerToken"] as? String
+            } catch {
+                print("ERROR FETCHING DEVELOPER TOKEN")
+            }
+        }
+        return developerToken
     }
     
     // MARK: General Apple Music API Methods

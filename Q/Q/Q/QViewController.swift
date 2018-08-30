@@ -12,7 +12,7 @@ import StoreKit
 import MediaPlayer
 import SDWebImage
 
-class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MusicSearchTableViewControllerDelegate {
+class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MusicSearchTableViewControllerDelegate/*, MPMediaPlayback*/ {
     
     @IBOutlet weak var ArtworkImageView: UIImageView!
     
@@ -133,9 +133,9 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         return UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Play queue from song selected at indexPath
-        // Set now playing item to correct song in queue
+    // MARK: Changing Song
+    
+    func selectSongInQueue(songIndexPath: IndexPath) {
         musicPlayer.perform(queueTransaction: { (queue: MPMusicPlayerControllerMutableQueue) in
             self.musicPlayer.pause()
         }) { (queue: MPMusicPlayerControllerQueue, error: Error?) in
@@ -143,11 +143,15 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
                 print("ERROR MUTATING QUEUE: \(error!)")
                 return
             }
-            self.musicPlayer.nowPlayingItem = queue.items[indexPath.row]
+            self.musicPlayer.nowPlayingItem = queue.items[songIndexPath.row]
             self.musicPlayer.play()
-            self.QueueTableView.deselectRow(at: indexPath, animated: true   )
+            self.QueueTableView.deselectRow(at: songIndexPath, animated: true)
         }
-        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Play queue from song selected at indexPath
+        selectSongInQueue(songIndexPath: indexPath)
     }
     
     // MARK: Music Player Notification Handlers
@@ -178,6 +182,42 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     @objc func volumeDidChange() {
         
     }
+    
+    // MARK: MPMediaPlayback Protocol Methods
+    
+//    func prepareToPlay() {
+//        <#code#>
+//    }
+//
+//    var isPreparedToPlay: Bool
+//
+//    func play() {
+//        <#code#>
+//    }
+//
+//    func pause() {
+//        <#code#>
+//    }
+//
+//    func stop() {
+//        <#code#>
+//    }
+//
+//    var currentPlaybackTime: TimeInterval
+//
+//    var currentPlaybackRate: Float
+//
+//    func beginSeekingForward() {
+//        <#code#>
+//    }
+//
+//    func beginSeekingBackward() {
+//        <#code#>
+//    }
+//
+//    func endSeeking() {
+//        <#code#>
+//    }
     
     // MARK: - Navigation
 
