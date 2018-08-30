@@ -30,6 +30,10 @@ class AppleMusicController {
         return URLSession(configuration: urlSessionConfiguration)
     }()
     
+    init() {
+        let _ = fetchDeveloperToken()
+    }
+    
     /// The storefront id that is used when making Apple Music API calls.
     var storefrontID: String?
     
@@ -38,19 +42,16 @@ class AppleMusicController {
     func fetchDeveloperToken() -> String? {
         if developerToken == nil {
             let query = PFQuery(className: "DeveloperToken")
-            query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) in
-                if error == nil {
-                    if let objects = objects {
-                        let developerTokenObject = objects[0]
-                        self.developerToken = developerTokenObject["developerToken"] as? String
-                    }
-                } else {
-                    print("ERROR FETCHING DEVELOPER TOKEN: \(error!.localizedDescription)")
-                }
+            
+            do {
+                let objects = try query.findObjects()
+                let developerTokenObject = objects[0]
+                self.developerToken = developerTokenObject["developerToken"] as? String
+            } catch {
+                print("ERROR FETCHING DEVELOPER TOKEN")
             }
         }
         return developerToken
-//        return "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlVZVVk0SEs2TlMifQ.eyJpc3MiOiJGS0JKTDM3SFBRIiwiaWF0IjoxNTMzMDg5NjQ0LCJleHAiOjE1NDg4NjEyNDR9.w7L-p--UrC98Odtnehjr1wxBeK5bKnBrVNv94C-aeLrVeC3wJT_AWrwWxV-fP97Dzs2_lIMX4nVmjbiSrI3wpQ"
     }
     
     // MARK: General Apple Music API Methods
