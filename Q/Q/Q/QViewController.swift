@@ -30,6 +30,8 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     let musicPlayer = MPMusicPlayerController.applicationQueuePlayer
     
+    var mediaItemQueue: [MPMediaItem]?
+    
     @IBAction func addSong(_ sender: UIButton) {
         performSegue(withIdentifier: "ShowMusicSearch", sender: sender)
     }
@@ -41,22 +43,18 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     @IBAction func play(_ sender: UIButton) {
         
         if !musicPlayer.isPreparedToPlay {
-            musicPlayer.setQueue(with: musicQueue.identifiers)
+            musicPlayer.setQueue(with: MPMediaItemCollection(items: mediaItemQueue!))
             musicPlayer.prepareToPlay()
+        }
+        switch musicPlayer.playbackState {
+        case .stopped:
             musicPlayer.play()
-        } else {
-            switch musicPlayer.playbackState {
-            case .stopped:
-                musicPlayer.setQueue(with: musicQueue.identifiers)
-                musicPlayer.prepareToPlay()
-                musicPlayer.play()
-            case .paused:
-                musicPlayer.play()
-            case .playing:
-                musicPlayer.pause()
-            default:
-                return
-            }
+        case .paused:
+            musicPlayer.play()
+        case .playing:
+            musicPlayer.pause()
+        default:
+            return
         }
         
     }
@@ -110,13 +108,26 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         performSegue(withIdentifier: "ShowMusicSearch", sender: sender)
     }
     
+    func insertSongInQueue(songIdentifier: String, index: Int) {
+        musicPlayer.perform(queueTransaction: { (queue: MPMusicPlayerControllerMutableQueue) in
+            let storeQueueDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [songIdentifier])
+            // insert song at end of queue or first in queue if no songs
+            if queue.items.count == 0 {
+                queue.insert(storeQueueDescriptor, after: nil)
+            } else {
+                queue.insert(storeQueueDescriptor, after: self.mediaItemQueue![index-1])
+            }
+        }) { (queue: MPMusicPlayerControllerQueue, error: Error?) in
+            self.mediaItemQueue = queue.items
+        }
+    }
+    
     // MARK: MusicSearchViewController delegate methods
     
     func didSelectSong(mediaItem: MediaItem) {
         musicQueue.addToQueue(song: mediaItem)
         self.QueueTableView.reloadData()
-        let storeQueueDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [mediaItem.identifier])
-        musicPlayer.append(storeQueueDescriptor)
+        insertSongInQueue(songIdentifier: mediaItem.identifier, index: musicQueue.identifiers.count-1) // insert selected song at end of queue
     }
     
     // MARK: UITableViewDelegate, UITableViewDataSource methods
@@ -136,17 +147,11 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     // MARK: Changing Song
     
     func selectSongInQueue(songIndexPath: IndexPath) {
-        musicPlayer.perform(queueTransaction: { (queue: MPMusicPlayerControllerMutableQueue) in
-            self.musicPlayer.pause()
-        }) { (queue: MPMusicPlayerControllerQueue, error: Error?) in
-            guard error == nil else {
-                print("ERROR MUTATING QUEUE: \(error!)")
-                return
-            }
-            self.musicPlayer.nowPlayingItem = queue.items[songIndexPath.row]
-            self.musicPlayer.play()
-            self.QueueTableView.deselectRow(at: songIndexPath, animated: true)
-        }
+        self.musicPlayer.pause()
+        self.musicPlayer.nowPlayingItem = mediaItemQueue![songIndexPath.row]
+        self.musicPlayer.prepareToPlay()
+        self.musicPlayer.play()
+        self.QueueTableView.deselectRow(at: songIndexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -172,7 +177,6 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         case .playing:
             PlayButton.setImage(#imageLiteral(resourceName: "pause-button"), for: .normal)
         case .stopped:
-            musicPlayer.setQueue(with: musicQueue.identifiers)
             PlayButton.setImage(#imageLiteral(resourceName: "play-button"), for: .normal)
         default:
             return
