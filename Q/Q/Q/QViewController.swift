@@ -12,11 +12,12 @@ import StoreKit
 import MediaPlayer
 import SDWebImage
 
-class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MusicSearchTableViewControllerDelegate/*, MPMediaPlayback*/ {
+class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,
+    MusicSearchTableViewControllerDelegate/*, MPMediaPlayback*/ {
     
     @IBOutlet weak var ArtworkImageView: UIImageView!
     
-    @IBOutlet weak var QTitleLabel: UILabel!
+    @IBOutlet weak var QTitleTextField: UITextField!
     
     @IBOutlet weak var PreviousButton: UIButton!
     
@@ -28,24 +29,23 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBOutlet weak var QueueTableView: UITableView!
     
+    // music player used to play Apple Music songs, application queue player gives greater queue functionality
     let musicPlayer = MPMusicPlayerController.applicationQueuePlayer
     
-    var mediaItemQueue: [MPMediaItem]?
+    // all Apple Music songs in the queue
+    var appleMusicMediaItemQueue: [MPMediaItem] = []
     
     @IBAction func addSong(_ sender: UIButton) {
         performSegue(withIdentifier: "ShowMusicSearch", sender: sender)
     }
     
+    // MARK: Changing Playback
+    
     @IBAction func previousSong(_ sender: Any) {
         musicPlayer.skipToPreviousItem()
     }
     
-    @IBAction func play(_ sender: UIButton) {
-        
-        if !musicPlayer.isPreparedToPlay {
-            musicPlayer.setQueue(with: MPMediaItemCollection(items: mediaItemQueue!))
-            musicPlayer.prepareToPlay()
-        }
+    func playMusic() {
         switch musicPlayer.playbackState {
         case .stopped:
             musicPlayer.play()
@@ -56,6 +56,19 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         default:
             return
         }
+    }
+    
+    @IBAction func play(_ sender: UIButton) {
+        
+        // prepare music player to play if not prepared already
+        if !musicPlayer.isPreparedToPlay {
+            musicPlayer.setQueue(with: musicQueue.identifiers)
+            musicPlayer.prepareToPlay { (error) in
+                self.playMusic()
+            }
+        } else {
+            playMusic()
+        }
         
     }
     
@@ -63,24 +76,46 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         musicPlayer.skipToNextItem()
     }
     
+    // MARK: Changing Q Title
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // only change name if there is text
+        if (textField.text != "") {
+            textField.resignFirstResponder()
+            return true
+        }
+        return false
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        musicQueue.name = textField.text!
+    }
+    
+    // Apple Music Controller handles Apple Music API searches
     var appleMusicController: AppleMusicController!
+    
+    // Apple Music Authorization Controller handles Apple Music and iClooud login
     var appleMusicAuthorizationController: AppleMusicAuthorizationController!
     
+    // instance of the Q model
     var musicQueue = Q()
     
     // MARK: View Loading Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // handle Apple Music configuration, login etc.
         self.appleMusicController = AppleMusicController()
         self.appleMusicAuthorizationController = AppleMusicAuthorizationController(appleMusicController: self.appleMusicController)
         
         self.QueueTableView.delegate = self
         self.QueueTableView.dataSource = self
+        QTitleTextField.delegate = self
         
         let notificationCenter = NotificationCenter.default
         
+        // music player playback notifications to be handled
         notificationCenter.addObserver(self,
                                        selector: #selector(nowPlayingItemDidChange),
                                        name: .MPMusicPlayerControllerNowPlayingItemDidChange,
@@ -96,6 +131,11 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
                                        name: .MPMusicPlayerControllerVolumeDidChange,
                                        object: nil)
         
+        // app lifecycle notifications
+        notificationCenter.addObserver(self, selector: #selector(willTerminate),
+                                       name: .UIApplicationWillTerminate,
+                                       object: nil)
+        
         musicPlayer.beginGeneratingPlaybackNotifications()
     }
 
@@ -104,30 +144,22 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: Adding songs to the Q
+    
     @IBAction func addToQ(_ sender: UIButton) {
         performSegue(withIdentifier: "ShowMusicSearch", sender: sender)
     }
     
-    func insertSongInQueue(songIdentifier: String, index: Int) {
-        musicPlayer.perform(queueTransaction: { (queue: MPMusicPlayerControllerMutableQueue) in
-            let storeQueueDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [songIdentifier])
-            // insert song at end of queue or first in queue if no songs
-            if queue.items.count == 0 {
-                queue.insert(storeQueueDescriptor, after: nil)
-            } else {
-                queue.insert(storeQueueDescriptor, after: self.mediaItemQueue![index-1])
-            }
-        }) { (queue: MPMusicPlayerControllerQueue, error: Error?) in
-            self.mediaItemQueue = queue.items
-        }
+    func addSongToQueue(songIdentifier: String) {
+        let appleMusicStoreQueueDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [songIdentifier])
+        musicPlayer.append(appleMusicStoreQueueDescriptor)
     }
     
-    // MARK: MusicSearchViewController delegate methods
-    
+    //
     func didSelectSong(mediaItem: MediaItem) {
         musicQueue.addToQueue(song: mediaItem)
         self.QueueTableView.reloadData()
-        insertSongInQueue(songIdentifier: mediaItem.identifier, index: musicQueue.identifiers.count-1) // insert selected song at end of queue
+        addSongToQueue(songIdentifier: mediaItem.identifier)
     }
     
     // MARK: UITableViewDelegate, UITableViewDataSource methods
@@ -147,11 +179,20 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     // MARK: Changing Song
     
     func selectSongInQueue(songIndexPath: IndexPath) {
-        self.musicPlayer.pause()
-        self.musicPlayer.nowPlayingItem = mediaItemQueue![songIndexPath.row]
-        self.musicPlayer.prepareToPlay()
-        self.musicPlayer.play()
-        self.QueueTableView.deselectRow(at: songIndexPath, animated: true)
+        // skip to next or previous if selected is one away
+        if songIndexPath.row == musicPlayer.indexOfNowPlayingItem-1 {
+            musicPlayer.skipToPreviousItem()
+        } else if songIndexPath.row == musicPlayer.indexOfNowPlayingItem+1 {
+            musicPlayer.skipToNextItem()
+        } else {
+            musicPlayer.pause()
+            // create a new descriptor, setting the start song to the specified song in the queue
+            let newQueueStoreDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: musicQueue.identifiers)
+            newQueueStoreDescriptor.startItemID = musicQueue.identifiers[songIndexPath.row]
+            musicPlayer.setQueue(with: newQueueStoreDescriptor)
+            musicPlayer.play()
+        }
+        QueueTableView.deselectRow(at: songIndexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -159,7 +200,7 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         selectSongInQueue(songIndexPath: indexPath)
     }
     
-    // MARK: Music Player Notification Handlers
+    // MARK: Music Player Playback Notification Handlers
     
     @objc func nowPlayingItemDidChange() {
         let mediaItemIndex = musicPlayer.indexOfNowPlayingItem
@@ -168,6 +209,7 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         ArtworkImageView.sd_setImage(with: artworkUrl, placeholderImage: UIImage())
     }
     
+    // change UI based on playback state
     @objc func playbackStateDidChange() {
         switch musicPlayer.playbackState {
         case .interrupted:
@@ -183,12 +225,13 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
     }
     
+    // TODO: Implement for volume to change
     @objc func volumeDidChange() {
         
     }
     
     // MARK: MPMediaPlayback Protocol Methods
-    
+    // TODO: Implement for more control over music
 //    func prepareToPlay() {
 //        <#code#>
 //    }
@@ -232,11 +275,17 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         if segue.identifier == "ShowMusicSearch" {
             if let musicSearchViewController = segue.destination as? MusicSearchTableViewController {
                 // passing appleMusic api to search
-                musicSearchViewController.appleMusicController = self.appleMusicController
-                musicSearchViewController.appleMusicAuthorizationController = self.appleMusicAuthorizationController
-                musicSearchViewController.delegate = self
+                DispatchQueue.main.async {
+                    musicSearchViewController.appleMusicController = self.appleMusicController
+                    musicSearchViewController.appleMusicAuthorizationController = self.appleMusicAuthorizationController
+                    musicSearchViewController.delegate = self
+                }
             }
         }
+    }
+    
+    @objc func willTerminate() {
+        musicPlayer.pause()
     }
 
 }

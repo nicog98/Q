@@ -109,19 +109,23 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if mediaItems[0].count > 0, indexPath.section == 0 { // Song
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as? SongTableViewCell {
-                let mediaItem = mediaItems[indexPath.section][indexPath.row]
-                if mediaItem.type == .songs {
-                    cell.mediaItem = mediaItem
-                    return cell
+            if indexPath.row < mediaItems[indexPath.section].count { // check if there is a media item to fill this row
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as? SongTableViewCell {
+                    let mediaItem = mediaItems[indexPath.section][indexPath.row]
+                    if mediaItem.type == .songs {
+                        cell.mediaItem = mediaItem
+                        return cell
+                    }
                 }
             }
         } else if mediaItems[1].count > 0, indexPath.section == 1 { // Album
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumCell", for: indexPath) as? AlbumTableViewCell {
-                let mediaItem = mediaItems[indexPath.section][indexPath.row]
-                if mediaItem.type == .albums {
-                    cell.mediaItem = mediaItem
-                    return cell
+            if indexPath.row < mediaItems[indexPath.section].count { // check if there is a media item to fill this row
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumCell", for: indexPath) as? AlbumTableViewCell {
+                    let mediaItem = mediaItems[indexPath.section][indexPath.row]
+                    if mediaItem.type == .albums {
+                        cell.mediaItem = mediaItem
+                        return cell
+                    }
                 }
             }
         }
