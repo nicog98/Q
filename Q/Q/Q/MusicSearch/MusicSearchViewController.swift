@@ -134,6 +134,8 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
     
     var selectedIndexPath: IndexPath?
     
+    var expandedAlbums: Set<Int>?
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectedIndexPath = indexPath
         let selectedMediaItem = mediaItems[indexPath.section][indexPath.row]
@@ -144,7 +146,9 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
                 self.selectedIndexPath = nil
             }
         } else { // album
-            // segue to show songs in album
+            // expand the album to show all of its songs
+            expandedAlbums?.insert(indexPath.row)
+            self.tableView.reloadData()
         }
     }
     

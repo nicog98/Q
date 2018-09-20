@@ -88,7 +88,9 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        musicQueue.name = textField.text!
+        if textField.text != musicQueue.name { // only save if the name changed
+            musicQueue.name = textField.text!
+        }
     }
     
     // Apple Music Controller handles Apple Music API searches
@@ -179,18 +181,21 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     // MARK: Changing Song
     
     func selectSongInQueue(songIndexPath: IndexPath) {
-        // skip to next or previous if selected is one away
-        if songIndexPath.row == musicPlayer.indexOfNowPlayingItem-1 {
-            musicPlayer.skipToPreviousItem()
-        } else if songIndexPath.row == musicPlayer.indexOfNowPlayingItem+1 {
-            musicPlayer.skipToNextItem()
-        } else {
-            musicPlayer.pause()
-            // create a new descriptor, setting the start song to the specified song in the queue
-            let newQueueStoreDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: musicQueue.identifiers)
-            newQueueStoreDescriptor.startItemID = musicQueue.identifiers[songIndexPath.row]
-            musicPlayer.setQueue(with: newQueueStoreDescriptor)
-            musicPlayer.play()
+        // only change song if it is different
+        if songIndexPath.row != musicPlayer.indexOfNowPlayingItem {
+            // skip to next or previous if selected is one away
+            if songIndexPath.row == musicPlayer.indexOfNowPlayingItem-1 {
+                musicPlayer.skipToPreviousItem()
+            } else if songIndexPath.row == musicPlayer.indexOfNowPlayingItem+1 {
+                musicPlayer.skipToNextItem()
+            } else {
+                musicPlayer.pause()
+                // create a new descriptor, setting the start song to the specified song in the queue
+                let newQueueStoreDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: musicQueue.identifiers)
+                newQueueStoreDescriptor.startItemID = musicQueue.identifiers[songIndexPath.row]
+                musicPlayer.setQueue(with: newQueueStoreDescriptor)
+                musicPlayer.play()
+            }
         }
         QueueTableView.deselectRow(at: songIndexPath, animated: true)
     }

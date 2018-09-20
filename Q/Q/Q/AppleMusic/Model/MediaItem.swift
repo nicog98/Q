@@ -33,6 +33,10 @@ class MediaItem {
         static let artistName = "artistName"
         
         static let artwork = "artwork"
+        
+        static let relationships = "relationships"
+        
+        static let tracks = "tracks"
     }
     
     // MARK: Properties
@@ -75,6 +79,17 @@ class MediaItem {
         
         guard let artworkJSON = attributes[JSONKeys.artwork] as? [String: Any], let artwork = try? Artwork(json: artworkJSON) else {
             throw SerializationError.missing(JSONKeys.artwork)
+        }
+        
+        // add media items for all tracks in an album
+        if type == .albums {
+            
+            guard let relationships = json[JSONKeys.relationships] as? [String: Any] else {
+                throw SerializationError.missing(JSONKeys.relationships)
+            }
+            
+            // TODO: look at Apple Music API to get track resource objects
+            
         }
         
         self.identifier = identifier
