@@ -14,6 +14,14 @@ protocol MusicSearchTableViewControllerDelegate {
 
 class MusicSearchTableViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate {
     
+    struct appleMusicCatalogRequestRelationships {
+        static let tracks = "tracks"
+        
+        static let artists = "artists"
+        
+        static let genres = "genres"
+    }
+    
     private static var songCellRowHeight: CGFloat = 70.0
     private static var albumCellRowHeight: CGFloat = 81.0
     
@@ -108,6 +116,9 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard mediaItems.count > 0 else { // only load values if there arre media items to fit
+            return UITableViewCell()
+        }
         if mediaItems[0].count > 0, indexPath.section == 0 { // Song
             if indexPath.row < mediaItems[indexPath.section].count { // check if there is a media item to fill this row
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as? SongTableViewCell {
@@ -134,8 +145,6 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
     
     var selectedIndexPath: IndexPath?
     
-    var expandedAlbums: Set<Int>?
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectedIndexPath = indexPath
         let selectedMediaItem = mediaItems[indexPath.section][indexPath.row]
@@ -146,9 +155,19 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
                 self.selectedIndexPath = nil
             }
         } else { // album
-            // expand the album to show all of its songs
-            expandedAlbums?.insert(indexPath.row)
-            self.tableView.reloadData()
+            // request album from Apple Music catalog
+            requestAlbumFromCatalog(albumIdentifier: selectedMediaItem.identifier)
+        }
+    }
+    
+    func requestAlbumFromCatalog(albumIdentifier: String) {
+        appleMusicController.performAppleMusicCatalogRequest(countryCode: appleMusicAuthorizationController.cloudServiceStorefrontCountryCode, requestIdentifier: albumIdentifier, relationship: appleMusicCatalogRequestRelationships.tracks) { (tracks: [MediaItem], error: Error?) in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                return
+            }
+            // TODO: show returned tracks in table view
+            print(tracks)
         }
     }
     

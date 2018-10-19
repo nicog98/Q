@@ -20,6 +20,9 @@ class AppleMusicController {
     /// The completion handler that is called when an Apple Music Get User Storefront API call completes.
     typealias GetUserStorefrontCompletionHandler = (_ storefront: String?, _ error: Error?) -> Void
     
+    /// The completion handler that is called when an Apple Music Catalog Request API call completes.
+    typealias CatalogRequestCompletionHandler = (_ mediaItems: [MediaItem], _ error: Error?) -> Void
+    
     // MARK: Properties
     
     /// The instance of `URLSession` that is going to be used for making network calls.
@@ -135,6 +138,32 @@ class AppleMusicController {
         }
         
         task.resume()
+    }
+    
+    func performAppleMusicCatalogRequest(countryCode: String, requestIdentifier: String, relationship: String, completion: @escaping CatalogRequestCompletionHandler) {
+        guard let developerToken = fetchDeveloperToken() else {
+            print("DEVELOPER TOKEN NOT CONFIGURED")
+            return
+        }
+        
+        let urlRequest = AppleMusicSearchGenerator.createCatalogRequest(developerToken: developerToken, countryCode: countryCode, requestIdentifier: requestIdentifier, relationship: relationship)
+        
+        let task = urlSession.dataTask(with: urlRequest) { (data, response, error) in
+            guard error == nil, let urlResponse = response as? HTTPURLResponse, urlResponse.statusCode == 200 else {
+                let error = NSError(domain: "AppkeMusicManagerErrorDomain", code: -9000, userInfo: [NSUnderlyingErrorKey : error!])
+                
+                completion([], error)
+                
+                return
+            }
+            
+            // handle response
+            print(data!)
+            
+        }
+        
+        task.resume()
+        
     }
     
     func processMediaItemSections(from json: Data) throws -> [[MediaItem]] {

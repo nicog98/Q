@@ -99,4 +99,18 @@ struct AppleMusicSearchGenerator {
         
         return urlRequest
     }
+    
+    static func createCatalogRequest(developerToken: String, countryCode: String, requestIdentifier: String, relationship: String) -> URLRequest {
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = AppleMusicSearchGenerator.appleMusicAPIBaseURLString
+        urlComponents.path = "/v1/catalog/\(countryCode)/albums/\(requestIdentifier)/\(relationship)"
+        
+        var urlRequest = URLRequest(url: urlComponents.url!)
+        urlRequest.httpMethod = "GET"
+        
+        urlRequest.addValue("Bearer \(developerToken)", forHTTPHeaderField: "Authorization")
+        
+        return urlRequest
+    }
 }

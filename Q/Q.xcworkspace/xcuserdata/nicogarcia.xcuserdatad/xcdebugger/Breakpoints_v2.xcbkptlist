@@ -74,12 +74,124 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Q/Q/MusicSearch/MusicSearchViewController.swift"
-            timestampString = "559150519.1408581"
+            timestampString = "561659199.297069"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
             landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Q/Q/MusicSearch/MusicSearchViewController.swift"
+            timestampString = "561659199.2971309"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
+            landmarkName = "requestAlbumFromCatalog(albumIdentifier:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Q.MusicSearchTableViewController.requestAlbumFromCatalog(albumIdentifier: Swift.String) -&gt; ()"
+                  moduleName = "Q"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nicogarcia/Documents/Code/Q/Q-ios/Q/Q/Q/MusicSearch/MusicSearchViewController.swift"
+                  timestampString = "561658717.744495"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "164"
+                  endingLineNumber = "164"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Array&lt;Q.MediaItem&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Q.MusicSearchTableViewController.requestAlbumFromCatalog(albumIdentifier: Swift.String) -&gt; ()"
+                  moduleName = "Q"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nicogarcia/Documents/Code/Q/Q-ios/Q/Q/Q/MusicSearch/MusicSearchViewController.swift"
+                  timestampString = "561658717.748749"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "165"
+                  endingLineNumber = "165"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Q/Q/MusicSearch/MusicSearchViewController.swift"
+            timestampString = "561659199.297179"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
+            landmarkName = "requestAlbumFromCatalog(albumIdentifier:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Q/Q/AppleMusic/AppleMusicController.swift"
+            timestampString = "561659199.297225"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
+            landmarkName = "performAppleMusicCatalogRequest(countryCode:requestIdentifier:relationship:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Q/Q/AppleMusic/AppleMusicController.swift"
+            timestampString = "561659199.297555"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
+            landmarkName = "performAppleMusicCatalogRequest(countryCode:requestIdentifier:relationship:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Q/Q/AppleMusic/Utility/AppleMusicSearchGenerator.swift"
+            timestampString = "561659199.2977951"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
+            landmarkName = "createCatalogRequest(developerToken:countryCode:requestIdentifier:relationship:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
