@@ -9,7 +9,7 @@
 import UIKit
 import SDWebImage
 
-class AlbumTableViewCell: UITableViewCell {
+class AlbumTableViewCell: MusicSearchTableViewCell {
 
     @IBOutlet weak var AlbumArtworkImageView: UIImageView!
     
@@ -17,7 +17,7 @@ class AlbumTableViewCell: UITableViewCell {
     
     @IBOutlet weak var ArtistLabel: UILabel!
     
-    var mediaItem: MediaItem? {
+    override var mediaItem: MediaItem? {
         didSet {
             AlbumNameLabel.text = mediaItem?.name ?? ""
             ArtistLabel.text = mediaItem?.artistName ?? ""

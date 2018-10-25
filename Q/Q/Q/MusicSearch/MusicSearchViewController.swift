@@ -14,8 +14,18 @@ protocol MusicSearchTableViewControllerDelegate {
 
 class MusicSearchTableViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate {
     
+    struct appleMusicCatalogRequestRelationships {
+        static let tracks = "tracks"
+        
+        static let artists = "artists"
+        
+        static let genres = "genres"
+    }
+    
     private static var songCellRowHeight: CGFloat = 70.0
     private static var albumCellRowHeight: CGFloat = 81.0
+    
+    private static let numSections = 2
     
     var delegate: MusicSearchTableViewControllerDelegate?
     
@@ -39,6 +49,8 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
             }
         }
     }
+    
+    var expandedAlbumTrackItems = [[MediaItem]?]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,7 +95,7 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
     // MARK: Table View Delegate Methods
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return MusicSearchTableViewController.numSections
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -107,34 +119,53 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
         }
     }
     
+    var expandedAlbum: [MediaItem]?
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if mediaItems[0].count > 0, indexPath.section == 0 { // Song
-            if indexPath.row < mediaItems[indexPath.section].count { // check if there is a media item to fill this row
-                if let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as? SongTableViewCell {
-                    let mediaItem = mediaItems[indexPath.section][indexPath.row]
-                    if mediaItem.type == .songs {
-                        cell.mediaItem = mediaItem
-                        return cell
-                    }
-                }
-            }
-        } else if mediaItems[1].count > 0, indexPath.section == 1 { // Album
-            if indexPath.row < mediaItems[indexPath.section].count { // check if there is a media item to fill this row
-                if let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumCell", for: indexPath) as? AlbumTableViewCell {
-                    let mediaItem = mediaItems[indexPath.section][indexPath.row]
-                    if mediaItem.type == .albums {
-                        cell.mediaItem = mediaItem
-                        return cell
-                    }
-                }
-            }
+        guard mediaItems.count > indexPath.section, mediaItems[indexPath.section].count > 0 else { // only load values if there arre media items to fit
+            return UITableViewCell()
         }
-        return UITableViewCell()
+        
+        let mediaItem = mediaItems[indexPath.section][indexPath.row]
+        var cell: MusicSearchTableViewCell?
+        
+        switch mediaItem.type {
+        case .songs:
+            cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as? SongTableViewCell
+        case .albums:
+            cell = tableView.dequeueReusableCell(withIdentifier: "AlbumCell", for: indexPath) as? AlbumTableViewCell
+        default:
+            break
+        }
+        
+        cell?.mediaItem = mediaItem
+        
+        return cell ?? UITableViewCell()
+        
+//        if mediaItems[0].count > 0, indexPath.section == 0 { // Song
+//            if indexPath.row < mediaItems[indexPath.section].count { // check if there is a media item to fill this row
+//                if let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as? SongTableViewCell {
+//                    let mediaItem = mediaItems[indexPath.section][indexPath.row]
+//                    if mediaItem.type == .songs {
+//                        cell.mediaItem = mediaItem
+//                        return cell
+//                    }
+//                }
+//            }
+//        } else if mediaItems[1].count > 0, indexPath.section == 1 { // Album
+//            if indexPath.row < mediaItems[indexPath.section].count { // check if there is a media item to fill this row
+//                if let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumCell", for: indexPath) as? AlbumTableViewCell {
+//                    let mediaItem = mediaItems[indexPath.section][indexPath.row]
+//                    if mediaItem.type == .albums {
+//                        cell.mediaItem = mediaItem
+//                        return cell
+//                    }
+//                }
+//            }
+//        }
     }
     
     var selectedIndexPath: IndexPath?
-    
-    var expandedAlbums: Set<Int>?
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectedIndexPath = indexPath
@@ -146,8 +177,22 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
                 self.selectedIndexPath = nil
             }
         } else { // album
-            // expand the album to show all of its songs
-            expandedAlbums?.insert(indexPath.row)
+            // request album from Apple Music catalog
+            expandAlbum(albumIdentifier: selectedMediaItem.identifier, albumIndex: indexPath.row)
+        }
+    }
+    
+    /// Request a specific album from Apple Music catalog. Used to expand album when tapped on in Music Search results
+    
+    func expandAlbum(albumIdentifier: String, albumIndex: Int) {
+        appleMusicController.performAppleMusicCatalogRequest(countryCode: appleMusicAuthorizationController.cloudServiceStorefrontCountryCode, requestIdentifier: albumIdentifier, relationship: appleMusicCatalogRequestRelationships.tracks) { (tracks: [MediaItem], error: Error?) in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                return
+            }
+            // TODO: show returned tracks in table view
+            // update mediaItems to include songs of expanded album
+            self.mediaItems[1].insert(contentsOf: tracks, at: albumIndex + 1)
             self.tableView.reloadData()
         }
     }
@@ -195,8 +240,12 @@ extension MusicSearchTableViewController: UISearchResultsUpdating {
                     return
                 }
                 self.mediaItems = results
+//                // allocate expanded album track items to size correlating to number of albums received
+//                self.expandedAlbumTrackItems = [[MediaItem]?](repeating: nil, count: results[1].count)
             }
         }
     }
     
 }
+
+

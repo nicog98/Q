@@ -20,6 +20,9 @@ class AppleMusicController {
     /// The completion handler that is called when an Apple Music Get User Storefront API call completes.
     typealias GetUserStorefrontCompletionHandler = (_ storefront: String?, _ error: Error?) -> Void
     
+    /// The completion handler that is called when an Apple Music Catalog Request API call completes.
+    typealias CatalogRequestCompletionHandler = (_ mediaItems: [MediaItem], _ error: Error?) -> Void
+    
     // MARK: Properties
     
     /// The instance of `URLSession` that is going to be used for making network calls.
@@ -135,6 +138,51 @@ class AppleMusicController {
         }
         
         task.resume()
+    }
+    
+    func performAppleMusicCatalogRequest(countryCode: String, requestIdentifier: String, relationship: String, completion: @escaping CatalogRequestCompletionHandler) {
+        guard let developerToken = fetchDeveloperToken() else {
+            print("DEVELOPER TOKEN NOT CONFIGURED")
+            return
+        }
+        
+        let urlRequest = AppleMusicSearchGenerator.createCatalogRequest(developerToken: developerToken, countryCode: countryCode, requestIdentifier: requestIdentifier, relationship: relationship)
+        
+        let task = urlSession.dataTask(with: urlRequest) { (data, response, error) in
+            guard error == nil, let urlResponse = response as? HTTPURLResponse, urlResponse.statusCode == 200 else {
+                let error = NSError(domain: "AppleMusicManagerErrorDomain", code: -9000, userInfo: [NSUnderlyingErrorKey : error!])
+                
+                completion([], error)
+                
+                return
+            }
+            
+            // handle response
+            do {
+                let albumTracks = try self.processAppleMusicCatalogResponse(from: data!)
+                completion(albumTracks, nil)
+            } catch {
+                print("AN ERROR OCURRED PROCESSING APPLE MUSIC CATALOG RESPONSE")
+            }
+            
+        }
+        
+        task.resume()
+        
+    }
+    
+    func processAppleMusicCatalogResponse(from json: Data) throws -> [MediaItem] {
+        guard let jsonDictionary = try JSONSerialization.jsonObject(with: json, options: []) as? [String: Any] else {
+            throw SerializationError.missing("")
+        }
+        
+        var albumTracks = [MediaItem]()
+        
+        if let dataArray = jsonDictionary[ResponseRootJSONKeys.data] as? [[String: Any]] {
+            albumTracks = try processMediaItems(from: dataArray)
+        }
+        
+        return albumTracks
     }
     
     func processMediaItemSections(from json: Data) throws -> [[MediaItem]] {
