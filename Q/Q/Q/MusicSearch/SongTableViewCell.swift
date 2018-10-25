@@ -8,13 +8,13 @@
 
 import UIKit
 
-class SongTableViewCell: UITableViewCell {
+class SongTableViewCell: MusicSearchTableViewCell {
 
     @IBOutlet weak var SongNameLabel: UILabel!
     
     @IBOutlet weak var ArtistLabel: UILabel!
     
-    var mediaItem: MediaItem? {
+    override var mediaItem: MediaItem? {
         didSet {
             SongNameLabel.text = mediaItem?.name ?? ""
             ArtistLabel.text = mediaItem?.artistName ?? ""

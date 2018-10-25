@@ -150,7 +150,7 @@ class AppleMusicController {
         
         let task = urlSession.dataTask(with: urlRequest) { (data, response, error) in
             guard error == nil, let urlResponse = response as? HTTPURLResponse, urlResponse.statusCode == 200 else {
-                let error = NSError(domain: "AppkeMusicManagerErrorDomain", code: -9000, userInfo: [NSUnderlyingErrorKey : error!])
+                let error = NSError(domain: "AppleMusicManagerErrorDomain", code: -9000, userInfo: [NSUnderlyingErrorKey : error!])
                 
                 completion([], error)
                 
@@ -158,12 +158,31 @@ class AppleMusicController {
             }
             
             // handle response
-            print(data!)
+            do {
+                let albumTracks = try self.processAppleMusicCatalogResponse(from: data!)
+                completion(albumTracks, nil)
+            } catch {
+                print("AN ERROR OCURRED PROCESSING APPLE MUSIC CATALOG RESPONSE")
+            }
             
         }
         
         task.resume()
         
+    }
+    
+    func processAppleMusicCatalogResponse(from json: Data) throws -> [MediaItem] {
+        guard let jsonDictionary = try JSONSerialization.jsonObject(with: json, options: []) as? [String: Any] else {
+            throw SerializationError.missing("")
+        }
+        
+        var albumTracks = [MediaItem]()
+        
+        if let dataArray = jsonDictionary[ResponseRootJSONKeys.data] as? [[String: Any]] {
+            albumTracks = try processMediaItems(from: dataArray)
+        }
+        
+        return albumTracks
     }
     
     func processMediaItemSections(from json: Data) throws -> [[MediaItem]] {
