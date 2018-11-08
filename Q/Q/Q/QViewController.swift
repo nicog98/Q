@@ -113,7 +113,7 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         self.QueueTableView.delegate = self
         self.QueueTableView.dataSource = self
-        QTitleTextField.delegate = self
+        self.QTitleTextField.delegate = self
         
         let notificationCenter = NotificationCenter.default
         
