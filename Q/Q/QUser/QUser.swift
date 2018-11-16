@@ -58,4 +58,12 @@ class QUser {
         
     }
     
+    /// INITIALIZATION FOR TEST
+    init() {
+        self.user = nil
+        self.username = "TEST"
+        self.qScore = 64
+        self.profilePictureData = nil
+    }
+    
 }

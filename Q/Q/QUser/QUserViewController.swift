@@ -22,6 +22,8 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     var imagePicker = UIImagePickerController()
     
+    /// MARK: Changing Profile Picture
+    
     @IBAction func editProfilePicutre(_ sender: UIButton) {
         // open photos
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
@@ -57,6 +59,15 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
     @IBOutlet weak var startQButton: UIButton!
     
     var user: QUser?
+    
+    /// FOR OFFLINE TESTING
+//    var user: QUser? = QUser()
+    
+    /// Apple Music Authorization Controller handles Apple Music and iCloud login
+    var appleMusicAuthorizationController: AppleMusicAuthorizationController!
+    
+    /// Apple Music Controller handles Apple Music API
+    var appleMusicController: AppleMusicController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +75,13 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
         self.UsernameLabel.text = self.user?.username!
         if let profilePictureData = self.user?.profilePictureData {
             self.ProfilePictureImageView.image = UIImage(data: profilePictureData)
+        } else {
+            self.ProfilePictureImageView.image = UIImage(named: "Albers-Square-Peach-Blue")
         }
+        
+        // Handle Apple Music configuration, login, etc.
+        self.appleMusicController = AppleMusicController()
+        self.appleMusicAuthorizationController = AppleMusicAuthorizationController(appleMusicController: self.appleMusicController)
         
         // set up delegates
         imagePicker.delegate = self
@@ -87,8 +104,9 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "ShowQ", let qView = segue.destination as? QViewController {
-            // initialize Q view controller
+        if segue.identifier == "ShowQ", let qNavigationController = segue.destination as? QNavigationController {
+            qNavigationController.appleMusicController = self.appleMusicController
+            qNavigationController.appleMusicAuthorizationController = self.appleMusicAuthorizationController
         }
     }
 

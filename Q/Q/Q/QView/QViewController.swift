@@ -41,10 +41,6 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     // MARK: Changing Playback
     
-    @IBAction func previousSong(_ sender: Any) {
-        musicPlayer.skipToPreviousItem()
-    }
-    
     func playMusic() {
         switch musicPlayer.playbackState {
         case .stopped:
@@ -74,6 +70,10 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBAction func nextSong(_ sender: Any) {
         musicPlayer.skipToNextItem()
+    }
+    
+    @IBAction func previousSong(_ sender: Any) {
+        musicPlayer.skipToPreviousItem()
     }
     
     // MARK: Changing Q Title
@@ -108,8 +108,10 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         super.viewDidLoad()
         
         // handle Apple Music configuration, login etc.
-        self.appleMusicController = AppleMusicController()
-        self.appleMusicAuthorizationController = AppleMusicAuthorizationController(appleMusicController: self.appleMusicController)
+        if let qNavigationController = self.navigationController as? QNavigationController {
+            self.appleMusicController = qNavigationController.appleMusicController
+            self.appleMusicAuthorizationController = qNavigationController.appleMusicAuthorizationController
+        }
         
         self.QueueTableView.delegate = self
         self.QueueTableView.dataSource = self
@@ -279,12 +281,7 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         // Pass the selected object to the new view controller.
         if segue.identifier == "ShowMusicSearch" {
             if let musicSearchViewController = segue.destination as? MusicSearchTableViewController {
-                // passing appleMusic api to search
-                DispatchQueue.main.async {
-                    musicSearchViewController.appleMusicController = self.appleMusicController
-                    musicSearchViewController.appleMusicAuthorizationController = self.appleMusicAuthorizationController
-                    musicSearchViewController.delegate = self
-                }
+                musicSearchViewController.delegate = self
             }
         }
     }

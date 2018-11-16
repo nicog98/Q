@@ -153,7 +153,7 @@ class AppleMusicAuthorizationController {
     @objc func requestCloudServiceCapabilities() {
         cloudServiceController.requestCapabilities(completionHandler: { [weak self] (cloudServiceCapability, error) in
             guard error == nil else {
-                fatalError("An error occurred when requesting capabilities: \(error!.localizedDescription)")
+                return
             }
             
             self?.cloudServiceCapabilities = cloudServiceCapability

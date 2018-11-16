@@ -13,7 +13,7 @@ protocol MusicSearchTableViewControllerDelegate {
 }
 
 class MusicSearchTableViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate {
-    
+
     struct appleMusicCatalogRequestRelationships {
         static let tracks = "tracks"
         
@@ -49,6 +49,13 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Configure Apple Music
+        if let qNavigationController = self.navigationController as? QNavigationController {
+            self.appleMusicController = qNavigationController.appleMusicController
+            self.appleMusicAuthorizationController = qNavigationController.appleMusicAuthorizationController
+        }
+        
         // Set up search bar/view controller
         searchController.delegate = self
         searchController.searchResultsUpdater = self
@@ -144,40 +151,41 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
                 self.selectedIndexPath = nil
             }
         } else if selectedMediaItem.type == .albums { // album
-            if let albumCell = tableView.cellForRow(at: indexPath) as? AlbumTableViewCell {
-                if !albumCell.expanded {
-                    expandAlbum(albumIdentifier: selectedMediaItem.identifier, albumCell: albumCell) // request album from Apple Music catalog
-                }
-            }
+            performSegue(withIdentifier: "ShowAlbum", sender: self)
+            
+//            if let albumCell = tableView.cellForRow(at: indexPath) as? AlbumTableViewCell {
+//                if !albumCell.expanded {
+////                    expandAlbum(albumIdentifier: selectedMediaItem.identifier, albumCell: albumCell) // request album from Apple Music catalog
+//                }
+//            }
         }
     }
     
     /// Request a specific album from Apple Music catalog. Used to expand album when tapped on in Music Search results
-    
-    func expandAlbum(albumIdentifier: String, albumCell: AlbumTableViewCell) {
-        appleMusicController.performAppleMusicCatalogRequest(countryCode: appleMusicAuthorizationController.cloudServiceStorefrontCountryCode, requestIdentifier: albumIdentifier, relationship: appleMusicCatalogRequestRelationships.tracks) { (tracks: [MediaItem], error: Error?) in
-            guard error == nil else {
-                print(error!.localizedDescription)
-                return
-            }
-            // TODO: show returned tracks in table view
-            // update mediaItems to include songs of expanded album
-            albumCell.albumTracks = tracks
-        }
-    }
+    // TODO: Add this functionality to album model
+//    func expandAlbum(albumIdentifier: String, albumCell: AlbumTableViewCell) {
+//        appleMusicController.performAppleMusicCatalogRequest(countryCode: appleMusicAuthorizationController.cloudServiceStorefrontCountryCode, requestIdentifier: albumIdentifier, relationship: appleMusicCatalogRequestRelationships.tracks) { (tracks: [MediaItem], error: Error?) in
+//            guard error == nil else {
+//                print(error!.localizedDescription)
+//                return
+//            }
+//            // TODO: show returned tracks in table view
+//            // update mediaItems to include songs of expanded album
+//            albumCell.albumTracks = tracks
+//        }
+//    }
     
     // MARK: Search Bar Delegate Methods
     
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        dismiss(animated: false)
-        dismiss(animated: true)
-    }
+//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        dismiss(animated: true)
+//    }
     
     // MARK: Search Controller Delegate Methods
     
-    func presentSearchController(_ searchController: UISearchController) {
-        searchController.searchBar.becomeFirstResponder()
-    }
+//    func presentSearchController(_ searchController: UISearchController) {
+//        searchController.searchBar.becomeFirstResponder()
+//    }
     
     //    MARK: - Navigation
     

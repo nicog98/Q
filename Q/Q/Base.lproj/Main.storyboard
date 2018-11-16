@@ -154,6 +154,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="huW-eF-Jsi"/>
                     <connections>
                         <outlet property="PasswordLabel" destination="ado-ux-VH3" id="98M-JI-Uaj"/>
                         <outlet property="PasswordTextField" destination="ohK-jM-ogg" id="2ny-Us-9QB"/>
@@ -162,12 +163,12 @@
                         <outlet property="UsernameLabel" destination="W34-W8-N8u" id="eXe-d4-lEk"/>
                         <outlet property="UsernameTextField" destination="n5I-vt-2xJ" id="wq0-Qf-hjo"/>
                         <segue destination="Owm-dl-VPX" kind="show" identifier="ShowSignUpPage" id="4lu-gM-oJO"/>
-                        <segue destination="U3u-GT-R4Q" kind="showDetail" identifier="ShowQUserViewFromSignIn" id="ajL-mg-aew"/>
+                        <segue destination="U3u-GT-R4Q" kind="show" identifier="ShowQUserViewFromLogin" id="2VG-A1-ooP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="140" y="133.5832083958021"/>
+            <point key="canvasLocation" x="-4874" y="247"/>
         </scene>
         <!--User View Controller-->
         <scene sceneID="IkL-cj-md1">
@@ -224,17 +225,19 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="R0X-zT-fod"/>
                     </view>
+                    <navigationItem key="navigationItem" id="qCa-ik-9kU"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="EditButton" destination="2ye-eI-yLj" id="a48-TL-jpf"/>
                         <outlet property="ProfilePictureImageView" destination="uF4-JM-KBg" id="m5V-8m-vNI"/>
                         <outlet property="UsernameLabel" destination="l8r-WH-JjH" id="CV4-Y6-ref"/>
                         <outlet property="startQButton" destination="5P1-sJ-y7I" id="jGk-01-Orf"/>
-                        <segue destination="lUE-8R-rf6" kind="show" identifier="ShowQ" id="Fkg-3C-IM3"/>
+                        <segue destination="sY5-Jf-nYF" kind="show" identifier="ShowQ" id="oyw-4Y-tTC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6bL-Wa-16p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1192.8" y="132.26600985221674"/>
+            <point key="canvasLocation" x="-3642" y="618"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Kz8-W2-LS8">
@@ -403,12 +406,28 @@
                         <outlet property="PreviousButton" destination="862-WA-SJ1" id="x7o-MV-mgz"/>
                         <outlet property="QTitleTextField" destination="i1B-7j-MwJ" id="T2o-ii-PgO"/>
                         <outlet property="QueueTableView" destination="OhC-nt-3SX" id="Ik0-jH-KG2"/>
-                        <segue destination="zNb-4w-evK" kind="showDetail" identifier="ShowMusicSearch" id="9b9-gl-Ht1"/>
+                        <segue destination="zNb-4w-evK" kind="show" identifier="ShowMusicSearch" id="dl1-Zf-dAD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qKf-NG-PCl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2364" y="131.52709359605913"/>
+            <point key="canvasLocation" x="-1502" y="61"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="8Bg-rW-RDw">
+            <objects>
+                <navigationController navigationBarHidden="YES" id="sY5-Jf-nYF" customClass="QNavigationController" customModule="Q" customModuleProvider="target" sceneMemberID="viewController">
+                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gK4-XA-8y6">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="lUE-8R-rf6" kind="relationship" relationship="rootViewController" id="GjC-89-RE8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xDJ-Qb-5AP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2481" y="61"/>
         </scene>
         <!--Music Search Table View Controller-->
         <scene sceneID="LeR-sg-exL">
@@ -535,10 +554,14 @@
                     <navigationItem key="navigationItem" id="oYH-mk-uhb">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="back-icon-1x" id="J30-a4-DYM"/>
                     </navigationItem>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <segue destination="ePV-gD-HOf" kind="show" identifier="ShowAlbum" id="5Gw-Rb-IQN"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RRv-Bo-kaX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3404" y="132.26600985221674"/>
+            <point key="canvasLocation" x="-332" y="-624"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="CgL-7i-1EV">
@@ -665,7 +688,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uYT-oD-E21" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4204" y="133"/>
+            <point key="canvasLocation" x="532" y="-624"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="1gI-zy-FZQ">
@@ -796,12 +819,12 @@
                         <outlet property="SignUpButton" destination="X1Z-H7-vIn" id="ZSS-zk-6IN"/>
                         <outlet property="UsernameField" destination="3em-Cj-NLd" id="ubz-7G-SgH"/>
                         <outlet property="UsernameLabel" destination="a1t-fo-ODg" id="I2t-Hp-YVF"/>
-                        <segue destination="U3u-GT-R4Q" kind="showDetail" identifier="ShowQUserViewFromSignUp" id="RgM-8G-m0r"/>
+                        <segue destination="U3u-GT-R4Q" kind="show" id="L3u-QX-F6u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="roh-gS-irh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="140" y="942.27886056971522"/>
+            <point key="canvasLocation" x="-4874" y="989"/>
         </scene>
     </scenes>
     <resources>
@@ -815,6 +838,6 @@
         <image name="previous-icon" width="204.80000305175781" height="204.80000305175781"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ajL-mg-aew"/>
+        <segue reference="2VG-A1-ooP"/>
     </inferredMetricsTieBreakers>
 </document>
