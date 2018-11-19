@@ -13,7 +13,7 @@ protocol MusicSearchTableViewControllerDelegate {
 }
 
 class MusicSearchTableViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate {
-    
+
     struct appleMusicCatalogRequestRelationships {
         static let tracks = "tracks"
         
@@ -21,9 +21,6 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
         
         static let genres = "genres"
     }
-    
-    private static var songCellRowHeight: CGFloat = 70.0
-    private static var albumCellRowHeight: CGFloat = 81.0
     
     private static let numSections = 2
     
@@ -50,16 +47,20 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
         }
     }
     
-    var expandedAlbumTrackItems = [[MediaItem]?]()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Set up search bar/view controller
         searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         searchController.definesPresentationContext = true
         searchController.searchBar.delegate = self
+        searchController.searchBar.isHidden = false
+        
+        // configure table view Autolayout
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = MusicSearchTableViewController.TableViewConstants.estimatedRowHeight
         
         tableView.tableHeaderView = searchController.searchBar
         
@@ -111,16 +112,6 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
         return ""
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return MusicSearchTableViewController.songCellRowHeight
-        } else {
-            return MusicSearchTableViewController.albumCellRowHeight
-        }
-    }
-    
-    var expandedAlbum: [MediaItem]?
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard mediaItems.count > indexPath.section, mediaItems[indexPath.section].count > 0 else { // only load values if there arre media items to fit
             return UITableViewCell()
@@ -142,65 +133,26 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
         
         return cell ?? UITableViewCell()
         
-//        if mediaItems[0].count > 0, indexPath.section == 0 { // Song
-//            if indexPath.row < mediaItems[indexPath.section].count { // check if there is a media item to fill this row
-//                if let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as? SongTableViewCell {
-//                    let mediaItem = mediaItems[indexPath.section][indexPath.row]
-//                    if mediaItem.type == .songs {
-//                        cell.mediaItem = mediaItem
-//                        return cell
-//                    }
-//                }
-//            }
-//        } else if mediaItems[1].count > 0, indexPath.section == 1 { // Album
-//            if indexPath.row < mediaItems[indexPath.section].count { // check if there is a media item to fill this row
-//                if let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumCell", for: indexPath) as? AlbumTableViewCell {
-//                    let mediaItem = mediaItems[indexPath.section][indexPath.row]
-//                    if mediaItem.type == .albums {
-//                        cell.mediaItem = mediaItem
-//                        return cell
-//                    }
-//                }
-//            }
-//        }
     }
     
-    var selectedIndexPath: IndexPath?
+    var selectedAlbum: AlbumTableViewCell?
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.selectedIndexPath = indexPath
         let selectedMediaItem = mediaItems[indexPath.section][indexPath.row]
         if selectedMediaItem.type == .songs {
             delegate?.didSelectSong(mediaItem: selectedMediaItem)
-            dismiss(animated: false)
-            dismiss(animated: true) {
-                self.selectedIndexPath = nil
+            dismiss(animated: true)
+        } else if selectedMediaItem.type == .albums { // album
+            if let albumCell = tableView.cellForRow(at: indexPath) as? AlbumTableViewCell {
+                self.selectedAlbum = albumCell
+                performSegue(withIdentifier: "ShowAlbum", sender: self)
             }
-        } else { // album
-            // request album from Apple Music catalog
-            expandAlbum(albumIdentifier: selectedMediaItem.identifier, albumIndex: indexPath.row)
-        }
-    }
-    
-    /// Request a specific album from Apple Music catalog. Used to expand album when tapped on in Music Search results
-    
-    func expandAlbum(albumIdentifier: String, albumIndex: Int) {
-        appleMusicController.performAppleMusicCatalogRequest(countryCode: appleMusicAuthorizationController.cloudServiceStorefrontCountryCode, requestIdentifier: albumIdentifier, relationship: appleMusicCatalogRequestRelationships.tracks) { (tracks: [MediaItem], error: Error?) in
-            guard error == nil else {
-                print(error!.localizedDescription)
-                return
-            }
-            // TODO: show returned tracks in table view
-            // update mediaItems to include songs of expanded album
-            self.mediaItems[1].insert(contentsOf: tracks, at: albumIndex + 1)
-            self.tableView.reloadData()
         }
     }
     
     // MARK: Search Bar Delegate Methods
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        dismiss(animated: false)
         dismiss(animated: true)
     }
     
@@ -210,11 +162,21 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
         searchController.searchBar.becomeFirstResponder()
     }
     
-    //    MARK: - Navigation
+    // MARK: - Navigation
     
-    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //
-    //    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowAlbum" {
+            searchController.searchBar.isHidden = true
+            self.navigationController?.isNavigationBarHidden = false
+            
+            // pass selected album to new view controller
+            if let albumTableViewController = segue.destination as? AlbumTableViewController {
+                albumTableViewController.appleMusicController = self.appleMusicController
+                albumTableViewController.appleMusicAuthorizationController = self.appleMusicAuthorizationController
+                albumTableViewController.album = selectedAlbum?.mediaItem
+            }
+        }
+    }
     
     // MARK: Miscellaneous
     
@@ -240,12 +202,17 @@ extension MusicSearchTableViewController: UISearchResultsUpdating {
                     return
                 }
                 self.mediaItems = results
-//                // allocate expanded album track items to size correlating to number of albums received
-//                self.expandedAlbumTrackItems = [[MediaItem]?](repeating: nil, count: results[1].count)
             }
         }
     }
     
 }
 
+extension MusicSearchTableViewController {
+    
+    struct TableViewConstants {
+        static let estimatedRowHeight: CGFloat = 80.0
+    }
+    
+}
 

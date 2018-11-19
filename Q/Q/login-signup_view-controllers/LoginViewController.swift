@@ -56,7 +56,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     userDefaults.set(self.PasswordTextField.text, forKey: LoginViewController.passwordUserDefaultsKey)
                 }
                 
-                self.performSegue(withIdentifier: "ShowQUserViewFromSignIn", sender: nil)
+                self.performSegue(withIdentifier: "ShowQUserViewFromLogin", sender: nil)
             }
         }
     }
@@ -118,9 +118,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "ShowQUserViewFromSignIn") {
-            if let qUser = segue.destination as? QUserViewController {
-                qUser.user = QUser(user: self.user!)
+        if (segue.identifier == "ShowQUserViewFromLogin") {
+            if let qUserView = segue.destination as? QUserViewController {
+                    qUserView.user = QUser(user: self.user!)
             }
         }
     }

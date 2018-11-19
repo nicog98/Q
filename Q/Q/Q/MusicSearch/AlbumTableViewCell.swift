@@ -10,12 +10,14 @@ import UIKit
 import SDWebImage
 
 class AlbumTableViewCell: MusicSearchTableViewCell {
-
+    
     @IBOutlet weak var AlbumArtworkImageView: UIImageView!
     
     @IBOutlet weak var AlbumNameLabel: UILabel!
     
     @IBOutlet weak var ArtistLabel: UILabel!
+    
+    var expanded: Bool = false
     
     override var mediaItem: MediaItem? {
         didSet {
@@ -35,8 +37,6 @@ class AlbumTableViewCell: MusicSearchTableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }

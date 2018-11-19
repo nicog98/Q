@@ -41,10 +41,6 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     // MARK: Changing Playback
     
-    @IBAction func previousSong(_ sender: Any) {
-        musicPlayer.skipToPreviousItem()
-    }
-    
     func playMusic() {
         switch musicPlayer.playbackState {
         case .stopped:
@@ -74,6 +70,10 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBAction func nextSong(_ sender: Any) {
         musicPlayer.skipToNextItem()
+    }
+    
+    @IBAction func previousSong(_ sender: Any) {
+        musicPlayer.skipToPreviousItem()
     }
     
     // MARK: Changing Q Title
@@ -107,13 +107,9 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // handle Apple Music configuration, login etc.
-        self.appleMusicController = AppleMusicController()
-        self.appleMusicAuthorizationController = AppleMusicAuthorizationController(appleMusicController: self.appleMusicController)
-        
         self.QueueTableView.delegate = self
         self.QueueTableView.dataSource = self
-        QTitleTextField.delegate = self
+        self.QTitleTextField.delegate = self
         
         let notificationCenter = NotificationCenter.default
         
@@ -147,10 +143,6 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     // MARK: Adding songs to the Q
-    
-    @IBAction func addToQ(_ sender: UIButton) {
-        performSegue(withIdentifier: "ShowMusicSearch", sender: sender)
-    }
     
     func addSongToQueue(songIdentifier: String) {
         let appleMusicStoreQueueDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [songIdentifier])
@@ -277,15 +269,12 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "ShowMusicSearch" {
-            if let musicSearchViewController = segue.destination as? MusicSearchTableViewController {
-                // passing appleMusic api to search
-                DispatchQueue.main.async {
-                    musicSearchViewController.appleMusicController = self.appleMusicController
-                    musicSearchViewController.appleMusicAuthorizationController = self.appleMusicAuthorizationController
-                    musicSearchViewController.delegate = self
-                }
-            }
+        if segue.identifier == "ShowMusicSearch",
+            let navigationController = segue.destination as? UINavigationController,
+            let musicSearchViewController = navigationController.topViewController as? MusicSearchTableViewController {
+            musicSearchViewController.appleMusicController = self.appleMusicController
+            musicSearchViewController.appleMusicAuthorizationController = self.appleMusicAuthorizationController
+            musicSearchViewController.delegate = self
         }
     }
     
