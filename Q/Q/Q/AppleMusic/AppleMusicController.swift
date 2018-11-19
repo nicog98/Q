@@ -37,6 +37,15 @@ class AppleMusicController {
         let _ = fetchDeveloperToken()
     }
     
+    /// Apple Music Request relationships
+    struct appleMusicCatalogRequestRelationships {
+        static let tracks = "tracks"
+        
+        static let artists = "artists"
+        
+        static let genres = "genres"
+    }
+    
     /// The storefront id that is used when making Apple Music API calls.
     var storefrontID: String?
     
@@ -228,6 +237,14 @@ class AppleMusicController {
         }
         
         return identifier
+    }
+    
+    // MARK: requesting album
+    
+    func requestAlbum(album: MediaItem, countryCode: String) {
+        performAppleMusicCatalogRequest(countryCode: countryCode, requestIdentifier: album.identifier, relationship: "tracks") { (tracks: [MediaItem], error: Error?) in
+            album.tracks = tracks
+        }
     }
     
 }

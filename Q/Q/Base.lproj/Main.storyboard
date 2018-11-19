@@ -232,7 +232,7 @@
                         <outlet property="ProfilePictureImageView" destination="uF4-JM-KBg" id="m5V-8m-vNI"/>
                         <outlet property="UsernameLabel" destination="l8r-WH-JjH" id="CV4-Y6-ref"/>
                         <outlet property="startQButton" destination="5P1-sJ-y7I" id="jGk-01-Orf"/>
-                        <segue destination="sY5-Jf-nYF" kind="show" identifier="ShowQ" id="oyw-4Y-tTC"/>
+                        <segue destination="lUE-8R-rf6" kind="show" identifier="ShowQ" id="vfz-07-Lr5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6bL-Wa-16p" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -338,7 +338,6 @@
                                 <state key="normal" image="add"/>
                                 <connections>
                                     <action selector="addSong:" destination="lUE-8R-rf6" eventType="touchUpInside" id="R6z-AH-4oz"/>
-                                    <action selector="addToQ:" destination="lUE-8R-rf6" eventType="touchUpInside" id="NmN-6L-xDC"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iGC-Qk-xnz">
@@ -363,8 +362,8 @@
                                 </attributedString>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="862-WA-SJ1">
-                                <rect key="frame" x="16" y="222" width="61" height="61"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="862-WA-SJ1">
+                                <rect key="frame" x="15.999999999999996" y="222" width="60.666666666666657" height="61"/>
                                 <state key="normal" image="previous-icon"/>
                                 <connections>
                                     <action selector="previousSong:" destination="lUE-8R-rf6" eventType="touchUpInside" id="3RO-U2-hmh"/>
@@ -387,6 +386,7 @@
                             <constraint firstItem="iGC-Qk-xnz" firstAttribute="bottom" secondItem="862-WA-SJ1" secondAttribute="bottom" id="Y7v-zV-exP"/>
                             <constraint firstItem="OhC-nt-3SX" firstAttribute="centerX" secondItem="Lh1-qc-3yk" secondAttribute="centerX" id="a2O-kI-PI0"/>
                             <constraint firstItem="iGC-Qk-xnz" firstAttribute="trailing" secondItem="yJ8-4R-S0P" secondAttribute="trailing" id="g5Z-U6-Sjf"/>
+                            <constraint firstItem="862-WA-SJ1" firstAttribute="leading" secondItem="fMM-d4-HFH" secondAttribute="leading" constant="16" id="hM8-Pc-QJo"/>
                             <constraint firstItem="fMM-d4-HFH" firstAttribute="trailing" secondItem="i1B-7j-MwJ" secondAttribute="trailing" id="inh-h7-FzG"/>
                             <constraint firstItem="OhC-nt-3SX" firstAttribute="leading" secondItem="fMM-d4-HFH" secondAttribute="leading" id="k1s-SV-T10"/>
                             <constraint firstItem="OhC-nt-3SX" firstAttribute="top" secondItem="i1B-7j-MwJ" secondAttribute="bottom" constant="16" id="kRi-Ln-Egk"/>
@@ -406,28 +406,28 @@
                         <outlet property="PreviousButton" destination="862-WA-SJ1" id="x7o-MV-mgz"/>
                         <outlet property="QTitleTextField" destination="i1B-7j-MwJ" id="T2o-ii-PgO"/>
                         <outlet property="QueueTableView" destination="OhC-nt-3SX" id="Ik0-jH-KG2"/>
-                        <segue destination="zNb-4w-evK" kind="show" identifier="ShowMusicSearch" id="dl1-Zf-dAD"/>
+                        <segue destination="YN1-7O-aCP" kind="show" identifier="ShowMusicSearch" id="KZD-pI-Ia9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qKf-NG-PCl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1502" y="61"/>
+            <point key="canvasLocation" x="-2314" y="247"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="8Bg-rW-RDw">
+        <scene sceneID="iEF-tQ-Ig5">
             <objects>
-                <navigationController navigationBarHidden="YES" id="sY5-Jf-nYF" customClass="QNavigationController" customModule="Q" customModuleProvider="target" sceneMemberID="viewController">
-                    <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gK4-XA-8y6">
+                <navigationController id="YN1-7O-aCP" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iCB-dB-Z1H">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="lUE-8R-rf6" kind="relationship" relationship="rootViewController" id="GjC-89-RE8"/>
+                        <segue destination="zNb-4w-evK" kind="relationship" relationship="rootViewController" id="YeS-wP-zXL"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xDJ-Qb-5AP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Li8-6S-6vx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2481" y="61"/>
+            <point key="canvasLocation" x="-1297" y="-446"/>
         </scene>
         <!--Music Search Table View Controller-->
         <scene sceneID="LeR-sg-exL">
@@ -485,11 +485,11 @@
                                     <outlet property="SongNameLabel" destination="rQz-fe-vLh" id="fmm-z8-5Pn"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AlbumCell" rowHeight="80.999999999999943" id="wo5-cI-XbS" customClass="AlbumTableViewCell" customModule="Q" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="125.33333333333334" width="375" height="81"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AlbumCell" rowHeight="79.999999999999943" id="wo5-cI-XbS" customClass="AlbumTableViewCell" customModule="Q" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="125.33333333333334" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wo5-cI-XbS" id="D6D-Pt-txn">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80.666666666666671"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79.666666666666671"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QgF-oO-Gy4">
@@ -507,7 +507,7 @@
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
                                             </userDefinedRuntimeAttributes>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FXL-MD-yaP">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FXL-MD-yaP">
                                             <rect key="frame" x="88" y="42" width="271" height="15.666666666666664"/>
                                             <attributedString key="attributedText">
                                                 <fragment content="ARTIST">
@@ -522,21 +522,22 @@
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bbc-YX-e6y">
                                             <rect key="frame" x="16" y="8" width="64" height="64"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="64" id="6pY-sP-h7c"/>
-                                                <constraint firstAttribute="width" constant="64" id="hXe-Jn-7qV"/>
+                                                <constraint firstAttribute="width" constant="64" id="6Hq-qn-aMB"/>
+                                                <constraint firstAttribute="height" constant="64" id="uvg-wq-itC"/>
                                             </constraints>
                                         </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="FXL-MD-yaP" firstAttribute="trailing" secondItem="D6D-Pt-txn" secondAttribute="trailingMargin" id="1qF-yG-7DR"/>
-                                        <constraint firstItem="FXL-MD-yaP" firstAttribute="top" secondItem="QgF-oO-Gy4" secondAttribute="bottom" constant="8" id="YEe-1Z-tFv"/>
+                                        <constraint firstItem="FXL-MD-yaP" firstAttribute="bottom" secondItem="D6D-Pt-txn" secondAttribute="bottomMargin" id="BBc-Jk-QwR"/>
+                                        <constraint firstItem="FXL-MD-yaP" firstAttribute="leading" secondItem="bbc-YX-e6y" secondAttribute="trailing" constant="8" id="H44-as-g2N"/>
+                                        <constraint firstItem="FXL-MD-yaP" firstAttribute="top" secondItem="QgF-oO-Gy4" secondAttribute="bottom" constant="8" id="MIQ-wy-Ijw"/>
                                         <constraint firstItem="QgF-oO-Gy4" firstAttribute="top" secondItem="D6D-Pt-txn" secondAttribute="topMargin" constant="2" id="cba-8V-ry3"/>
                                         <constraint firstItem="bbc-YX-e6y" firstAttribute="leading" secondItem="D6D-Pt-txn" secondAttribute="leading" constant="16" id="dg8-VS-Q6A"/>
                                         <constraint firstItem="bbc-YX-e6y" firstAttribute="top" secondItem="D6D-Pt-txn" secondAttribute="top" constant="8" id="gmO-ok-q42"/>
-                                        <constraint firstItem="FXL-MD-yaP" firstAttribute="leading" secondItem="bbc-YX-e6y" secondAttribute="trailing" constant="8" id="ntc-D4-JjP"/>
+                                        <constraint firstAttribute="bottom" secondItem="bbc-YX-e6y" secondAttribute="bottom" constant="8" id="oQT-iz-5lg"/>
                                         <constraint firstItem="QgF-oO-Gy4" firstAttribute="trailing" secondItem="D6D-Pt-txn" secondAttribute="trailingMargin" id="ol5-Va-x3T"/>
                                         <constraint firstItem="QgF-oO-Gy4" firstAttribute="leading" secondItem="bbc-YX-e6y" secondAttribute="trailing" constant="8" id="pmv-t1-40E"/>
-                                        <constraint firstItem="QgF-oO-Gy4" firstAttribute="leading" secondItem="bbc-YX-e6y" secondAttribute="trailing" constant="8" id="xzC-Zx-M51"/>
+                                        <constraint firstItem="FXL-MD-yaP" firstAttribute="trailing" secondItem="D6D-Pt-txn" secondAttribute="trailingMargin" id="w6p-Q4-X7R"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -556,30 +557,30 @@
                     </navigationItem>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <segue destination="ePV-gD-HOf" kind="show" identifier="ShowAlbum" id="5Gw-Rb-IQN"/>
+                        <segue destination="ePV-gD-HOf" kind="show" identifier="ShowAlbum" id="Qyy-HV-sp5"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RRv-Bo-kaX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-332" y="-624"/>
+            <point key="canvasLocation" x="-399.19999999999999" y="-446.30541871921184"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Album Table View Controller-->
         <scene sceneID="CgL-7i-1EV">
             <objects>
-                <tableViewController id="ePV-gD-HOf" sceneMemberID="viewController">
+                <tableViewController id="ePV-gD-HOf" customClass="AlbumTableViewController" customModule="Q" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Lz3-1f-skU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AlbumCell" rowHeight="80.999999999999943" id="Rjm-Ql-WlI" customClass="AlbumTableViewCell" customModule="Q" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="81"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AlbumCell" rowHeight="79.999999999999943" id="NDu-18-X26" customClass="AlbumTableViewCell" customModule="Q" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rjm-Ql-WlI" id="ZB4-3G-3Iu">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80.666666666666671"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NDu-18-X26" id="45x-Yg-pD1">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79.666666666666671"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iuw-o7-Vlx">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZT-PM-2Da">
                                             <rect key="frame" x="88" y="13" width="271" height="21"/>
                                             <attributedString key="attributedText">
                                                 <fragment content="ALBUM NAME">
@@ -594,7 +595,7 @@
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
                                             </userDefinedRuntimeAttributes>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Osv-PC-XDF">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QiG-F6-5W5">
                                             <rect key="frame" x="88" y="42" width="271" height="15.666666666666664"/>
                                             <attributedString key="attributedText">
                                                 <fragment content="ARTIST">
@@ -606,34 +607,35 @@
                                             </attributedString>
                                             <color key="highlightedColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vcs-Gy-PRy">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JhB-fl-wKe">
                                             <rect key="frame" x="16" y="8" width="64" height="64"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="64" id="Yhw-Mg-9ym"/>
-                                                <constraint firstAttribute="height" constant="64" id="d9Z-Qf-Xcr"/>
+                                                <constraint firstAttribute="height" constant="64" id="FPk-kx-UXE"/>
+                                                <constraint firstAttribute="width" constant="64" id="jp3-8G-9yA"/>
                                             </constraints>
                                         </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="iuw-o7-Vlx" firstAttribute="top" secondItem="ZB4-3G-3Iu" secondAttribute="topMargin" constant="2" id="0JN-Fa-jIZ"/>
-                                        <constraint firstItem="Vcs-Gy-PRy" firstAttribute="leading" secondItem="ZB4-3G-3Iu" secondAttribute="leading" constant="16" id="3st-us-9vK"/>
-                                        <constraint firstItem="Osv-PC-XDF" firstAttribute="top" secondItem="iuw-o7-Vlx" secondAttribute="bottom" constant="8" id="835-1s-rTt"/>
-                                        <constraint firstItem="Osv-PC-XDF" firstAttribute="leading" secondItem="Vcs-Gy-PRy" secondAttribute="trailing" constant="8" id="HWK-iA-VFd"/>
-                                        <constraint firstItem="Vcs-Gy-PRy" firstAttribute="top" secondItem="ZB4-3G-3Iu" secondAttribute="top" constant="8" id="Oro-yE-fCL"/>
-                                        <constraint firstItem="Osv-PC-XDF" firstAttribute="trailing" secondItem="ZB4-3G-3Iu" secondAttribute="trailingMargin" id="POC-wl-T2h"/>
-                                        <constraint firstItem="iuw-o7-Vlx" firstAttribute="trailing" secondItem="ZB4-3G-3Iu" secondAttribute="trailingMargin" id="owA-Ch-tHH"/>
-                                        <constraint firstItem="iuw-o7-Vlx" firstAttribute="leading" secondItem="Vcs-Gy-PRy" secondAttribute="trailing" constant="8" id="pZy-U1-o51"/>
-                                        <constraint firstItem="iuw-o7-Vlx" firstAttribute="leading" secondItem="Vcs-Gy-PRy" secondAttribute="trailing" constant="8" id="xiU-14-Nui"/>
+                                        <constraint firstItem="EZT-PM-2Da" firstAttribute="trailing" secondItem="45x-Yg-pD1" secondAttribute="trailingMargin" id="8Na-jk-flR"/>
+                                        <constraint firstItem="JhB-fl-wKe" firstAttribute="top" secondItem="45x-Yg-pD1" secondAttribute="top" constant="8" id="9Th-Re-7CI"/>
+                                        <constraint firstItem="QiG-F6-5W5" firstAttribute="bottom" secondItem="45x-Yg-pD1" secondAttribute="bottomMargin" id="Duu-Dj-f1D"/>
+                                        <constraint firstItem="QiG-F6-5W5" firstAttribute="leading" secondItem="JhB-fl-wKe" secondAttribute="trailing" constant="8" id="E4o-Wl-pWU"/>
+                                        <constraint firstItem="EZT-PM-2Da" firstAttribute="top" secondItem="45x-Yg-pD1" secondAttribute="topMargin" constant="2" id="bWe-Fb-4Mv"/>
+                                        <constraint firstItem="QiG-F6-5W5" firstAttribute="top" secondItem="EZT-PM-2Da" secondAttribute="bottom" constant="8" id="f1n-wy-IV8"/>
+                                        <constraint firstItem="EZT-PM-2Da" firstAttribute="leading" secondItem="JhB-fl-wKe" secondAttribute="trailing" constant="8" id="hBL-0t-Vo4"/>
+                                        <constraint firstItem="QiG-F6-5W5" firstAttribute="trailing" secondItem="45x-Yg-pD1" secondAttribute="trailingMargin" id="hMg-cr-uYt"/>
+                                        <constraint firstAttribute="bottom" secondItem="JhB-fl-wKe" secondAttribute="bottom" constant="8" id="oev-HO-b7N"/>
+                                        <constraint firstItem="JhB-fl-wKe" firstAttribute="leading" secondItem="45x-Yg-pD1" secondAttribute="leading" constant="16" id="pGp-yc-AXR"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="AlbumArtworkImageView" destination="Vcs-Gy-PRy" id="000-5Q-bwA"/>
-                                    <outlet property="AlbumNameLabel" destination="iuw-o7-Vlx" id="kd6-Sf-Kpe"/>
-                                    <outlet property="ArtistLabel" destination="Osv-PC-XDF" id="6xp-ud-lBq"/>
+                                    <outlet property="AlbumArtworkImageView" destination="JhB-fl-wKe" id="32O-Ep-xjT"/>
+                                    <outlet property="AlbumNameLabel" destination="EZT-PM-2Da" id="IoO-YO-d5p"/>
+                                    <outlet property="ArtistLabel" destination="QiG-F6-5W5" id="Nyc-Qb-yuN"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SongCell" rowHeight="70" id="vI7-lq-xh1" customClass="SongTableViewCell" customModule="Q" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="109" width="375" height="70"/>
+                                <rect key="frame" x="0.0" y="108" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vI7-lq-xh1" id="0zy-Cm-azy">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="69.666666666666671"/>
@@ -688,7 +690,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uYT-oD-E21" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="532" y="-624"/>
+            <point key="canvasLocation" x="460" y="-446"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="1gI-zy-FZQ">

@@ -19,11 +19,6 @@ class AlbumTableViewCell: MusicSearchTableViewCell {
     
     var expanded: Bool = false
     
-    var albumTracks: [MediaItem]? {
-        didSet {
-        }
-    }
-    
     override var mediaItem: MediaItem? {
         didSet {
             AlbumNameLabel.text = mediaItem?.name ?? ""

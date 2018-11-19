@@ -52,6 +52,8 @@ class MediaItem {
     /// The type of the `MediaItem` which in this application can be either `songs` or `albums`.
     let type: MediaType
     
+    var tracks: [MediaItem]?
+    
     // MARK: Initialization
     
     init(json: [String: Any]) throws {
