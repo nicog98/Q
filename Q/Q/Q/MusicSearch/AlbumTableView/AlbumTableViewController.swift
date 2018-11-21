@@ -13,11 +13,7 @@ class AlbumTableViewController: UITableViewController {
     var appleMusicController: AppleMusicController!
     var appleMusicAuthorizationController: AppleMusicAuthorizationController!
     
-    var album: MediaItem! {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    var album: MediaItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +37,9 @@ class AlbumTableViewController: UITableViewController {
                 return
             }
             self.album.tracks = tracks
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
 

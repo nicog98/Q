@@ -555,7 +555,6 @@
                     <navigationItem key="navigationItem" id="oYH-mk-uhb">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="back-icon-1x" id="J30-a4-DYM"/>
                     </navigationItem>
-                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <segue destination="ePV-gD-HOf" kind="show" identifier="ShowAlbum" id="Qyy-HV-sp5"/>
                     </connections>
