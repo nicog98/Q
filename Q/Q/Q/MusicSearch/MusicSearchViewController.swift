@@ -54,16 +54,13 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
         searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
-        searchController.definesPresentationContext = true
         searchController.searchBar.delegate = self
-        searchController.searchBar.isHidden = false
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
         
         // configure table view Autolayout
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = MusicSearchTableViewController.TableViewConstants.estimatedRowHeight
-        
-        tableView.tableHeaderView = searchController.searchBar
-        
         tableView.keyboardDismissMode = .onDrag // hide keyboard when user scrolls table view
     }
     
@@ -141,6 +138,7 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
         let selectedMediaItem = mediaItems[indexPath.section][indexPath.row]
         if selectedMediaItem.type == .songs {
             delegate?.didSelectSong(mediaItem: selectedMediaItem)
+            searchController.isActive = false
             dismiss(animated: true)
         } else if selectedMediaItem.type == .albums { // album
             if let albumCell = tableView.cellForRow(at: indexPath) as? AlbumTableViewCell {
@@ -166,8 +164,6 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowAlbum" {
-            searchController.searchBar.isHidden = true
-            self.navigationController?.isNavigationBarHidden = false
             
             // pass selected album to new view controller
             if let albumTableViewController = segue.destination as? AlbumTableViewController {
