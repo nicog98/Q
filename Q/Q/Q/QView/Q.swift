@@ -25,9 +25,9 @@ struct Q {
         self.name = ""
     }
     
-    mutating func addToQueue(song: MediaItem) {
-        queue.append(song)
-        identifiers.append(song.identifier)
+    mutating func addToQueue(mediaItem: MediaItem) {
+        queue.append(mediaItem)
+        identifiers.append(mediaItem.identifier)
     }
     
     mutating func addMember(user: QUser) {

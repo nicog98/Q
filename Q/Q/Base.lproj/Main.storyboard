@@ -413,10 +413,10 @@
             </objects>
             <point key="canvasLocation" x="-2314" y="247"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Music Search Navigation View Controller-->
         <scene sceneID="iEF-tQ-Ig5">
             <objects>
-                <navigationController id="YN1-7O-aCP" sceneMemberID="viewController">
+                <navigationController id="YN1-7O-aCP" customClass="MusicSearchNavigationViewController" customModule="Q" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iCB-dB-Z1H">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

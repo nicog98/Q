@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol MusicSearchTableViewControllerDelegate {
-    func didSelectSong(mediaItem: MediaItem)
-}
-
 class MusicSearchTableViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate {
 
     struct appleMusicCatalogRequestRelationships {
@@ -24,13 +20,11 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
     
     private static let numSections = 2
     
-    var delegate: MusicSearchTableViewControllerDelegate?
+    // Instance of navigation controller
+    var musicSearchNavigationViewController: MusicSearchNavigationViewController?
     
-    // Handle Apple Music API queries
-    var appleMusicController = AppleMusicController()
-    
-    // Handle Apple Music authorization
-    var appleMusicAuthorizationController: AppleMusicAuthorizationController!
+    // Handle Apple Music Configuration
+    var appleMusicConfiguration: AppleMusicConfiguration?
     
     // Allow for music searching and updating search results
     let searchController = UISearchController(searchResultsController: nil)
@@ -58,10 +52,17 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
-        // configure table view Autolayout
+        // Configure table view Autolayout
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = MusicSearchTableViewController.TableViewConstants.estimatedRowHeight
         tableView.keyboardDismissMode = .onDrag // hide keyboard when user scrolls table view
+        
+        // Get instance of navigation controller
+        self.musicSearchNavigationViewController = self.navigationController as? MusicSearchNavigationViewController
+        
+        // Get Apple Music configuration from navigation controller
+        self.appleMusicConfiguration = self.musicSearchNavigationViewController?.appleMusicConfiguration
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -71,17 +72,20 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if appleMusicController.fetchDeveloperToken() == nil {
-            
-            searchController.searchBar.isUserInteractionEnabled = false
-            
-            let alertController = UIAlertController(title: "Error",
-                                                    message: "No developer token was specified. See the README for more information.",
-                                                    preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.cancel, handler: nil))
-            present(alertController, animated: true, completion: nil)
-        } else {
-            searchController.searchBar.isUserInteractionEnabled = true
+        // Set up Apple Music
+        if appleMusicConfiguration != nil {
+            if appleMusicConfiguration!.appleMusicController.fetchDeveloperToken() == nil {
+                
+                searchController.searchBar.isUserInteractionEnabled = false
+                
+                let alertController = UIAlertController(title: "Error",
+                                                        message: "No developer token was specified. See the README for more information.",
+                                                        preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.cancel, handler: nil))
+                present(alertController, animated: true, completion: nil)
+            } else {
+                searchController.searchBar.isUserInteractionEnabled = true
+            }
         }
     }
     
@@ -137,7 +141,7 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedMediaItem = mediaItems[indexPath.section][indexPath.row]
         if selectedMediaItem.type == .songs {
-            delegate?.didSelectSong(mediaItem: selectedMediaItem)
+            musicSearchNavigationViewController?.musicSearchDelegate?.didSelectMediaItem(mediaItem: selectedMediaItem)
             searchController.isActive = false
             dismiss(animated: true)
         } else if selectedMediaItem.type == .albums { // album
@@ -167,8 +171,6 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
             
             // pass selected album to new view controller
             if let albumTableViewController = segue.destination as? AlbumTableViewController {
-                albumTableViewController.appleMusicController = self.appleMusicController
-                albumTableViewController.appleMusicAuthorizationController = self.appleMusicAuthorizationController
                 albumTableViewController.album = selectedAlbum?.mediaItem
             }
         }
@@ -192,7 +194,7 @@ extension MusicSearchTableViewController: UISearchResultsUpdating {
                 self.mediaItems = []
             }
         } else {
-            appleMusicController.performAppleMusicCatalogSearch(with: searchString, countryCode: appleMusicAuthorizationController.cloudServiceStorefrontCountryCode) { (results: [[MediaItem]], error: Error?) in
+            appleMusicConfiguration?.appleMusicController.performAppleMusicCatalogSearch(with: searchString, countryCode: (appleMusicConfiguration?.appleMusicAuthorizationController.cloudServiceStorefrontCountryCode)!) { (results: [[MediaItem]], error: Error?) in
                 guard error == nil else {
                     print(error!.localizedDescription)
                     return

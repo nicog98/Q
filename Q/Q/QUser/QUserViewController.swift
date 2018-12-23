@@ -63,11 +63,13 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
     /// FOR OFFLINE TESTING
 //    var user: QUser? = QUser()
     
-    /// Apple Music Authorization Controller handles Apple Music and iCloud login
-    var appleMusicAuthorizationController: AppleMusicAuthorizationController!
+    var appleMusicConfiguration: AppleMusicConfiguration?
     
-    /// Apple Music Controller handles Apple Music API
-    var appleMusicController: AppleMusicController!
+    /// Apple Music Authorization Controller handles Apple Music and iCloud login
+//    var appleMusicAuthorizationController: AppleMusicAuthorizationController!
+//
+//    /// Apple Music Controller handles Apple Music API
+//    var appleMusicController: AppleMusicController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,8 +82,10 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
         }
         
         // Handle Apple Music configuration, login, etc.
-        self.appleMusicController = AppleMusicController()
-        self.appleMusicAuthorizationController = AppleMusicAuthorizationController(appleMusicController: self.appleMusicController)
+        self.appleMusicConfiguration = AppleMusicConfiguration()
+        
+//        self.appleMusicController = AppleMusicController()
+//        self.appleMusicAuthorizationController = AppleMusicAuthorizationController(appleMusicController: self.appleMusicController)
         
         // set up delegates
         imagePicker.delegate = self
@@ -105,8 +109,9 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "ShowQ", let qViewController = segue.destination as? QViewController {
-            qViewController.appleMusicController = self.appleMusicController
-            qViewController.appleMusicAuthorizationController = self.appleMusicAuthorizationController
+//            qViewController.appleMusicController = self.appleMusicController
+//            qViewController.appleMusicAuthorizationController = self.appleMusicAuthorizationController
+            qViewController.appleMusicConfiguration = self.appleMusicConfiguration
         }
     }
 

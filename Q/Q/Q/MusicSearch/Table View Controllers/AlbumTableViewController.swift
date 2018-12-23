@@ -10,15 +10,16 @@ import UIKit
 
 class AlbumTableViewController: UITableViewController {
     
-    var appleMusicController: AppleMusicController!
-    var appleMusicAuthorizationController: AppleMusicAuthorizationController!
+    // Instance of overarching navigation controller
+    var musicSearchNavigationViewController: MusicSearchNavigationViewController?
+    
+    // Handles Apple Music configuration (Apple Music API queries, authorization)
+    var appleMusicConfiguration: AppleMusicConfiguration?
     
     var album: MediaItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        requestAlbum()
 
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 80
@@ -27,11 +28,22 @@ class AlbumTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        // Get instance of navigation controller
+        self.musicSearchNavigationViewController = self.navigationController as? MusicSearchNavigationViewController
+        
+        // Configure music library controllers
+        self.appleMusicConfiguration = musicSearchNavigationViewController?.appleMusicConfiguration
+        
+        requestAlbum()
     }
     
     // MARK: Request Album
     func requestAlbum() {
-        appleMusicController.performAppleMusicCatalogRequest(countryCode: appleMusicAuthorizationController.cloudServiceStorefrontCountryCode, requestIdentifier: album.identifier, relationship: AppleMusicController.appleMusicCatalogRequestRelationships.tracks) { (tracks: [MediaItem], error: Error?) in
+        appleMusicConfiguration?.appleMusicController.performAppleMusicCatalogRequest(
+            countryCode: (appleMusicConfiguration?.appleMusicAuthorizationController.cloudServiceStorefrontCountryCode)!,
+            requestIdentifier: album.identifier,
+            relationship: AppleMusicController.appleMusicCatalogRequestRelationships.tracks) { (tracks: [MediaItem], error: Error?) in
             guard error == nil else {
                 print(error!.localizedDescription)
                 return
@@ -68,6 +80,19 @@ class AlbumTableViewController: UITableViewController {
         return UITableViewCell()
     }
 
+    // MARK: Table View Methods
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var selectedMediaItem: MediaItem
+        if indexPath.row == 0 { // select entire album if clicked on header
+            selectedMediaItem = album
+        } else { // select a song from the album
+            selectedMediaItem = album!.tracks![indexPath.row-1]
+        }
+        musicSearchNavigationViewController?.musicSearchDelegate?.didSelectMediaItem(mediaItem: selectedMediaItem)
+        dismiss(animated: true)
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
