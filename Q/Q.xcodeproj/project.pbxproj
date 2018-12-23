@@ -37,6 +37,8 @@
 		3FAF7CBF211C02DB00AF83E7 /* SongTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF7CBE211C02DB00AF83E7 /* SongTableViewCell.swift */; };
 		3FCDAD262181406200C90B4B /* MusicSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCDAD252181406200C90B4B /* MusicSearchTableViewCell.swift */; };
 		3FDDF12F20FF11360054F6F7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDDF12E20FF11360054F6F7 /* SignUpViewController.swift */; };
+		3FE23A7121CFB7F700A0F882 /* MusicSearchNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE23A7021CFB7F700A0F882 /* MusicSearchNavigationViewController.swift */; };
+		3FE23A7821CFBD7600A0F882 /* AppleMusicConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE23A7721CFBD7600A0F882 /* AppleMusicConfiguration.swift */; };
 		3FE5D35E2111257700CABC65 /* AppleMusicAuthorizationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE5D35D2111257700CABC65 /* AppleMusicAuthorizationController.swift */; };
 		3FE5D36121112EAF00CABC65 /* AppleMusicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE5D36021112EAF00CABC65 /* AppleMusicController.swift */; };
 		3FE5D365211158FE00CABC65 /* JSONKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE5D364211158FE00CABC65 /* JSONKeys.swift */; };
@@ -81,6 +83,8 @@
 		3FAF7CBE211C02DB00AF83E7 /* SongTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongTableViewCell.swift; sourceTree = "<group>"; };
 		3FCDAD252181406200C90B4B /* MusicSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicSearchTableViewCell.swift; sourceTree = "<group>"; };
 		3FDDF12E20FF11360054F6F7 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		3FE23A7021CFB7F700A0F882 /* MusicSearchNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicSearchNavigationViewController.swift; sourceTree = "<group>"; };
+		3FE23A7721CFBD7600A0F882 /* AppleMusicConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicConfiguration.swift; sourceTree = "<group>"; };
 		3FE5D35D2111257700CABC65 /* AppleMusicAuthorizationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicAuthorizationController.swift; sourceTree = "<group>"; };
 		3FE5D36021112EAF00CABC65 /* AppleMusicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicController.swift; sourceTree = "<group>"; };
 		3FE5D364211158FE00CABC65 /* JSONKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONKeys.swift; sourceTree = "<group>"; };
@@ -132,14 +136,6 @@
 				3F377560212519670037CA18 /* QTableViewCell.swift */,
 			);
 			path = QView;
-			sourceTree = "<group>";
-		};
-		3F47825921A31A3E0049E767 /* AlbumTableView */ = {
-			isa = PBXGroup;
-			children = (
-				3F47825721A31A1F0049E767 /* AlbumTableViewController.swift */,
-			);
-			path = AlbumTableView;
 			sourceTree = "<group>";
 		};
 		3F68F4F220F57DF300928008 = {
@@ -235,13 +231,38 @@
 		3FAF7CBD211C02B400AF83E7 /* MusicSearch */ = {
 			isa = PBXGroup;
 			children = (
-				3F630991210ADA940055DD5E /* MusicSearchViewController.swift */,
-				3F47825921A31A3E0049E767 /* AlbumTableView */,
-				3FAF7CBB211C02AD00AF83E7 /* AlbumTableViewCell.swift */,
-				3FCDAD252181406200C90B4B /* MusicSearchTableViewCell.swift */,
-				3FAF7CBE211C02DB00AF83E7 /* SongTableViewCell.swift */,
+				3FE23A7421CFB84800A0F882 /* Table View Controllers */,
+				3FE23A7321CFB82300A0F882 /* Table View Cells */,
+				3FE23A7221CFB80100A0F882 /* Navigation Controller */,
 			);
 			path = MusicSearch;
+			sourceTree = "<group>";
+		};
+		3FE23A7221CFB80100A0F882 /* Navigation Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3FE23A7021CFB7F700A0F882 /* MusicSearchNavigationViewController.swift */,
+			);
+			path = "Navigation Controller";
+			sourceTree = "<group>";
+		};
+		3FE23A7321CFB82300A0F882 /* Table View Cells */ = {
+			isa = PBXGroup;
+			children = (
+				3FCDAD252181406200C90B4B /* MusicSearchTableViewCell.swift */,
+				3FAF7CBE211C02DB00AF83E7 /* SongTableViewCell.swift */,
+				3FAF7CBB211C02AD00AF83E7 /* AlbumTableViewCell.swift */,
+			);
+			path = "Table View Cells";
+			sourceTree = "<group>";
+		};
+		3FE23A7421CFB84800A0F882 /* Table View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3F630991210ADA940055DD5E /* MusicSearchViewController.swift */,
+				3F47825721A31A1F0049E767 /* AlbumTableViewController.swift */,
+			);
+			path = "Table View Controllers";
 			sourceTree = "<group>";
 		};
 		3FE5D35F21112E0400CABC65 /* AppleMusic */ = {
@@ -251,6 +272,7 @@
 				3FE5D363211158D200CABC65 /* Utility */,
 				3FE5D36021112EAF00CABC65 /* AppleMusicController.swift */,
 				3FE5D35D2111257700CABC65 /* AppleMusicAuthorizationController.swift */,
+				3FE23A7721CFBD7600A0F882 /* AppleMusicConfiguration.swift */,
 			);
 			path = AppleMusic;
 			sourceTree = "<group>";
@@ -398,6 +420,7 @@
 				3FE5D36B2111595000CABC65 /* SerializationError.swift in Sources */,
 				3FCDAD262181406200C90B4B /* MusicSearchTableViewCell.swift in Sources */,
 				3F377561212519670037CA18 /* QTableViewCell.swift in Sources */,
+				3FE23A7821CFBD7600A0F882 /* AppleMusicConfiguration.swift in Sources */,
 				3F630992210ADA940055DD5E /* MusicSearchViewController.swift in Sources */,
 				3FAEA7022104E76E0069B8BF /* QUserViewController.swift in Sources */,
 				3FDDF12F20FF11360054F6F7 /* SignUpViewController.swift in Sources */,
@@ -411,6 +434,7 @@
 				3FE5D365211158FE00CABC65 /* JSONKeys.swift in Sources */,
 				3FAF7CBF211C02DB00AF83E7 /* SongTableViewCell.swift in Sources */,
 				3FAEA7072104F1770069B8BF /* QUser.swift in Sources */,
+				3FE23A7121CFB7F700A0F882 /* MusicSearchNavigationViewController.swift in Sources */,
 				3F1EACE0210FD18000C5ADFE /* AppleMusicSearchGenerator.swift in Sources */,
 				3F47825821A31A1F0049E767 /* AlbumTableViewController.swift in Sources */,
 				3FE5D36121112EAF00CABC65 /* AppleMusicController.swift in Sources */,

@@ -13,7 +13,7 @@ import MediaPlayer
 import SDWebImage
 
 class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,
-    MusicSearchTableViewControllerDelegate/*, MPMediaPlayback*/ {
+    MusicSearchNavigationViewControllerDelegate/*, MPMediaPlayback*/ {
     
     @IBOutlet weak var ArtworkImageView: UIImageView!
     
@@ -55,11 +55,13 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     @IBAction func play(_ sender: UIButton) {
-        
         // prepare music player to play if not prepared already
         if !musicPlayer.isPreparedToPlay {
             musicPlayer.setQueue(with: musicQueue.identifiers)
             musicPlayer.prepareToPlay { (error) in
+                guard error == nil else {
+                    return
+                }
                 self.playMusic()
             }
         } else {
@@ -93,11 +95,13 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
     }
     
+    var appleMusicConfiguration: AppleMusicConfiguration?
+    
     // Apple Music Controller handles Apple Music API searches
-    var appleMusicController: AppleMusicController!
+//    var appleMusicController: AppleMusicController!
     
     // Apple Music Authorization Controller handles Apple Music and iClooud login
-    var appleMusicAuthorizationController: AppleMusicAuthorizationController!
+//    var appleMusicAuthorizationController: AppleMusicAuthorizationController!
     
     // instance of the Q model
     var musicQueue = Q()
@@ -144,16 +148,23 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     // MARK: Adding songs to the Q
     
-    func addSongToQueue(songIdentifier: String) {
-        let appleMusicStoreQueueDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [songIdentifier])
-        musicPlayer.append(appleMusicStoreQueueDescriptor)
+    func addToQueue(mediaItem: MediaItem) {
+        if mediaItem.type == .songs {
+            musicQueue.addToQueue(mediaItem: mediaItem)
+            let mediaItemIdentifier = mediaItem.identifier
+            let appleMusicStoreQueueDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [mediaItemIdentifier])
+            musicPlayer.append(appleMusicStoreQueueDescriptor)
+        } else if mediaItem.type == .albums {
+            for song in mediaItem.tracks! {
+                addToQueue(mediaItem: song)
+            }
+        }
     }
     
-    //
-    func didSelectSong(mediaItem: MediaItem) {
-        musicQueue.addToQueue(song: mediaItem)
+    // MARK: MusicSearchNavigationViewControllerDelegate methods
+    func didSelectMediaItem(mediaItem: MediaItem) {
+        addToQueue(mediaItem: mediaItem)
         self.QueueTableView.reloadData()
-        addSongToQueue(songIdentifier: mediaItem.identifier)
     }
     
     // MARK: UITableViewDelegate, UITableViewDataSource methods
@@ -270,14 +281,13 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "ShowMusicSearch",
-            let navigationController = segue.destination as? UINavigationController,
-            let musicSearchViewController = navigationController.topViewController as? MusicSearchTableViewController {
-            musicSearchViewController.appleMusicController = self.appleMusicController
-            musicSearchViewController.appleMusicAuthorizationController = self.appleMusicAuthorizationController
-            musicSearchViewController.delegate = self
+            let musicSearchNavigationController = segue.destination as? MusicSearchNavigationViewController {
+            musicSearchNavigationController.appleMusicConfiguration = self.appleMusicConfiguration
+            musicSearchNavigationController.musicSearchDelegate = self
         }
     }
     
+    // MARK: Handle killing the app
     @objc func willTerminate() {
         musicPlayer.pause()
     }
