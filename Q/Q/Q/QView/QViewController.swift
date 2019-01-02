@@ -81,7 +81,7 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     @objc func nowPlayingItemDidChange() {
         let mediaItemIndex = musicPlayer.indexOfNowPlayingItem
         let mediaItem = q.queue[mediaItemIndex]
-        let artworkUrl = mediaItem.artwork.imageURL(size: CGSize(width: mediaItem.artwork.width, height: mediaItem.artwork.height))
+        let artworkUrl = mediaItem.artwork.imageURL(height: Int(ArtworkImageView.frame.height), width: Int(ArtworkImageView.frame.width))
         ArtworkImageView.sd_setImage(with: artworkUrl, placeholderImage: UIImage())
     }
     
@@ -169,12 +169,12 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     // MARK: Adding songs to the Q
     
     func addToQueue(mediaItem: MediaItem) {
-        if mediaItem.type == .songs {
+        if mediaItem.type == .song {
             q.addToQueue(mediaItem: mediaItem)
             let mediaItemIdentifier = mediaItem.identifier
             let appleMusicStoreQueueDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [mediaItemIdentifier])
             musicPlayer.append(appleMusicStoreQueueDescriptor)
-        } else if mediaItem.type == .albums {
+        } else if mediaItem.type == .album {
             for song in mediaItem.tracks! {
                 addToQueue(mediaItem: song)
             }

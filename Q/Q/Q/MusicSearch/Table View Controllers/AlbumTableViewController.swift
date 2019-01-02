@@ -43,7 +43,7 @@ class AlbumTableViewController: UITableViewController {
         appleMusicConfiguration?.appleMusicController.performAppleMusicCatalogRequest(
             countryCode: (appleMusicConfiguration?.appleMusicAuthorizationController.cloudServiceStorefrontCountryCode)!,
             requestIdentifier: album.identifier,
-            relationship: AppleMusicController.appleMusicCatalogRequestRelationships.tracks) { (tracks: [MediaItem], error: Error?) in
+            relationship: AppleMusicController.appleMusicCatalogRequestRelationships.tracks) { (tracks: [AppleMusicMediaItem], error: Error?) in
             guard error == nil else {
                 print(error!.localizedDescription)
                 return
