@@ -20,18 +20,12 @@ class QPageViewController: UIPageViewController, UIPageViewControllerDataSource,
     var qPageViewControllerDelegate: QPageViewControllerDelegate?
     
     lazy var views: [UIViewController] = [
-        self.fetchViewController(identifier: QPageViewController.viewControllerIdentifiers.startQVC),
+        self.fetchViewController(identifier: QPageViewController.viewControllerIdentifiers.qVC),
         self.fetchViewController(identifier: QPageViewController.viewControllerIdentifiers.nearbyVC)
     ]
     
     private func fetchViewController(identifier: String) -> UIViewController {
-        if identifier == QPageViewController.viewControllerIdentifiers.startQVC,
-            let qStatusViewController = (storyboard?.instantiateViewController(withIdentifier: identifier) as? QStatusViewController) {
-            qStatusViewController.delegate = self
-            return qStatusViewController
-        } else {
-            return (storyboard?.instantiateViewController(withIdentifier: identifier))!
-        }
+        return storyboard!.instantiateViewController(withIdentifier: identifier)
     }
 
     override func viewDidLoad() {
@@ -99,6 +93,8 @@ extension QPageViewController {
     
     struct viewControllerIdentifiers {
         static let startQVC: String = "StartQViewController"
+        
+        static let qVC: String = "QViewController"
         
         static let nearbyVC: String = "NearbyViewController"
     }

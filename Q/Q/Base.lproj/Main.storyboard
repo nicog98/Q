@@ -254,7 +254,7 @@
         <!--View Controller-->
         <scene sceneID="Kz8-W2-LS8">
             <objects>
-                <viewController id="lUE-8R-rf6" customClass="QViewController" customModule="Q" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="QViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lUE-8R-rf6" customClass="QViewController" customModule="Q" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Lh1-qc-3yk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -859,6 +859,7 @@
         <!--Status View Controller-->
         <scene sceneID="f3j-QV-prc">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8eo-36-Tz4" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="StartQViewController" modalPresentationStyle="pageSheet" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Pq8-XK-bIs" customClass="QStatusViewController" customModule="Q" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NYI-5e-56F">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
@@ -896,13 +897,13 @@
                         <outlet property="StartQButton" destination="Rsd-Yr-xSu" id="sZC-Bn-hCB"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8eo-36-Tz4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2882" y="1437"/>
+            <point key="canvasLocation" x="-4466" y="2007"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="K21-57-t7I">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eZj-HA-e6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="NearbyViewController" modalPresentationStyle="pageSheet" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Gqj-d4-SbY" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LkS-dl-nCx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
@@ -942,9 +943,8 @@
                         <viewLayoutGuide key="safeArea" id="7kF-JY-oHe"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eZj-HA-e6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2132" y="1437"/>
+            <point key="canvasLocation" x="-2314" y="989"/>
         </scene>
     </scenes>
     <resources>
@@ -959,6 +959,6 @@
         <image name="previous-icon" width="204.80000305175781" height="204.80000305175781"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="L3u-QX-F6u"/>
+        <segue reference="2VG-A1-ooP"/>
     </inferredMetricsTieBreakers>
 </document>
