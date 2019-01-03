@@ -9,7 +9,15 @@
 import UIKit
 import Parse
 
-class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, QPageViewControllerDelegate {
+    
+    @IBOutlet weak var UsernameLabel: UILabel!
+    
+    @IBOutlet weak var ContainerView: UIView!
+    
+    var qPageViewController: QPageViewController!
+    
+    /// MARK: Profile Picture
     
     @IBOutlet weak var ProfilePictureImageView: UIImageView! {
         didSet {
@@ -21,8 +29,6 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
     @IBOutlet weak var EditButton: UIButton!
     
     var imagePicker = UIImagePickerController()
-    
-    /// MARK: Changing Profile Picture
     
     @IBAction func editProfilePicutre(_ sender: UIButton) {
         // open photos
@@ -54,22 +60,14 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
         dismiss(animated: true, completion: nil)
     }
     
-    @IBOutlet weak var UsernameLabel: UILabel!
-    
-    @IBOutlet weak var startQButton: UIButton!
-    
     var user: QUser?
     
     /// FOR OFFLINE TESTING
 //    var user: QUser? = QUser()
     
-    var appleMusicConfiguration: AppleMusicConfiguration?
+    // MARK: Configuring Apple Music
     
-    /// Apple Music Authorization Controller handles Apple Music and iCloud login
-//    var appleMusicAuthorizationController: AppleMusicAuthorizationController!
-//
-//    /// Apple Music Controller handles Apple Music API
-//    var appleMusicController: AppleMusicController!
+    var appleMusicConfiguration: AppleMusicConfiguration?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,11 +82,15 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
         // Handle Apple Music configuration, login, etc.
         self.appleMusicConfiguration = AppleMusicConfiguration()
         
-//        self.appleMusicController = AppleMusicController()
-//        self.appleMusicAuthorizationController = AppleMusicAuthorizationController(appleMusicController: self.appleMusicController)
-        
         // set up delegates
         imagePicker.delegate = self
+        
+    }
+    
+    // MARK: QPageViewControllerDelegate methods
+    
+    func didSelectStartQ() {
+        performSegue(withIdentifier: "ShowQ", sender: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -96,22 +98,14 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
         // Dispose of any resources that can be recreated.
     }
     
-    
-    @IBAction func startQ(_ sender: Any) {
-        performSegue(withIdentifier: "ShowQ", sender: sender)
-    }
-    
-
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         if segue.identifier == "ShowQ", let qViewController = segue.destination as? QViewController {
-//            qViewController.appleMusicController = self.appleMusicController
-//            qViewController.appleMusicAuthorizationController = self.appleMusicAuthorizationController
             qViewController.appleMusicConfiguration = self.appleMusicConfiguration
+        } else if segue.identifier == "EmbedQPageViewController", let qPageViewController = segue.destination as? QPageViewController {
+            qPageViewController.qPageViewControllerDelegate = self // set up delegate for segueing based on actions in QPageViewController
         }
     }
 

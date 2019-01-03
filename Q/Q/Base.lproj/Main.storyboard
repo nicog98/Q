@@ -213,7 +213,7 @@
                                     <constraint firstAttribute="height" constant="355" id="an7-8R-HbY"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="Q4I-Hr-wjg" kind="embed" id="ded-Ye-Vcp"/>
+                                    <segue destination="Q4I-Hr-wjg" kind="embed" identifier="EmbedQPageViewController" id="ded-Ye-Vcp"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -238,7 +238,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="qCa-ik-9kU"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="ContainerView" destination="V5D-Rq-By5" id="htO-XM-YUE"/>
                         <outlet property="EditButton" destination="2ye-eI-yLj" id="a48-TL-jpf"/>
                         <outlet property="ProfilePictureImageView" destination="uF4-JM-KBg" id="m5V-8m-vNI"/>
                         <outlet property="UsernameLabel" destination="l8r-WH-JjH" id="CV4-Y6-ref"/>
@@ -379,6 +381,14 @@
                                     <action selector="previousSong:" destination="lUE-8R-rf6" eventType="touchUpInside" id="3RO-U2-hmh"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rQy-rd-xYA">
+                                <rect key="frame" x="16" y="44" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="down-arrow-filled"/>
+                                <connections>
+                                    <action selector="dismiss:" destination="lUE-8R-rf6" eventType="touchUpInside" id="wKl-ys-elp"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -411,6 +421,7 @@
                     <connections>
                         <outlet property="AddButton" destination="yJ8-4R-S0P" id="JOC-Ga-M2z"/>
                         <outlet property="ArtworkImageView" destination="ji2-Tj-S6C" id="lhv-sI-Q8n"/>
+                        <outlet property="DismissButton" destination="rQy-rd-xYA" id="sFp-qh-y8I"/>
                         <outlet property="NextButton" destination="iGC-Qk-xnz" id="hUt-5r-Gtd"/>
                         <outlet property="PlayButton" destination="zWb-nl-5xX" id="d5w-iJ-PBL"/>
                         <outlet property="PreviousButton" destination="862-WA-SJ1" id="x7o-MV-mgz"/>
@@ -421,7 +432,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qKf-NG-PCl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2314" y="247"/>
+            <point key="canvasLocation" x="-2314.4000000000001" y="246.79802955665025"/>
         </scene>
         <!--Music Search Navigation View Controller-->
         <scene sceneID="iEF-tQ-Ig5">
@@ -845,10 +856,10 @@
             </objects>
             <point key="canvasLocation" x="-3642" y="1268"/>
         </scene>
-        <!--View Controller-->
+        <!--Status View Controller-->
         <scene sceneID="f3j-QV-prc">
             <objects>
-                <viewController storyboardIdentifier="StartQViewController" modalPresentationStyle="pageSheet" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Pq8-XK-bIs" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StartQViewController" modalPresentationStyle="pageSheet" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Pq8-XK-bIs" customClass="QStatusViewController" customModule="Q" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NYI-5e-56F">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -867,6 +878,9 @@
                                         </fragment>
                                     </attributedString>
                                 </state>
+                                <connections>
+                                    <action selector="startQ:" destination="Pq8-XK-bIs" eventType="touchUpInside" id="P9b-It-u0A"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -878,10 +892,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Wi2-Ma-ekG"/>
                     </view>
+                    <connections>
+                        <outlet property="StartQButton" destination="Rsd-Yr-xSu" id="sZC-Bn-hCB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8eo-36-Tz4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4076" y="2013.5467980295568"/>
+            <point key="canvasLocation" x="-2882" y="1437"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="K21-57-t7I">
@@ -927,7 +944,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eZj-HA-e6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3199.1999999999998" y="2013.5467980295568"/>
+            <point key="canvasLocation" x="-2132" y="1437"/>
         </scene>
     </scenes>
     <resources>
@@ -936,6 +953,7 @@
         <image name="back-icon" width="204.80000305175781" height="204.80000305175781"/>
         <image name="back-icon-1x" width="50" height="50"/>
         <image name="back-icon-2x" width="50" height="50"/>
+        <image name="down-arrow-filled" width="180" height="180"/>
         <image name="next-icon" width="204.80000305175781" height="204.80000305175781"/>
         <image name="play-button" width="102.40000152587891" height="102.40000152587891"/>
         <image name="previous-icon" width="204.80000305175781" height="204.80000305175781"/>

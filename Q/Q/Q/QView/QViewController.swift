@@ -29,6 +29,8 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBOutlet weak var AddButton: UIButton!
     
+    @IBOutlet weak var DismissButton: UIButton!
+    
     @IBOutlet weak var QueueTableView: UITableView!
     
     // Music player used to play Apple Music songs, application queue player gives greater queue functionality
@@ -269,7 +271,12 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
 //    }
     
     // MARK: - Navigation
-
+    
+    
+    @IBAction func dismiss(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.

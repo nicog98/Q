@@ -8,7 +8,16 @@
 
 import UIKit
 
-class QPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+protocol QPageViewControllerDelegate {
+    /// Function that indicates the "START Q" button was pressed
+    func didSelectStartQ()
+}
+
+class QPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, QStatusViewControllerDelegate {
+    
+    /// Delegate object to indicate to QUserView of actions in PageViewController view controllers
+    /// i.e. selected "START Q" button
+    var qPageViewControllerDelegate: QPageViewControllerDelegate?
     
     lazy var views: [UIViewController] = [
         self.fetchViewController(identifier: QPageViewController.viewControllerIdentifiers.startQVC),
@@ -16,7 +25,13 @@ class QPageViewController: UIPageViewController, UIPageViewControllerDataSource,
     ]
     
     private func fetchViewController(identifier: String) -> UIViewController {
-        return storyboard!.instantiateViewController(withIdentifier: identifier)
+        if identifier == QPageViewController.viewControllerIdentifiers.startQVC,
+            let qStatusViewController = (storyboard?.instantiateViewController(withIdentifier: identifier) as? QStatusViewController) {
+            qStatusViewController.delegate = self
+            return qStatusViewController
+        } else {
+            return (storyboard?.instantiateViewController(withIdentifier: identifier))!
+        }
     }
 
     override func viewDidLoad() {
@@ -52,12 +67,20 @@ class QPageViewController: UIPageViewController, UIPageViewControllerDataSource,
         return self.views[index]
     }
     
+    // MARK: UIPageViewControllerDelegate methods
+    
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
         return self.views.count
     }
     
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         return currentViewControllerIndex
+    }
+    
+    // MARK: QStatusViewControllerDelegate methods
+    
+    func didSelectStartQ() {
+        qPageViewControllerDelegate?.didSelectStartQ() // delegate chaining
     }
 
     /*
