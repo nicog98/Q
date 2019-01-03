@@ -104,8 +104,7 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     // MARK: Changing Q Title
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // only change name if there is text
-        if (textField.text != "") {
+        if (textField.text != "") { // only change name if there is text
             textField.resignFirstResponder()
             return true
         }

@@ -11,6 +11,7 @@
 		3F02656421DD3A350030867A /* Artwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F02656321DD3A350030867A /* Artwork.swift */; };
 		3F1EACE0210FD18000C5ADFE /* AppleMusicSearchGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1EACDF210FD18000C5ADFE /* AppleMusicSearchGenerator.swift */; };
 		3F377561212519670037CA18 /* QTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F377560212519670037CA18 /* QTableViewCell.swift */; };
+		3F3B3ADB21DD864C007670B6 /* QPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B3ADA21DD864C007670B6 /* QPageViewController.swift */; };
 		3F47825821A31A1F0049E767 /* AlbumTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F47825721A31A1F0049E767 /* AlbumTableViewController.swift */; };
 		3F630992210ADA940055DD5E /* MusicSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F630991210ADA940055DD5E /* MusicSearchViewController.swift */; };
 		3F68F4FF20F57DF300928008 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F68F4FE20F57DF300928008 /* AppDelegate.swift */; };
@@ -57,6 +58,7 @@
 		3F02656321DD3A350030867A /* Artwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artwork.swift; sourceTree = "<group>"; };
 		3F1EACDF210FD18000C5ADFE /* AppleMusicSearchGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicSearchGenerator.swift; sourceTree = "<group>"; };
 		3F377560212519670037CA18 /* QTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QTableViewCell.swift; sourceTree = "<group>"; };
+		3F3B3ADA21DD864C007670B6 /* QPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QPageViewController.swift; sourceTree = "<group>"; };
 		3F47825721A31A1F0049E767 /* AlbumTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTableViewController.swift; sourceTree = "<group>"; };
 		3F630991210ADA940055DD5E /* MusicSearchViewController.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = MusicSearchViewController.swift; sourceTree = "<group>"; };
 		3F68F4FB20F57DF300928008 /* Q.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Q.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -227,6 +229,7 @@
 			children = (
 				3FAEA7012104E76E0069B8BF /* QUserViewController.swift */,
 				3FAEA7062104F1770069B8BF /* QUser.swift */,
+				3F3B3ADA21DD864C007670B6 /* QPageViewController.swift */,
 			);
 			path = QUser;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 				3FAEA7072104F1770069B8BF /* QUser.swift in Sources */,
 				3FE23A7121CFB7F700A0F882 /* MusicSearchNavigationViewController.swift in Sources */,
 				3F1EACE0210FD18000C5ADFE /* AppleMusicSearchGenerator.swift in Sources */,
+				3F3B3ADB21DD864C007670B6 /* QPageViewController.swift in Sources */,
 				3F47825821A31A1F0049E767 /* AlbumTableViewController.swift in Sources */,
 				3FE5D36121112EAF00CABC65 /* AppleMusicController.swift in Sources */,
 				3F68F4FF20F57DF300928008 /* AppDelegate.swift in Sources */,
