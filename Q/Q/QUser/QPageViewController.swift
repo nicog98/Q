@@ -52,8 +52,6 @@ class QPageViewController: UIPageViewController, UIPageViewControllerDataSource,
         return self.views[index]
     }
     
-    // MARK: UIPageViewControllerDelegate methods
-    
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
         return self.views.count
     }
