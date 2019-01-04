@@ -208,9 +208,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V5D-Rq-By5">
-                                <rect key="frame" x="0.0" y="457" width="375" height="355"/>
+                                <rect key="frame" x="0.0" y="512" width="375" height="300"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="355" id="an7-8R-HbY"/>
+                                    <constraint firstAttribute="height" constant="300" id="aS6-tF-3uk"/>
                                 </constraints>
                                 <connections>
                                     <segue destination="Q4I-Hr-wjg" kind="embed" identifier="EmbedQPageViewController" id="ded-Ye-Vcp"/>
@@ -244,7 +244,7 @@
                         <outlet property="EditButton" destination="2ye-eI-yLj" id="a48-TL-jpf"/>
                         <outlet property="ProfilePictureImageView" destination="uF4-JM-KBg" id="m5V-8m-vNI"/>
                         <outlet property="UsernameLabel" destination="l8r-WH-JjH" id="CV4-Y6-ref"/>
-                        <segue destination="lUE-8R-rf6" kind="show" identifier="ShowQ" id="vfz-07-Lr5"/>
+                        <segue destination="RNJ-0Y-76X" kind="presentation" identifier="PresentMaxQPageViewController" id="1DR-Af-ih9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6bL-Wa-16p" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -432,7 +432,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qKf-NG-PCl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2314.4000000000001" y="246.79802955665025"/>
+            <point key="canvasLocation" x="-1159" y="250"/>
         </scene>
         <!--Music Search Navigation View Controller-->
         <scene sceneID="iEF-tQ-Ig5">
@@ -448,7 +448,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Li8-6S-6vx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1297" y="-446"/>
+            <point key="canvasLocation" x="-143" y="-443"/>
         </scene>
         <!--Music Search Table View Controller-->
         <scene sceneID="LeR-sg-exL">
@@ -582,7 +582,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RRv-Bo-kaX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-399.19999999999999" y="-446.30541871921184"/>
+            <point key="canvasLocation" x="756" y="-443"/>
         </scene>
         <!--Album Table View Controller-->
         <scene sceneID="CgL-7i-1EV">
@@ -710,7 +710,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uYT-oD-E21" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="460" y="-446"/>
+            <point key="canvasLocation" x="1615" y="-443"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="1gI-zy-FZQ">
@@ -848,13 +848,21 @@
             </objects>
             <point key="canvasLocation" x="-4874" y="989"/>
         </scene>
-        <!--Page View Controller-->
+        <!--MiniQ Page View Controller-->
         <scene sceneID="Zat-9v-dDS">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="Q4I-Hr-wjg" customClass="QPageViewController" customModule="Q" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="Q4I-Hr-wjg" customClass="MiniQPageViewController" customModule="Q" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Afm-Xb-XtV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3642" y="1268"/>
+            <point key="canvasLocation" x="-3642" y="1148"/>
+        </scene>
+        <!--MaxQ Page View Controller-->
+        <scene sceneID="rfw-sB-e2q">
+            <objects>
+                <pageViewController storyboardIdentifier="MaxQPageViewController" autoresizesArchivedViewToFullSize="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="RNJ-0Y-76X" customClass="MaxQPageViewController" customModule="Q" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4mB-ha-kpM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2482" y="618"/>
         </scene>
         <!--Status View Controller-->
         <scene sceneID="f3j-QV-prc">
@@ -898,7 +906,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8eo-36-Tz4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2882" y="1437"/>
+            <point key="canvasLocation" x="-1159" y="962"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="K21-57-t7I">
@@ -944,7 +952,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eZj-HA-e6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2132" y="1437"/>
+            <point key="canvasLocation" x="-1159" y="1678"/>
         </scene>
     </scenes>
     <resources>

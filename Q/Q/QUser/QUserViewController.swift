@@ -15,7 +15,7 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     @IBOutlet weak var ContainerView: UIView!
     
-    var qPageViewController: QPageViewController!
+    var qPageViewController: MiniQPageViewController!
     
     /// MARK: Profile Picture
     
@@ -90,7 +90,7 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
     // MARK: QPageViewControllerDelegate methods
     
     func didSelectStartQ() {
-        performSegue(withIdentifier: "ShowQ", sender: self)
+        performSegue(withIdentifier: "PresentMaxQPageViewController", sender: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -104,8 +104,9 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowQ", let qViewController = segue.destination as? QViewController {
             qViewController.appleMusicConfiguration = self.appleMusicConfiguration
-        } else if segue.identifier == "EmbedQPageViewController", let qPageViewController = segue.destination as? QPageViewController {
+        } else if segue.identifier == "EmbedQPageViewController", let qPageViewController = segue.destination as? MiniQPageViewController {
             qPageViewController.qPageViewControllerDelegate = self // set up delegate for segueing based on actions in QPageViewController
+            self.qPageViewController = qPageViewController
         }
     }
 

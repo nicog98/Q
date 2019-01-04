@@ -130,8 +130,6 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.musicPlayer.prepareToPlay()
-        
         self.QueueTableView.delegate = self
         self.QueueTableView.dataSource = self
         self.QTitleTextField.delegate = self

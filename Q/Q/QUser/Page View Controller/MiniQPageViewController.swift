@@ -13,19 +13,19 @@ protocol QPageViewControllerDelegate {
     func didSelectStartQ()
 }
 
-class QPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, QStatusViewControllerDelegate {
+class MiniQPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, QStatusViewControllerDelegate {
     
     /// Delegate object to indicate to QUserView of actions in PageViewController view controllers
     /// i.e. selected "START Q" button
     var qPageViewControllerDelegate: QPageViewControllerDelegate?
     
     lazy var views: [UIViewController] = [
-        self.fetchViewController(identifier: QPageViewController.viewControllerIdentifiers.startQVC),
-        self.fetchViewController(identifier: QPageViewController.viewControllerIdentifiers.nearbyVC)
+        self.fetchViewController(identifier: MiniQPageViewController.viewControllerIdentifiers.startQVC),
+        self.fetchViewController(identifier: MiniQPageViewController.viewControllerIdentifiers.nearbyVC)
     ]
     
     private func fetchViewController(identifier: String) -> UIViewController {
-        if identifier == QPageViewController.viewControllerIdentifiers.startQVC,
+        if identifier == MiniQPageViewController.viewControllerIdentifiers.startQVC,
             let qStatusViewController = (storyboard?.instantiateViewController(withIdentifier: identifier) as? QStatusViewController) {
             qStatusViewController.delegate = self
             return qStatusViewController
@@ -95,7 +95,7 @@ class QPageViewController: UIPageViewController, UIPageViewControllerDataSource,
 
 }
 
-extension QPageViewController {
+extension MiniQPageViewController {
     
     struct viewControllerIdentifiers {
         static let startQVC: String = "StartQViewController"
