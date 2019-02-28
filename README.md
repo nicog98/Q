@@ -1,4 +1,4 @@
 # Q
-Collective music queue. Built for iOS 11.
+Collective music queue. Built for iOS 12.
 
 ⛑
