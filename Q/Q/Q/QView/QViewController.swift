@@ -29,6 +29,8 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBOutlet weak var AddButton: UIButton!
     
+    @IBOutlet weak var DismissButton: UIButton!
+    
     @IBOutlet weak var QueueTableView: UITableView!
     
     // Music player used to play Apple Music songs, application queue player gives greater queue functionality
@@ -81,7 +83,7 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     @objc func nowPlayingItemDidChange() {
         let mediaItemIndex = musicPlayer.indexOfNowPlayingItem
         let mediaItem = q.queue[mediaItemIndex]
-        let artworkUrl = mediaItem.artwork.imageURL(size: CGSize(width: mediaItem.artwork.width, height: mediaItem.artwork.height))
+        let artworkUrl = mediaItem.artwork.imageURL(height: Int(ArtworkImageView.frame.height), width: Int(ArtworkImageView.frame.width))
         ArtworkImageView.sd_setImage(with: artworkUrl, placeholderImage: UIImage())
     }
     
@@ -104,8 +106,7 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     // MARK: Changing Q Title
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // only change name if there is text
-        if (textField.text != "") {
+        if (textField.text != "") { // only change name if there is text
             textField.resignFirstResponder()
             return true
         }
@@ -128,8 +129,6 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.musicPlayer.prepareToPlay()
         
         self.QueueTableView.delegate = self
         self.QueueTableView.dataSource = self
@@ -169,12 +168,12 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     // MARK: Adding songs to the Q
     
     func addToQueue(mediaItem: MediaItem) {
-        if mediaItem.type == .songs {
+        if mediaItem.type == .song {
             q.addToQueue(mediaItem: mediaItem)
             let mediaItemIdentifier = mediaItem.identifier
             let appleMusicStoreQueueDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [mediaItemIdentifier])
             musicPlayer.append(appleMusicStoreQueueDescriptor)
-        } else if mediaItem.type == .albums {
+        } else if mediaItem.type == .album {
             for song in mediaItem.tracks! {
                 addToQueue(mediaItem: song)
             }
@@ -270,7 +269,12 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
 //    }
     
     // MARK: - Navigation
-
+    
+    
+    @IBAction func dismiss(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.

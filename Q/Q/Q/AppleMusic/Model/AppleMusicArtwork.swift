@@ -6,9 +6,9 @@
 //  Copyright © 2018 Nicolai Garcia. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class Artwork {
+class AppleMusicArtwork: Artwork {
     
     // MARK: Types
     
@@ -21,23 +21,10 @@ class Artwork {
         static let url = "url"
     }
     
-    // MARK: Properties
-    
-    /// The maximum height available for the image.
-    let height: Int
-    
-    /// The maximum width available for the image.
-    let width: Int
-    
-    /**
-     The string representation of the URL to request the image asset. This template should be used to create the URL for the correctly sized image
-     your application wishes to use.  See `Artwork.imageURL(size:)` for additional information.
-     */
-    let urlTemplateString: String
-    
     // MARK: Initialization
     
     init(json: [String: Any]) throws {
+        
         guard let height = json[JSONKeys.height] as? Int else {
             throw SerializationError.missing(JSONKeys.height)
         }
@@ -50,14 +37,12 @@ class Artwork {
             throw SerializationError.missing(JSONKeys.url)
         }
         
-        self.height = height
-        self.width = width
-        self.urlTemplateString = urlTemplateString
+        super.init(height: height, width: width, urlTemplateString: urlTemplateString)
     }
     
     // MARK: Image URL Generation Method
     
-    func imageURL(size: CGSize) -> URL {
+    override func imageURL(height: Int, width: Int) -> URL {
         
         /*
          There are three pieces of information needed to create the URL for the image we want for a given size.  This information is the width, height
@@ -65,10 +50,10 @@ class Artwork {
          */
         
         // 1) Replace the "{w}" placeholder with the desired width as an integer value.
-        var imageURLString = urlTemplateString.replacingOccurrences(of: "{w}", with: "\(Int(size.width))")
+        var imageURLString = urlTemplateString.replacingOccurrences(of: "{w}", with: "\(width)")
         
         // 2) Replace the "{h}" placeholder with the desired height as an integer value.
-        imageURLString = imageURLString.replacingOccurrences(of: "{h}", with: "\(Int(size.width))")
+        imageURLString = imageURLString.replacingOccurrences(of: "{h}", with: "\(height)")
         
         // 3) Replace the "{f}" placeholder with the desired image format.
         imageURLString = imageURLString.replacingOccurrences(of: "{f}", with: "png")

@@ -122,9 +122,9 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
         var cell: MusicSearchTableViewCell?
         
         switch mediaItem.type {
-        case .songs:
+        case .song:
             cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as? SongTableViewCell
-        case .albums:
+        case .album:
             cell = tableView.dequeueReusableCell(withIdentifier: "AlbumCell", for: indexPath) as? AlbumTableViewCell
         default:
             break
@@ -140,11 +140,11 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedMediaItem = mediaItems[indexPath.section][indexPath.row]
-        if selectedMediaItem.type == .songs {
+        if selectedMediaItem.type == .song {
             musicSearchNavigationViewController?.musicSearchDelegate?.didSelectMediaItem(mediaItem: selectedMediaItem)
             searchController.isActive = false
             dismiss(animated: true)
-        } else if selectedMediaItem.type == .albums { // album
+        } else if selectedMediaItem.type == .album { // album
             if let albumCell = tableView.cellForRow(at: indexPath) as? AlbumTableViewCell {
                 self.selectedAlbum = albumCell
                 performSegue(withIdentifier: "ShowAlbum", sender: self)

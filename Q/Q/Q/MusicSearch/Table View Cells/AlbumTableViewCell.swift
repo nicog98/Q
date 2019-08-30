@@ -23,7 +23,7 @@ class AlbumTableViewCell: MusicSearchTableViewCell {
         didSet {
             AlbumNameLabel.text = mediaItem?.name ?? ""
             ArtistLabel.text = mediaItem?.artistName ?? ""
-            guard let artworkUrl = self.mediaItem?.artwork.imageURL(size: CGSize(width: (self.mediaItem?.artwork.width)!, height: (self.mediaItem?.artwork.height)!)) else {
+            guard let artworkUrl = self.mediaItem?.artwork.imageURL(height: Int(AlbumArtworkImageView.frame.height), width: Int(AlbumArtworkImageView.frame.width)) else {
                 return
             }
             AlbumArtworkImageView.sd_setImage(with: artworkUrl, placeholderImage: UIImage())

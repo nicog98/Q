@@ -15,13 +15,13 @@ class AppleMusicController {
     // MARK: Types
     
     /// The completion handler that is called when an Apple Music Catalog Search API call completes.
-    typealias CatalogSearchCompletionHandler = (_ mediaItems: [[MediaItem]], _ error: Error?) -> Void
+    typealias CatalogSearchCompletionHandler = (_ mediaItems: [[AppleMusicMediaItem]], _ error: Error?) -> Void
     
     /// The completion handler that is called when an Apple Music Get User Storefront API call completes.
     typealias GetUserStorefrontCompletionHandler = (_ storefront: String?, _ error: Error?) -> Void
     
     /// The completion handler that is called when an Apple Music Catalog Request API call completes.
-    typealias CatalogRequestCompletionHandler = (_ mediaItems: [MediaItem], _ error: Error?) -> Void
+    typealias CatalogRequestCompletionHandler = (_ mediaItems: [AppleMusicMediaItem], _ error: Error?) -> Void
     
     // MARK: Properties
     
@@ -180,12 +180,12 @@ class AppleMusicController {
         
     }
     
-    func processAppleMusicCatalogResponse(from json: Data) throws -> [MediaItem] {
+    func processAppleMusicCatalogResponse(from json: Data) throws -> [AppleMusicMediaItem] {
         guard let jsonDictionary = try JSONSerialization.jsonObject(with: json, options: []) as? [String: Any] else {
             throw SerializationError.missing("")
         }
         
-        var albumTracks = [MediaItem]()
+        var albumTracks = [AppleMusicMediaItem]()
         
         if let dataArray = jsonDictionary[ResponseRootJSONKeys.data] as? [[String: Any]] {
             albumTracks = try processMediaItems(from: dataArray)
@@ -194,13 +194,13 @@ class AppleMusicController {
         return albumTracks
     }
     
-    func processMediaItemSections(from json: Data) throws -> [[MediaItem]] {
+    func processMediaItemSections(from json: Data) throws -> [[AppleMusicMediaItem]] {
         guard let jsonDictionary = try JSONSerialization.jsonObject(with: json, options: []) as? [String: Any],
             let results = jsonDictionary[ResponseRootJSONKeys.results] as? [String: [String: Any]] else {
                 throw SerializationError.missing(ResponseRootJSONKeys.results)
         }
         
-        var mediaItems = [[MediaItem]]()
+        var mediaItems = [[AppleMusicMediaItem]]()
         
         if let songsDictionary = results[ResourceTypeJSONKeys.songs] {
             
@@ -221,8 +221,8 @@ class AppleMusicController {
         return mediaItems
     }
     
-    func processMediaItems(from json: [[String: Any]]) throws -> [MediaItem] {
-        let songMediaItems = try json.map { try MediaItem(json: $0) }
+    func processMediaItems(from json: [[String: Any]]) throws -> [AppleMusicMediaItem] {
+        let songMediaItems = try json.map { try AppleMusicMediaItem(json: $0) }
         return songMediaItems
     }
     
@@ -241,8 +241,8 @@ class AppleMusicController {
     
     // MARK: requesting album
     
-    func requestAlbum(album: MediaItem, countryCode: String) {
-        performAppleMusicCatalogRequest(countryCode: countryCode, requestIdentifier: album.identifier, relationship: "tracks") { (tracks: [MediaItem], error: Error?) in
+    func requestAlbum(album: AppleMusicMediaItem, countryCode: String) {
+        performAppleMusicCatalogRequest(countryCode: countryCode, requestIdentifier: album.identifier, relationship: "tracks") { (tracks: [AppleMusicMediaItem], error: Error?) in
             album.tracks = tracks
         }
     }

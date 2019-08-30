@@ -9,7 +9,17 @@
 import UIKit
 import Parse
 
-class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    @IBOutlet weak var UsernameLabel: UILabel!
+    
+    @IBOutlet weak var ContainerView: UIView!
+    
+    var qPageViewController: MiniQPageViewController!
+    
+    var qPageModel: QPageModel!
+    
+    /// MARK: Profile Picture
     
     @IBOutlet weak var ProfilePictureImageView: UIImageView! {
         didSet {
@@ -21,8 +31,6 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
     @IBOutlet weak var EditButton: UIButton!
     
     var imagePicker = UIImagePickerController()
-    
-    /// MARK: Changing Profile Picture
     
     @IBAction func editProfilePicutre(_ sender: UIButton) {
         // open photos
@@ -54,22 +62,24 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
         dismiss(animated: true, completion: nil)
     }
     
-    @IBOutlet weak var UsernameLabel: UILabel!
+    /// MARK: UICollectionView protocol methods
     
-    @IBOutlet weak var startQButton: UIButton!
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        <#code#>
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        <#code#>
+    }
     
     var user: QUser?
     
     /// FOR OFFLINE TESTING
 //    var user: QUser? = QUser()
     
-    var appleMusicConfiguration: AppleMusicConfiguration?
+    // MARK: Configuring Apple Music
     
-    /// Apple Music Authorization Controller handles Apple Music and iCloud login
-//    var appleMusicAuthorizationController: AppleMusicAuthorizationController!
-//
-//    /// Apple Music Controller handles Apple Music API
-//    var appleMusicController: AppleMusicController!
+    var appleMusicConfiguration: AppleMusicConfiguration?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,33 +94,43 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
         // Handle Apple Music configuration, login, etc.
         self.appleMusicConfiguration = AppleMusicConfiguration()
         
-//        self.appleMusicController = AppleMusicController()
-//        self.appleMusicAuthorizationController = AppleMusicAuthorizationController(appleMusicController: self.appleMusicController)
-        
         // set up delegates
         imagePicker.delegate = self
+        
+        // set up page controller model
+        self.qPageModel = QPageModel(appleMusicConfiguration: self.appleMusicConfiguration)
+        
+        // Add observers for notifications posted from view controllers in page view
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(startQ),
+                                               name: QStatusViewController.startQSelected,
+                                               object: nil)
+        
     }
+    
+    // MARK: Handling notifications
+    
+//    @objc func startQ() {
+//        performSegue(withIdentifier: "PresentMaxQPageViewController", sender: self)
+//    }
+    
+    @IBAction func startQ(_ sender: Any) {
+        performSegue(withIdentifier: "ShowQ", sender: self)
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    
-    @IBAction func startQ(_ sender: Any) {
-        performSegue(withIdentifier: "ShowQ", sender: sender)
-    }
-    
-
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        if segue.identifier == "ShowQ", let qViewController = segue.destination as? QViewController {
-//            qViewController.appleMusicController = self.appleMusicController
-//            qViewController.appleMusicAuthorizationController = self.appleMusicAuthorizationController
+        if segue.identifier == "EmbedQPageViewController", let qPageViewController = segue.destination as? MiniQPageViewController {
+            self.qPageViewController = qPageViewController
+        } else if segue.identifier == "ShowQ", let qViewController = segue.destination as? QViewController {
             qViewController.appleMusicConfiguration = self.appleMusicConfiguration
         }
     }

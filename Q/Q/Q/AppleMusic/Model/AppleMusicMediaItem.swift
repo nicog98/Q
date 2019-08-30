@@ -8,17 +8,9 @@
 
 import Foundation
 
-class MediaItem {
+class AppleMusicMediaItem: MediaItem {
     
     // MARK: Types
-    
-    /// The type of resource.
-    ///
-    /// - songs: This indicates that the `MediaItem` is a song from the Apple Music Catalog.
-    /// - albums: This indicates that the `MediaItem` is an album from the Apple Music Catalog.
-    enum MediaType: String {
-        case songs, albums, stations, playlists
-    }
     
     /// The various keys needed for serializing an instance of `MediaItem` using a JSON response from the Apple Music Web Service.
     struct JSONKeys {
@@ -35,25 +27,6 @@ class MediaItem {
         static let artwork = "artwork"
     }
     
-    // MARK: Properties
-    
-    /// The persistent identifier of the resource which is used to add the item to the playlist or trigger playback.
-    let identifier: String
-    
-    /// The localized name of the album or song.
-    let name: String
-    
-    /// The artist’s name.
-    let artistName: String
-    
-    /// The album artwork associated with the song or album.
-    let artwork: Artwork
-    
-    /// The type of the `MediaItem` which in this application can be either `songs` or `albums`.
-    let type: MediaType
-    
-    var tracks: [MediaItem]?
-    
     // MARK: Initialization
     
     init(json: [String: Any]) throws {
@@ -61,9 +34,10 @@ class MediaItem {
             throw SerializationError.missing(JSONKeys.identifier)
         }
         
-        guard let typeString = json[JSONKeys.type] as? String, let type = MediaType(rawValue: typeString) else {
+        guard var typeString = json[JSONKeys.type] as? String else {
             throw SerializationError.missing(JSONKeys.type)
         }
+        typeString.removeLast() // Apple Music encodes the type parameter with a trailing 's', remove it so it conforms with the MediaItem.MediaType parameter
         
         guard let attributes = json[JSONKeys.attributes] as? [String: Any] else {
             throw SerializationError.missing(JSONKeys.attributes)
@@ -75,14 +49,10 @@ class MediaItem {
         
         let artistName = attributes[JSONKeys.artistName] as? String ?? " "
         
-        guard let artworkJSON = attributes[JSONKeys.artwork] as? [String: Any], let artwork = try? Artwork(json: artworkJSON) else {
+        guard let artworkJSON = attributes[JSONKeys.artwork] as? [String: Any], let artwork = try? AppleMusicArtwork(json: artworkJSON) else {
             throw SerializationError.missing(JSONKeys.artwork)
         }
         
-        self.identifier = identifier
-        self.type = type
-        self.name = name
-        self.artistName = artistName
-        self.artwork = artwork
+        super.init(identifier: identifier, typeString: typeString, name: name, artistName: artistName, artwork: artwork)
     }
 }
