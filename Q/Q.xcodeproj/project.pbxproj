@@ -38,8 +38,9 @@
 		3FAEA70D210568C80069B8BF /* QViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEA70C210568C80069B8BF /* QViewController.swift */; };
 		3FAF7CBC211C02AD00AF83E7 /* AlbumTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF7CBB211C02AD00AF83E7 /* AlbumTableViewCell.swift */; };
 		3FAF7CBF211C02DB00AF83E7 /* SongTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF7CBE211C02DB00AF83E7 /* SongTableViewCell.swift */; };
+		3FC2239F21DFAEDE0044E054 /* MaxQPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC2239E21DFAEDE0044E054 /* MaxQPageViewController.swift */; };
+		3FC223A321DFB2F90044E054 /* QPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC223A221DFB2F90044E054 /* QPageModel.swift */; };
 		3FCDAD262181406200C90B4B /* MusicSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCDAD252181406200C90B4B /* MusicSearchTableViewCell.swift */; };
-		3FD86D5721DEF52E00A05A79 /* MaxQPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD86D5621DEF52E00A05A79 /* MaxQPageViewController.swift */; };
 		3FDDF12F20FF11360054F6F7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDDF12E20FF11360054F6F7 /* SignUpViewController.swift */; };
 		3FE23A7121CFB7F700A0F882 /* MusicSearchNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE23A7021CFB7F700A0F882 /* MusicSearchNavigationViewController.swift */; };
 		3FE23A7821CFBD7600A0F882 /* AppleMusicConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE23A7721CFBD7600A0F882 /* AppleMusicConfiguration.swift */; };
@@ -89,8 +90,9 @@
 		3FAEA70C210568C80069B8BF /* QViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QViewController.swift; sourceTree = "<group>"; };
 		3FAF7CBB211C02AD00AF83E7 /* AlbumTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTableViewCell.swift; sourceTree = "<group>"; };
 		3FAF7CBE211C02DB00AF83E7 /* SongTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongTableViewCell.swift; sourceTree = "<group>"; };
+		3FC2239E21DFAEDE0044E054 /* MaxQPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxQPageViewController.swift; sourceTree = "<group>"; };
+		3FC223A221DFB2F90044E054 /* QPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QPageModel.swift; sourceTree = "<group>"; };
 		3FCDAD252181406200C90B4B /* MusicSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicSearchTableViewCell.swift; sourceTree = "<group>"; };
-		3FD86D5621DEF52E00A05A79 /* MaxQPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxQPageViewController.swift; sourceTree = "<group>"; };
 		3FDDF12E20FF11360054F6F7 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		3FE23A7021CFB7F700A0F882 /* MusicSearchNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicSearchNavigationViewController.swift; sourceTree = "<group>"; };
 		3FE23A7721CFBD7600A0F882 /* AppleMusicConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicConfiguration.swift; sourceTree = "<group>"; };
@@ -259,6 +261,24 @@
 			path = MusicSearch;
 			sourceTree = "<group>";
 		};
+		3FC223A021DFB2980044E054 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3FC223A221DFB2F90044E054 /* QPageModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3FC223A121DFB2A10044E054 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3FF49FAF21DEA1DC00D9A377 /* QStatusViewController.swift */,
+				3F3B3ADA21DD864C007670B6 /* MiniQPageViewController.swift */,
+				3FC2239E21DFAEDE0044E054 /* MaxQPageViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
 		3FE23A7221CFB80100A0F882 /* Navigation Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -320,9 +340,8 @@
 		3FF49FAC21DE955300D9A377 /* Page View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				3F3B3ADA21DD864C007670B6 /* MiniQPageViewController.swift */,
-				3FF49FAF21DEA1DC00D9A377 /* QStatusViewController.swift */,
-				3FD86D5621DEF52E00A05A79 /* MaxQPageViewController.swift */,
+				3FC223A021DFB2980044E054 /* Model */,
+				3FC223A121DFB2A10044E054 /* View Controllers */,
 			);
 			path = "Page View Controller";
 			sourceTree = "<group>";
@@ -448,7 +467,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3FD86D5721DEF52E00A05A79 /* MaxQPageViewController.swift in Sources */,
+				3FC2239F21DFAEDE0044E054 /* MaxQPageViewController.swift in Sources */,
 				3FE5D36B2111595000CABC65 /* SerializationError.swift in Sources */,
 				3FCDAD262181406200C90B4B /* MusicSearchTableViewCell.swift in Sources */,
 				3F377561212519670037CA18 /* QTableViewCell.swift in Sources */,
@@ -466,6 +485,7 @@
 				3FE5D3692111593A00CABC65 /* AppleMusicMediaItem.swift in Sources */,
 				3FE5D3672111592700CABC65 /* AppleMusicArtwork.swift in Sources */,
 				3FF49FB021DEA1DC00D9A377 /* QStatusViewController.swift in Sources */,
+				3FC223A321DFB2F90044E054 /* QPageModel.swift in Sources */,
 				3FE5D365211158FE00CABC65 /* JSONKeys.swift in Sources */,
 				3FAF7CBF211C02DB00AF83E7 /* SongTableViewCell.swift in Sources */,
 				3FAEA7072104F1770069B8BF /* QUser.swift in Sources */,

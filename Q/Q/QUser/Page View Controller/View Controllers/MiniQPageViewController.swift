@@ -8,16 +8,10 @@
 
 import UIKit
 
-protocol QPageViewControllerDelegate {
-    /// Function that indicates the "START Q" button was pressed
-    func didSelectStartQ()
-}
-
-class MiniQPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, QStatusViewControllerDelegate {
+class MiniQPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
-    /// Delegate object to indicate to QUserView of actions in PageViewController view controllers
-    /// i.e. selected "START Q" button
-    var qPageViewControllerDelegate: QPageViewControllerDelegate?
+    /// The model for presenting the page view controller
+    var qPageModel: QPageModel!
     
     lazy var views: [UIViewController] = [
         self.fetchViewController(identifier: MiniQPageViewController.viewControllerIdentifiers.startQVC),
@@ -25,13 +19,7 @@ class MiniQPageViewController: UIPageViewController, UIPageViewControllerDataSou
     ]
     
     private func fetchViewController(identifier: String) -> UIViewController {
-        if identifier == MiniQPageViewController.viewControllerIdentifiers.startQVC,
-            let qStatusViewController = (storyboard?.instantiateViewController(withIdentifier: identifier) as? QStatusViewController) {
-            qStatusViewController.delegate = self
-            return qStatusViewController
-        } else {
-            return (storyboard?.instantiateViewController(withIdentifier: identifier))!
-        }
+        return (storyboard?.instantiateViewController(withIdentifier: identifier))!
     }
 
     override func viewDidLoad() {
@@ -75,12 +63,6 @@ class MiniQPageViewController: UIPageViewController, UIPageViewControllerDataSou
     
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         return currentViewControllerIndex
-    }
-    
-    // MARK: QStatusViewControllerDelegate methods
-    
-    func didSelectStartQ() {
-        qPageViewControllerDelegate?.didSelectStartQ() // delegate chaining
     }
 
     /*

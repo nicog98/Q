@@ -1,5 +1,5 @@
 //
-//  MaxQPageViewController.swift
+//  QStatusViewController.swift
 //  Q
 //
 //  Created by Nicolai Garcia on 1/3/19.
@@ -8,7 +8,10 @@
 
 import UIKit
 
-class MaxQPageViewController: UIPageViewController {
+class QStatusViewController: UIViewController {
+    
+    /// Notification that is posted when "START Q" is selected
+    static let startQSelected = Notification.Name("startQSelected")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,7 +19,12 @@ class MaxQPageViewController: UIPageViewController {
         // Do any additional setup after loading the view.
     }
     
-
+    @IBOutlet weak var StartQButton: UIButton!
+    
+    @IBAction func startQ(_ sender: Any) {
+        NotificationCenter.default.post(name: QStatusViewController.startQSelected, object: self) // Post to notification center
+    }
+    
     /*
     // MARK: - Navigation
 

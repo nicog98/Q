@@ -9,13 +9,15 @@
 import UIKit
 import Parse
 
-class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, QPageViewControllerDelegate {
+class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet weak var UsernameLabel: UILabel!
     
     @IBOutlet weak var ContainerView: UIView!
     
     var qPageViewController: MiniQPageViewController!
+    
+    var qPageModel: QPageModel!
     
     /// MARK: Profile Picture
     
@@ -60,6 +62,16 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
         dismiss(animated: true, completion: nil)
     }
     
+    /// MARK: UICollectionView protocol methods
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        <#code#>
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        <#code#>
+    }
+    
     var user: QUser?
     
     /// FOR OFFLINE TESTING
@@ -85,13 +97,27 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
         // set up delegates
         imagePicker.delegate = self
         
+        // set up page controller model
+        self.qPageModel = QPageModel(appleMusicConfiguration: self.appleMusicConfiguration)
+        
+        // Add observers for notifications posted from view controllers in page view
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(startQ),
+                                               name: QStatusViewController.startQSelected,
+                                               object: nil)
+        
     }
     
-    // MARK: QPageViewControllerDelegate methods
+    // MARK: Handling notifications
     
-    func didSelectStartQ() {
-        performSegue(withIdentifier: "PresentMaxQPageViewController", sender: self)
+//    @objc func startQ() {
+//        performSegue(withIdentifier: "PresentMaxQPageViewController", sender: self)
+//    }
+    
+    @IBAction func startQ(_ sender: Any) {
+        performSegue(withIdentifier: "ShowQ", sender: self)
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -102,11 +128,10 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowQ", let qViewController = segue.destination as? QViewController {
-            qViewController.appleMusicConfiguration = self.appleMusicConfiguration
-        } else if segue.identifier == "EmbedQPageViewController", let qPageViewController = segue.destination as? MiniQPageViewController {
-            qPageViewController.qPageViewControllerDelegate = self // set up delegate for segueing based on actions in QPageViewController
+        if segue.identifier == "EmbedQPageViewController", let qPageViewController = segue.destination as? MiniQPageViewController {
             self.qPageViewController = qPageViewController
+        } else if segue.identifier == "ShowQ", let qViewController = segue.destination as? QViewController {
+            qViewController.appleMusicConfiguration = self.appleMusicConfiguration
         }
     }
 
