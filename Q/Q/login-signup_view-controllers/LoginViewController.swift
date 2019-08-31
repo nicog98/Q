@@ -38,6 +38,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     public var user: PFUser?
     
+    /// MARK: Login
+    
     func loginUser(username: String, password: String, firstTime: Bool) {
         PFUser.logInWithUsername(inBackground: username, password: password) { (user: PFUser?, error: Error?) in
             if let error = error {
@@ -48,14 +50,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 self.user = user
                 self.SignInActivityIndicator.stopAnimating()
                 self.SignInActivityIndicator.isHidden = true
-                
+
                 // store login information in user defaults
                 if firstTime {
                     let userDefaults = UserDefaults.standard
                     userDefaults.set(self.UsernameTextField.text, forKey: LoginViewController.usernameUserDefaultsKey)
                     userDefaults.set(self.PasswordTextField.text, forKey: LoginViewController.passwordUserDefaultsKey)
                 }
-                
+
                 self.performSegue(withIdentifier: "ShowQUserViewFromLogin", sender: nil)
             }
         }
@@ -64,7 +66,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func signIn(_ sender: UIButton) {
         self.SignInActivityIndicator.isHidden = false
         self.SignInActivityIndicator.startAnimating()
-        loginUser(username: self.UsernameTextField.text!, password: self.PasswordTextField.text!, firstTime: true)
+//        loginUser(username: self.UsernameTextField.text!, password: self.PasswordTextField.text!, firstTime: true)
+        // FOR OFFLINE TESTING
+        self.performSegue(withIdentifier: "ShowQUserViewFromLogin", sender: sender)
     }
     
     @IBAction func signUp(_ sender: UIButton) {
@@ -85,10 +89,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         // attempt to retrieve user login information if stored in user defaults
-        let userDefaults = UserDefaults.standard
-        if let username = userDefaults.string(forKey: LoginViewController.usernameUserDefaultsKey), let password = userDefaults.string(forKey: LoginViewController.passwordUserDefaultsKey) {
-            loginUser(username: username, password: password, firstTime: false)
-        }
+        // COMMENT FOR OFFLINE TESTING
+//        let userDefaults = UserDefaults.standard
+//        if let username = userDefaults.string(forKey: LoginViewController.usernameUserDefaultsKey), let password = userDefaults.string(forKey: LoginViewController.passwordUserDefaultsKey) {
+//            loginUser(username: username, password: password, firstTime: false)
+//        }
     }
     
     var screenMoved: Bool = false
@@ -120,7 +125,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "ShowQUserViewFromLogin") {
             if let qUserView = segue.destination as? QUserViewController {
-                    qUserView.user = QUser(user: self.user!)
+                // initialize to empty user if unable to login
+                qUserView.user = self.user != nil ? QUser(user: self.user!) : QUser()
             }
         }
     }

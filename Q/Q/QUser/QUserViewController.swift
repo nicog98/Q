@@ -13,6 +13,8 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     @IBOutlet weak var UsernameLabel: UILabel!
     
+    @IBOutlet weak var PlaylistCollectionView: UICollectionView!
+    
     @IBOutlet weak var ContainerView: UIView!
     
     var qPageViewController: MiniQPageViewController!
@@ -65,17 +67,21 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
     /// MARK: UICollectionView protocol methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        return (self.user?.playlists.count)! + 1
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        if indexPath.item < self.user!.playlists.count {
+            return UICollectionViewCell()
+        } else if indexPath.item == self.user!.playlists.count {
+            // return AddCell
+            let addCell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddCell", for: indexPath) as? AddCollectionViewCell
+            return addCell ?? UICollectionViewCell()
+        }
+        return UICollectionViewCell()
     }
     
     var user: QUser?
-    
-    /// FOR OFFLINE TESTING
-//    var user: QUser? = QUser()
     
     // MARK: Configuring Apple Music
     
@@ -88,7 +94,7 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
         if let profilePictureData = self.user?.profilePictureData {
             self.ProfilePictureImageView.image = UIImage(data: profilePictureData)
         } else {
-            self.ProfilePictureImageView.image = UIImage(named: "Albers-Square-Peach-Blue")
+            self.ProfilePictureImageView.image = UIImage(named: "Virgil")
         }
         
         // Handle Apple Music configuration, login, etc.
@@ -96,6 +102,8 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
         
         // set up delegates
         imagePicker.delegate = self
+        PlaylistCollectionView.delegate = self
+        PlaylistCollectionView.dataSource = self
         
         // set up page controller model
         self.qPageModel = QPageModel(appleMusicConfiguration: self.appleMusicConfiguration)
@@ -106,6 +114,10 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
                                                name: QStatusViewController.startQSelected,
                                                object: nil)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     // MARK: Handling notifications

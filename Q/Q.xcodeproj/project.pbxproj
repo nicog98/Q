@@ -32,6 +32,8 @@
 		3F7A824220FCDC0200965FB6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7A824120FCDC0200965FB6 /* SystemConfiguration.framework */; };
 		3F7A824420FCDC1100965FB6 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7A824320FCDC1100965FB6 /* libsqlite3.tbd */; };
 		3F7A824620FCDC1B00965FB6 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7A824520FCDC1B00965FB6 /* libz.tbd */; };
+		3FA35D84231B017D009AD887 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA35D83231B017D009AD887 /* Playlist.swift */; };
+		3FA35D87231B05C0009AD887 /* AddCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA35D86231B05C0009AD887 /* AddCollectionViewCell.swift */; };
 		3FAEA7022104E76E0069B8BF /* QUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEA7012104E76E0069B8BF /* QUserViewController.swift */; };
 		3FAEA7072104F1770069B8BF /* QUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEA7062104F1770069B8BF /* QUser.swift */; };
 		3FAEA70B210568B60069B8BF /* Q.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEA70A210568B60069B8BF /* Q.swift */; };
@@ -84,6 +86,8 @@
 		3F7A824120FCDC0200965FB6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3F7A824320FCDC1100965FB6 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		3F7A824520FCDC1B00965FB6 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		3FA35D83231B017D009AD887 /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
+		3FA35D86231B05C0009AD887 /* AddCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCollectionViewCell.swift; sourceTree = "<group>"; };
 		3FAEA7012104E76E0069B8BF /* QUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QUserViewController.swift; sourceTree = "<group>"; };
 		3FAEA7062104F1770069B8BF /* QUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QUser.swift; sourceTree = "<group>"; };
 		3FAEA70A210568B60069B8BF /* Q.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Q.swift; sourceTree = "<group>"; };
@@ -145,6 +149,7 @@
 			children = (
 				3F02656121DD30D80030867A /* MediaItem.swift */,
 				3F02656321DD3A350030867A /* Artwork.swift */,
+				3FA35D83231B017D009AD887 /* Playlist.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -211,6 +216,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3FA35D85231B059C009AD887 /* Collection View Cells */ = {
+			isa = PBXGroup;
+			children = (
+				3FA35D86231B05C0009AD887 /* AddCollectionViewCell.swift */,
+			);
+			path = "Collection View Cells";
+			sourceTree = "<group>";
+		};
 		3FAEA6FF2104E5A40069B8BF /* login-signup_view-controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,6 +248,7 @@
 			children = (
 				3FAEA7012104E76E0069B8BF /* QUserViewController.swift */,
 				3FAEA7062104F1770069B8BF /* QUser.swift */,
+				3FA35D85231B059C009AD887 /* Collection View Cells */,
 				3FF49FAC21DE955300D9A377 /* Page View Controller */,
 			);
 			path = QUser;
@@ -473,6 +487,7 @@
 				3F377561212519670037CA18 /* QTableViewCell.swift in Sources */,
 				3FE23A7821CFBD7600A0F882 /* AppleMusicConfiguration.swift in Sources */,
 				3F630992210ADA940055DD5E /* MusicSearchViewController.swift in Sources */,
+				3FA35D87231B05C0009AD887 /* AddCollectionViewCell.swift in Sources */,
 				3FAEA7022104E76E0069B8BF /* QUserViewController.swift in Sources */,
 				3FDDF12F20FF11360054F6F7 /* SignUpViewController.swift in Sources */,
 				3FAEA70D210568C80069B8BF /* QViewController.swift in Sources */,
@@ -487,6 +502,7 @@
 				3FF49FB021DEA1DC00D9A377 /* QStatusViewController.swift in Sources */,
 				3FC223A321DFB2F90044E054 /* QPageModel.swift in Sources */,
 				3FE5D365211158FE00CABC65 /* JSONKeys.swift in Sources */,
+				3FA35D84231B017D009AD887 /* Playlist.swift in Sources */,
 				3FAF7CBF211C02DB00AF83E7 /* SongTableViewCell.swift in Sources */,
 				3FAEA7072104F1770069B8BF /* QUser.swift in Sources */,
 				3FE23A7121CFB7F700A0F882 /* MusicSearchNavigationViewController.swift in Sources */,
