@@ -32,6 +32,8 @@ class QUser {
     
     var username: String?
     
+    var playlists: [Q]
+    
     var delegate: QUserDelegate?
     
     public func saveUserInfo() {
@@ -55,7 +57,8 @@ class QUser {
                 print("UNABLE TO RETRIEVE PROFILE PICTURE DATA")
             }
         }
-        
+        // TODO: Figure out how to store this in Parse server
+        self.playlists = []
     }
     
     /// INITIALIZATION FOR TEST
@@ -64,6 +67,7 @@ class QUser {
         self.username = "TEST"
         self.qScore = 64
         self.profilePictureData = nil
+        self.playlists = []
     }
     
 }
