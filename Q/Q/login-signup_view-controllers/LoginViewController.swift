@@ -66,9 +66,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func signIn(_ sender: UIButton) {
         self.SignInActivityIndicator.isHidden = false
         self.SignInActivityIndicator.startAnimating()
-//        loginUser(username: self.UsernameTextField.text!, password: self.PasswordTextField.text!, firstTime: true)
+        loginUser(username: self.UsernameTextField.text!, password: self.PasswordTextField.text!, firstTime: true)
         // FOR OFFLINE TESTING
-        self.performSegue(withIdentifier: "ShowQUserViewFromLogin", sender: sender)
+//        self.performSegue(withIdentifier: "ShowQUserViewFromLogin", sender: sender)
     }
     
     @IBAction func signUp(_ sender: UIButton) {
@@ -90,10 +90,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         // attempt to retrieve user login information if stored in user defaults
         // COMMENT FOR OFFLINE TESTING
-//        let userDefaults = UserDefaults.standard
-//        if let username = userDefaults.string(forKey: LoginViewController.usernameUserDefaultsKey), let password = userDefaults.string(forKey: LoginViewController.passwordUserDefaultsKey) {
-//            loginUser(username: username, password: password, firstTime: false)
-//        }
+        let userDefaults = UserDefaults.standard
+        if let username = userDefaults.string(forKey: LoginViewController.usernameUserDefaultsKey), let password = userDefaults.string(forKey: LoginViewController.passwordUserDefaultsKey) {
+            loginUser(username: username, password: password, firstTime: false)
+        }
     }
     
     var screenMoved: Bool = false

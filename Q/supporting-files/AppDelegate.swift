@@ -17,11 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
          // COMMENT OUT FOR TESTING OFFLINE
-//        let configuration = ParseClientConfiguration {
-//            $0.applicationId = "galeo00"
-//            $0.server = "http://q-server-nicolaig.herokuapp.com/parse"
-//        }
-//        Parse.initialize(with: configuration)
+        let configuration = ParseClientConfiguration {
+            $0.applicationId = "galeo00"
+            $0.server = "http://q-server-nicolaig.herokuapp.com/parse"
+        }
+        Parse.initialize(with: configuration)
 //        testServer()
         return true
     }

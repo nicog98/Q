@@ -21,6 +21,8 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     var qPageModel: QPageModel!
     
+    var user: QUser?
+    
     /// MARK: Profile Picture
     
     @IBOutlet weak var ProfilePictureImageView: UIImageView! {
@@ -81,7 +83,15 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
         return UICollectionViewCell()
     }
     
-    var user: QUser?
+    /// MARK: CollectionViewCell Selection
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.item < self.user!.playlists.count {
+            // Selected existing playlist
+        } else if indexPath.item == self.user!.playlists.count {
+            // Selected add new playlist
+        }
+    }
     
     // MARK: Configuring Apple Music
     
@@ -108,12 +118,6 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
         // set up page controller model
         self.qPageModel = QPageModel(appleMusicConfiguration: self.appleMusicConfiguration)
         
-        // Add observers for notifications posted from view controllers in page view
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(startQ),
-                                               name: QStatusViewController.startQSelected,
-                                               object: nil)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -121,15 +125,6 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     // MARK: Handling notifications
-    
-//    @objc func startQ() {
-//        performSegue(withIdentifier: "PresentMaxQPageViewController", sender: self)
-//    }
-    
-    @IBAction func startQ(_ sender: Any) {
-        performSegue(withIdentifier: "ShowQ", sender: self)
-    }
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

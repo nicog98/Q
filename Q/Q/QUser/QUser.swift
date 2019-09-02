@@ -32,7 +32,7 @@ class QUser {
     
     var username: String?
     
-    var playlists: [Playlist]
+    var playlists: [Q]
     
     var delegate: QUserDelegate?
     
