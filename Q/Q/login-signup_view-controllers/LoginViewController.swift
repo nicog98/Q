@@ -72,7 +72,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func signUp(_ sender: UIButton) {
-        performSegue(withIdentifier: "ShowSignUpPage", sender: sender)
+//        performSegue(withIdentifier: "ShowSignUpPage", sender: sender)
     }
     
     override func viewDidLoad() {
@@ -124,7 +124,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "ShowQUserViewFromLogin") {
-            if let qUserView = segue.destination as? QUserViewController {
+            // Get QUserViewController which is root of QNavigationController
+            if let qUserView = (segue.destination as? QNavigationViewController)?.viewControllers[0] as? QUserViewController {
                 // initialize to empty user if unable to login
                 qUserView.user = self.user != nil ? QUser(user: self.user!) : QUser()
             }

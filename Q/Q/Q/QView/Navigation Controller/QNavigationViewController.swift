@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol MusicSearchNavigationViewControllerDelegate {
+protocol QNavigationViewControllerDelegate {
     
     func didSelectMediaItem(mediaItem: MediaItem)
     
 }
 
-class MusicSearchNavigationViewController: UINavigationController {
+class QNavigationViewController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,7 @@ class MusicSearchNavigationViewController: UINavigationController {
     }
     
     // Delegate to handle media item selected from music search
-    var musicSearchDelegate: MusicSearchNavigationViewControllerDelegate?
+    var qNavigationViewControllerDelegate: QNavigationViewControllerDelegate?
     
     // Handle Apple Music configuration
     var appleMusicConfiguration: AppleMusicConfiguration?

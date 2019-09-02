@@ -21,7 +21,7 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
     private static let numSections = 2
     
     // Instance of navigation controller
-    var musicSearchNavigationViewController: MusicSearchNavigationViewController?
+    var qNavigationController: QNavigationViewController?
     
     // Handle Apple Music Configuration
     var appleMusicConfiguration: AppleMusicConfiguration?
@@ -58,10 +58,10 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
         tableView.keyboardDismissMode = .onDrag // hide keyboard when user scrolls table view
         
         // Get instance of navigation controller
-        self.musicSearchNavigationViewController = self.navigationController as? MusicSearchNavigationViewController
+        self.qNavigationController = self.navigationController as? QNavigationViewController
         
         // Get Apple Music configuration from navigation controller
-        self.appleMusicConfiguration = self.musicSearchNavigationViewController?.appleMusicConfiguration
+        self.appleMusicConfiguration = self.qNavigationController?.appleMusicConfiguration
         
     }
     
@@ -141,9 +141,8 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedMediaItem = mediaItems[indexPath.section][indexPath.row]
         if selectedMediaItem.type == .song {
-            musicSearchNavigationViewController?.musicSearchDelegate?.didSelectMediaItem(mediaItem: selectedMediaItem)
-            searchController.isActive = false
-            dismiss(animated: true)
+            qNavigationController?.qNavigationViewControllerDelegate?.didSelectMediaItem(mediaItem: selectedMediaItem)
+            self.qNavigationController?.popViewController(animated: true)
         } else if selectedMediaItem.type == .album { // album
             if let albumCell = tableView.cellForRow(at: indexPath) as? AlbumTableViewCell {
                 self.selectedAlbum = albumCell
@@ -155,7 +154,7 @@ class MusicSearchTableViewController: UITableViewController, UISearchControllerD
     // MARK: Search Bar Delegate Methods
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        dismiss(animated: true)
+        self.qNavigationController?.popToViewController((qNavigationController?.viewControllers[1])!, animated: true)
     }
     
     // MARK: Search Controller Delegate Methods

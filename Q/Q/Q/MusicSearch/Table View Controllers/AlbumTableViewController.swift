@@ -11,7 +11,7 @@ import UIKit
 class AlbumTableViewController: UITableViewController {
     
     // Instance of overarching navigation controller
-    var musicSearchNavigationViewController: MusicSearchNavigationViewController?
+    var qNavigationController: QNavigationViewController?
     
     // Handles Apple Music configuration (Apple Music API queries, authorization)
     var appleMusicConfiguration: AppleMusicConfiguration?
@@ -30,10 +30,10 @@ class AlbumTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Get instance of navigation controller
-        self.musicSearchNavigationViewController = self.navigationController as? MusicSearchNavigationViewController
+        self.qNavigationController = self.navigationController as? QNavigationViewController
         
         // Configure music library controllers
-        self.appleMusicConfiguration = musicSearchNavigationViewController?.appleMusicConfiguration
+        self.appleMusicConfiguration = qNavigationController?.appleMusicConfiguration
         
         requestAlbum()
     }
@@ -89,8 +89,8 @@ class AlbumTableViewController: UITableViewController {
         } else { // select a song from the album
             selectedMediaItem = album!.tracks![indexPath.row-1]
         }
-        musicSearchNavigationViewController?.musicSearchDelegate?.didSelectMediaItem(mediaItem: selectedMediaItem)
-        dismiss(animated: true)
+        self.qNavigationController?.qNavigationViewControllerDelegate?.didSelectMediaItem(mediaItem: selectedMediaItem)
+        self.qNavigationController?.popToViewController((qNavigationController?.viewControllers[1])!, animated: true)
     }
     
     /*

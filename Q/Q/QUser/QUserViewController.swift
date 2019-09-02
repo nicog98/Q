@@ -69,11 +69,12 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
     /// MARK: UICollectionView protocol methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (self.user?.playlists.count)! + 1
+        return (self.user!.playlists.count) + 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item < self.user!.playlists.count {
+            // return PlaylistCell
             return UICollectionViewCell()
         } else if indexPath.item == self.user!.playlists.count {
             // return AddCell
@@ -85,12 +86,17 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     /// MARK: CollectionViewCell Selection
     
+    var selectedQ: Q?
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item < self.user!.playlists.count {
             // Selected existing playlist
+            self.selectedQ = self.user!.playlists[indexPath.item]
         } else if indexPath.item == self.user!.playlists.count {
             // Selected add new playlist
+            self.selectedQ = nil
         }
+        performSegue(withIdentifier: "ShowQ", sender: nil)
     }
     
     // MARK: Configuring Apple Music
@@ -109,6 +115,7 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
         
         // Handle Apple Music configuration, login, etc.
         self.appleMusicConfiguration = AppleMusicConfiguration()
+        (self.navigationController as? QNavigationViewController)?.appleMusicConfiguration = self.appleMusicConfiguration
         
         // set up delegates
         imagePicker.delegate = self
@@ -135,10 +142,11 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "EmbedQPageViewController", let qPageViewController = segue.destination as? MiniQPageViewController {
-            self.qPageViewController = qPageViewController
-        } else if segue.identifier == "ShowQ", let qViewController = segue.destination as? QViewController {
-            qViewController.appleMusicConfiguration = self.appleMusicConfiguration
+        if segue.identifier == "ShowQ", let qViewController = segue.destination as? QViewController {
+            // set QView with Q (existing or instantiated)
+            if self.selectedQ != nil {
+                qViewController.q = self.selectedQ!
+            }
         }
     }
 

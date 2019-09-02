@@ -13,7 +13,7 @@ import MediaPlayer
 import SDWebImage
 
 class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,
-    MusicSearchNavigationViewControllerDelegate/*, MPMediaPlayback*/ {
+    QNavigationViewControllerDelegate/*, MPMediaPlayback*/ {
     
     // MARK: UI
     
@@ -27,16 +27,14 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBOutlet weak var NextButton: UIButton!
     
-    @IBOutlet weak var AddButton: UIButton!
-    
-    @IBOutlet weak var DismissButton: UIButton!
+    @IBOutlet weak var AddButton: UIBarButtonItem!
     
     @IBOutlet weak var QueueTableView: UITableView!
     
     // Music player used to play Apple Music songs, application queue player gives greater queue functionality
     let musicPlayer = MPMusicPlayerController.applicationQueuePlayer
     
-    @IBAction func addSong(_ sender: UIButton) {
+    @IBAction func addSong(_ sender: Any) {
         performSegue(withIdentifier: "ShowMusicSearch", sender: sender)
     }
     
@@ -93,11 +91,11 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         case .interrupted:
             musicPlayer.pause()
         case .paused:
-            PlayButton.setImage(#imageLiteral(resourceName: "play-button"), for: .normal)
+            PlayButton.isHidden = false
         case .playing:
-            PlayButton.setImage(#imageLiteral(resourceName: "pause-button"), for: .normal)
+            PlayButton.isHidden = true
         case .stopped:
-            PlayButton.setImage(#imageLiteral(resourceName: "play-button"), for: .normal)
+            PlayButton.isHidden = true
         default:
             return
         }
@@ -125,10 +123,17 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     // instance of the Q model
     var q = Q()
     
+    // parent UINavigationController
+    var qNavigationController: QNavigationViewController?
+    
     // MARK: View Loading Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.appleMusicConfiguration = (self.navigationController as? QNavigationViewController)?.appleMusicConfiguration
+        self.qNavigationController = self.navigationController as? QNavigationViewController
+        self.qNavigationController?.qNavigationViewControllerDelegate = self
         
         self.QueueTableView.delegate = self
         self.QueueTableView.dataSource = self
@@ -180,7 +185,7 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
     }
     
-    // MARK: MusicSearchNavigationViewControllerDelegate methods
+    // MARK: QNavigationViewControllerDelegate methods
     func didSelectMediaItem(mediaItem: MediaItem) {
         addToQueue(mediaItem: mediaItem)
         self.QueueTableView.reloadData()
@@ -277,13 +282,7 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        if segue.identifier == "ShowMusicSearch",
-            let musicSearchNavigationController = segue.destination as? MusicSearchNavigationViewController {
-            musicSearchNavigationController.appleMusicConfiguration = self.appleMusicConfiguration
-            musicSearchNavigationController.musicSearchDelegate = self
-        }
+        // set up MusicSearch
     }
     
     // MARK: Handle killing the app
