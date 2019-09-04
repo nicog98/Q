@@ -66,7 +66,7 @@ class QUser {
         self.user = nil
         self.username = "TEST"
         self.qScore = 64
-        self.profilePictureData = nil
+        self.profilePictureData = UIImagePNGRepresentation(UIImage(named: "Virgil")!)
         self.playlists = []
     }
     

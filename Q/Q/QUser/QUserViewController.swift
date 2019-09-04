@@ -107,11 +107,8 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
         super.viewDidLoad()
         
         self.UsernameLabel.text = self.user?.username!
-        if let profilePictureData = self.user?.profilePictureData {
-            self.ProfilePictureImageView.image = UIImage(data: profilePictureData)
-        } else {
-            self.ProfilePictureImageView.image = UIImage(named: "Virgil")
-        }
+        self.ProfilePictureImageView.contentMode = .scaleAspectFill
+        self.ProfilePictureImageView.image = UIImage(data: self.user!.profilePictureData!)
         
         // Handle Apple Music configuration, login, etc.
         self.appleMusicConfiguration = AppleMusicConfiguration()
@@ -146,7 +143,10 @@ class QUserViewController: UIViewController, UIImagePickerControllerDelegate, UI
             // set QView with Q (existing or instantiated)
             if self.selectedQ != nil {
                 qViewController.q = self.selectedQ!
+            } else {
+                qViewController.q = Q()
             }
+            qViewController.user = self.user!
         }
     }
 

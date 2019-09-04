@@ -19,8 +19,6 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBOutlet weak var ArtworkImageView: UIImageView!
     
-    @IBOutlet weak var QTitleTextField: UITextField!
-    
     @IBOutlet weak var PreviousButton: UIButton!
     
     @IBOutlet weak var PlayButton: UIButton!
@@ -56,7 +54,7 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     @IBAction func play(_ sender: UIButton) {
         // prepare music player to play if not prepared already
         if !musicPlayer.isPreparedToPlay {
-            musicPlayer.setQueue(with: q.identifiers)
+            musicPlayer.setQueue(with: q?.identifiers ?? [])
             musicPlayer.prepareToPlay { (error) in
                 guard error == nil else {
                     return
@@ -80,7 +78,7 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @objc func nowPlayingItemDidChange() {
         let mediaItemIndex = musicPlayer.indexOfNowPlayingItem
-        let mediaItem = q.queue[mediaItemIndex]
+        let mediaItem = q!.queue[mediaItemIndex]
         let artworkUrl = mediaItem.artwork.imageURL(height: Int(ArtworkImageView.frame.height), width: Int(ArtworkImageView.frame.width))
         ArtworkImageView.sd_setImage(with: artworkUrl, placeholderImage: UIImage())
     }
@@ -112,8 +110,8 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField.text != q.name { // only save if the name changed
-            q.name = textField.text!
+        if textField.text != q!.name { // only save if the name changed
+            q!.name = textField.text!
         }
     }
     
@@ -121,7 +119,10 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     var appleMusicConfiguration: AppleMusicConfiguration?
     
     // instance of the Q model
-    var q = Q()
+    var q: Q?
+    
+    // user who owns this playlist
+    var user: QUser?
     
     // parent UINavigationController
     var qNavigationController: QNavigationViewController?
@@ -131,13 +132,14 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        drawTitleView()
+        
         self.appleMusicConfiguration = (self.navigationController as? QNavigationViewController)?.appleMusicConfiguration
         self.qNavigationController = self.navigationController as? QNavigationViewController
         self.qNavigationController?.qNavigationViewControllerDelegate = self
         
         self.QueueTableView.delegate = self
         self.QueueTableView.dataSource = self
-        self.QTitleTextField.delegate = self
         
         let notificationCenter = NotificationCenter.default
         
@@ -164,6 +166,20 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         musicPlayer.beginGeneratingPlaybackNotifications()
     }
+    
+    func drawTitleView() {
+//        let imageView = UIImageView(image: UIImage(data: self.user!.profilePictureData!))
+        let containerView = UIView(frame: CGRect(x: self.navigationController!.navigationBar.center.x-20, y: 0, width: 40.0, height: 40.0))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = imageView.frame.height/2
+        imageView.layer.borderWidth = 1.0
+        imageView.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        imageView.contentMode = .scaleAspectFill
+        imageView.image = UIImage(data: self.user!.profilePictureData!)
+        containerView.addSubview(imageView)
+        self.navigationItem.titleView = containerView
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -174,7 +190,7 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func addToQueue(mediaItem: MediaItem) {
         if mediaItem.type == .song {
-            q.addToQueue(mediaItem: mediaItem)
+            q!.addToQueue(mediaItem: mediaItem)
             let mediaItemIdentifier = mediaItem.identifier
             let appleMusicStoreQueueDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [mediaItemIdentifier])
             musicPlayer.append(appleMusicStoreQueueDescriptor)
@@ -194,12 +210,12 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
     // MARK: UITableViewDelegate, UITableViewDataSource methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.q.queue.count
+        return self.q?.queue.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let songCell = tableView.dequeueReusableCell(withIdentifier: "SongCell") as? QTableViewCell {
-            songCell.mediaItem = self.q.queue[indexPath.row]
+            songCell.mediaItem = self.q?.queue[indexPath.row]
             return songCell
         }
         return UITableViewCell()
@@ -218,8 +234,8 @@ class QViewController: UIViewController, UITableViewDelegate, UITableViewDataSou
             } else {
                 musicPlayer.pause()
                 // create a new descriptor, setting the start song to the specified song in the queue
-                let newQueueStoreDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: q.identifiers)
-                newQueueStoreDescriptor.startItemID = q.identifiers[songIndexPath.row]
+                let newQueueStoreDescriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: q!.identifiers)
+                newQueueStoreDescriptor.startItemID = q!.identifiers[songIndexPath.row]
                 musicPlayer.setQueue(with: newQueueStoreDescriptor)
                 musicPlayer.play()
             }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Q {
+class Q {
     
     var members: [QUser]
     
@@ -25,12 +25,12 @@ struct Q {
         self.name = ""
     }
     
-    mutating func addToQueue(mediaItem: MediaItem) {
+    func addToQueue(mediaItem: MediaItem) {
         queue.append(mediaItem)
         identifiers.append(mediaItem.identifier)
     }
     
-    mutating func addMember(user: QUser) {
+    func addMember(user: QUser) {
         members.append(user)
     }
     

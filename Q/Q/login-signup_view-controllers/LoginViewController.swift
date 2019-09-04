@@ -66,9 +66,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func signIn(_ sender: UIButton) {
         self.SignInActivityIndicator.isHidden = false
         self.SignInActivityIndicator.startAnimating()
-        loginUser(username: self.UsernameTextField.text!, password: self.PasswordTextField.text!, firstTime: true)
+//        loginUser(username: self.UsernameTextField.text!, password: self.PasswordTextField.text!, firstTime: true)
         // FOR OFFLINE TESTING
-//        self.performSegue(withIdentifier: "ShowQUserViewFromLogin", sender: sender)
+        self.performSegue(withIdentifier: "ShowQUserViewFromLogin", sender: sender)
     }
     
     @IBAction func signUp(_ sender: UIButton) {
